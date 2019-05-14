@@ -1,0 +1,89 @@
+/**
+ * Copyright @ 2013 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.sys@1.0;
+
+/**
+ * Specifies a enum which describe the storage type
+ */
+enum SysdStorageTypeID : int32_t {
+    SYSD_STORAGE_PARTITION_DATA = 0,
+    SYSD_STORAGE_PARTITION_MAP = 1,
+};
+
+/**
+ * Specifies a enum which describe the system property name id
+ */
+enum SysdPropertyNameID : int32_t {
+    TEST_PROPERTY_NAME_ID0 = 0,
+    TEST_PROPERTY_NAME_ID1 = 1,
+    TEST_PROPERTY_NAME_ID2 = 2,
+    SYSD_PROPERTY_ID_AUTOTESTMODE = 3,
+    SYSD_PROPERTY_ID_KERNER_VERSION = 4,
+    SYSD_PROPERTY_ID_MICON_VERSION = 5,
+    SYSD_PROPERTY_ID_AMIGOPROGRAM_VERSION = 6,
+    SYSD_PROPERTY_ID_AMIGODATA_VERSION = 7,
+    SYSD_PROPERTY_ID_SOC_VERSION = 8,
+    SYSD_PROPERTY_ID_SETID_VERSION = 9,
+    SYSD_PROPERTY_ID_POWERONMODE = 10,
+};
+
+/**
+ * Specifies a enum which describe bsp boot mode
+ */
+ enum SysdBootMode : int32_t {
+    SYSD_BOOTMODE_NORMAL = 0,
+    SYSD_BOOTMODE_UPDATE = 1,
+    SYSD_BOOTMODE_TESTMODE = 2,
+    SYSD_BOOTMODE_USERUPDATE = 3,
+    SYSD_BOOTMODE_CATCH_SNAPSHOT = 4,
+    SYSD_BOOTMODE_SNAPSHOT = 5,
+ };
+
+/**
+  * Specifies a enum which describe usb mode.
+  */
+ enum Usb1ModeEnum : int32_t {
+     USB1_MODE_HOST = 0,
+     USB1_MODE_DEVICE = 1,
+ };
+
+/**
+ * Specifies a enum which describe adb with usb mode.
+ */
+ enum AdbWithUsbModeEnum : int32_t {
+     ADB_WITH_USB_MODE_ON = 0,
+     ADB_WITH_USB_MODE_OFF = 1,
+ };
+
+/**
+  * Specifies a enum which describe adb with network mode.
+  */
+ enum AdbWithNetworkModeEnum : int32_t {
+     ADB_WITH_NETWORK_MODE_ON = 0,
+     ADB_WITH_NETWORK_MODE_OFF = 1,
+ };
+
+/**
+  * Specifies a struct which describe vehicle authid info.
+  */
+ struct VehicleAuthIDInfo {
+        uint8_t[2]    factoryNo;
+        uint8_t       gpsType;
+        uint8_t[5]    modelNo;
+        uint8_t       engineType;
+        uint8_t       config;
+        uint8_t[8]    reserve;
+        uint8_t[2]    supplier;
+        uint8_t[12]   customize;
+};

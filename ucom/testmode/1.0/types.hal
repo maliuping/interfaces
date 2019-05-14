@@ -1,0 +1,226 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+ 
+package iauto.hardware.ucom.testmode@1.0;
+
+/**
+ * Specifies a enum which describe the ComdTestMode Client ID
+ * when a new module need to listern the ComdTestMode infomation please add a new ID in there   
+ * used in function: registerListener unRegisterListener
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeListenerID : uint8_t {
+    EN_TM_LIS_ID_TESTMODE = 0x00,
+    EN_TM_LIS_ID_TEST = 0xFF,
+};
+
+/**
+ * Specifies a enum which describe the auto test uart status
+ * used in function: notifyTestModeUartSetResult testModeUartSetting
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeAutoTestUartStatus : uint8_t{
+    EN_TM_AUTO_TEST_UART_OFF = 0x00,        //Auto Test uart setting off　
+    EN_TM_AUTO_TEST_UART_ON = 0x01,         //Auto Test uart setting on
+};
+
+/**
+ * Specifies a enum which describe the function execution result
+ * used in function: every function in IComdTestMode.hal
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeFuncResult : uint8_t {
+    EN_TM_FUNC_RESULT_OK = 0x00,
+    EN_TM_FUNC_RESULT_ERR_PARA = 0x01,
+    EN_TM_FUNC_RESULT_ERR_SERV = 0x02,
+};
+
+/**
+ * Specifies a enum which describe the change value of the antenna terminal.
+ * used in function: testModeDirDspAntCtrlReq
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeDspAntCtrlReq : uint8_t{
+    EN_TM_DSP_ANT_DIVER_ACT = 0x00,             //Antenna diver effective
+    EN_TM_DSP_ANT_MAIN_FIX = 0x01,              //Main antenna fixing
+    EN_TM_DSP_ANT_SUB_FIX = 0x02,               //Sub antenna fixing
+    EN_TM_DSP_ANT_MAIN_SUB_SUM_FIX = 0x03,      //Main antenna + sub antenna fixing
+    EN_TM_DSP_ANT_MAIN_SUB_DIF_FIX = 0x04,      //Main antenna - Sub antenna fixing
+    EN_TM_DSP_ANT_GET_STA = 0x05,               //Get tuner Antenna terminal status
+};
+
+/**
+ * Specifies a enum which describe the echo back of request value and Error notification when control is not possible
+ * used in function: notifyTestModeDirDspAntCtrlResp
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeDspAntCtrlResp : uint8_t{
+    EN_TM_DSP_ANT_DIVER_ACT = 0x00,         //Antenna diver effective
+    EN_TM_DSP_ANT_MAIN_FIX = 0x01,          //Main antenna fixing
+    EN_TM_DSP_ANT_SUB_FIX = 0x02,           //Sub antenna fixing
+    EN_TM_DSP_ANT_MAIN_SUB_SUM_FIX = 0x03,  //Main antenna + sub antenna fixing
+    EN_TM_DSP_ANT_MAIN_SUB_DIF_FIX = 0x04,  //Main antenna - Sub antenna fixing
+    EN_TM_DSP_ANT_UNCTRL = 0xFF,            //uncontrollable
+};
+
+/**
+ * Specifies a enum which describe the common off/on status in ComdDiag
+ * used in function: notifyTestModeFlatModeInfoResp
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeStatus : uint8_t {
+    EN_TM_STATUS_OFF = 0x00, 
+    EN_TM_STATUS_ON = 0x01,
+};
+
+/**
+ * Specifies a enum which describe the commen command of set mode 
+ * used in function: testModeSetFlatMode
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeSetModeCmd : uint8_t {
+    EN_TM_SET_MODE_CMD_OFF = 0x00,
+    EN_TM_SET_MODE_CMD_ON = 0x01,
+    EN_TM_SET_MODE_CMD_GET_CUR = 0x02,
+};
+
+/**
+ * Specifies a enum which describe the key code of steering key
+ * used in struct: StComdTestModeKeyCodeInfo
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeKeyType : uint8_t {
+    EN_TM_KEY_NULL = 0x00,    
+    EN_TM_KEY_STSW_UP = 0x21,
+    EN_TM_KEY_STSW_DOWN = 0x22,
+    EN_TM_KEY_VOL_UP = 0x23,
+    EN_TM_KEY_VOL_DOWN = 0x24,
+    EN_TM_KEY_MODE = 0x25,
+    EN_TM_KEY_HOOK_ON = 0x26,
+    EN_TM_KEY_HOOK_OFF = 0x27,
+    EN_TM_KEY_VOICE = 0x28,
+    EN_TM_KEY_ENTER = 0x29,
+    EN_TM_KEY_BACK = 0x2A,
+    EN_TM_KEY_STSW_RIGHT = 0x2B,
+    EN_TM_KEY_STSW_LEFT = 0x2C,
+    EN_TM_KEY_SOURCE = 0x2D,
+    EN_TM_KEY_PHONE = 0x2E,
+    EN_TM_KEY_ATT = 0x2F,
+    EN_TM_KEY_DISP = 0x30,
+    EN_TM_KEY_RIGHT = 0x31,
+    EN_TM_KEY_UP = 0x32,
+    EN_TM_KEY_LEFT = 0x33,
+    EN_TM_KEY_DOWN = 0x34,
+    EN_TM_KEY_BAND = 0x35,
+    EN_TM_KEY_MENU = 0x36,
+};
+
+/**
+ * Specifies a enum which describe the AUX status
+ * used in struct: StComdTestModeAUXInfo
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeAUXStatus : uint8_t {
+    EN_TM_AUX_STATUS_NULL = 0x00,
+    EN_TM_AUX_STATUS_AUX_OUT = 0x01,
+    EN_TM_AUX_STATUS_AUX_IN = 0x02,
+    EN_TM_AUX_STATUS_VTR_IN = 0x03,
+};
+
+/**
+ * Specifies a enum which describe the cause of factory cold start
+ * used in struct: StComdTestModeFactColdStartInfo
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeFactColdStartCause : uint8_t {
+    EN_TM_FACT_COLD_START_CAUSE_TM = 0x01,
+    EN_TM_FACT_COLD_START_CAUSE_PANA = 0x02,
+    EN_TM_FACT_COLD_START_CAUSE_NISSAN = 0x03,
+};
+
+/**
+ * Specifies a enum which describe the initial status of amigo when navi request factory cold start
+ * used in struct: StComdTestModeFactColdStartInfo
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeAmigoInitStatus : uint8_t {
+    EN_TM_AMIGO_INIT_STATUS_SUC = 0x01,
+    EN_TM_AMIGO_INIT_STATUS_FAIL = 0x02,
+    EN_TM_AMIGO_INIT_STATUS_REFUSE = 0x03,
+};
+
+/**
+ * Specifies a enum which describe the listern function in IComdTestModeListener.hal
+ * used in function: registerListener
+ * Adaptive project: Base && Morley
+ */
+enum EnComdTestModeEventId : uint64_t{
+    EN_TM_EID_notifyTestModeUartSetResult = 1 << 0,
+    EN_TM_EID_notifyTestModeAutoTestDataResp = 1 << 1,
+    EN_TM_EID_notifyTestModeDirDspAntCtrlResp = 1 << 2,
+    EN_TM_EID_notifyTestModeKeyCodeResp = 1 << 3,
+    EN_TM_EID_notifyTestModeEMMCADResp = 1 << 4,
+    EN_TM_EID_notifyTestModeAUXADResp = 1 <<  5,
+    EN_TM_EID_notifyTestModeFactColdStartInitEnd = 1 << 6,
+    EN_TM_EID_notifyTestModeFlatModeInfoResp = 1 << 7,
+};
+
+/**
+ * Specifies a bitfield which describe the assemble of EnComdTestModeEventId
+ * when you want sonme functions you can bit or the element in EnComdTestModeEventId
+ * Adaptive project: Base && Morley
+ */
+typedef bitfield<EnComdTestModeEventId> EnComdTestModeEventIds;
+
+/**
+ * Specifies a struct which describe the response information of factory cold start
+ * used in function: notifyTestModeFacColdStartInitEnd
+ * Adaptive project: Base && Morley
+ */
+struct StComdTestModeFactColdStartInfo{
+    EnComdTestModeFactColdStartCause cause;
+    EnComdTestModeAmigoInitStatus status;
+};
+
+/**
+ * Specifies a struct which describe common format of ad values in ComdTestMode
+ * used in struct: StComdTestModeKeyCodeInfo StComdTestModeAUXInfo
+ * used in function: notifyTestModeEMMCADResp
+ * Adaptive project: Base && Morley
+ */
+struct StComdTestModeADValue{
+    uint8_t adHigh;
+    uint8_t adLow;    
+};
+
+/**
+ * Specifies a struct which describe the key code response infomation 
+ * used in function: notifyTestModeKeyCodeResp
+ * Adaptive project: Base && Morley
+ */
+struct StComdTestModeKeyCodeInfo{
+    EnComdTestModeKeyType key;
+    StComdTestModeADValue stSw1;
+    StComdTestModeADValue stSw2;
+};
+
+/**
+ * Specifies a struct which describe the AUX response information
+ * used in function: notifyTestModeAUXADResp
+ * Adaptive project: Base && Morley
+ */
+struct StComdTestModeAUXInfo{
+    EnComdTestModeAUXStatus auxStatus;
+    StComdTestModeADValue auxAd;
+};
+

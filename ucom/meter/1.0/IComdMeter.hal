@@ -1,0 +1,80 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.meter@1.0;
+
+import IComdMeterListener;
+
+interface IComdMeter {
+//Listenner register or unregister
+    /**
+    *   when a new module need to listen the EnComdTuner information
+    *   please invoke this function
+    *
+    *   @param listener  : client sp pointer
+    *   @param serviceId : listener Id
+    *   @param eventIds  : function that client want to monitor
+    *
+    *   @return EnComdMeterFuncResult
+    *       @retval EN_METER_RESULT_OK       : operation ok
+    *       @retval EN_METER_RESULT_ERR_PARA : parameter error
+    *       @retval EN_METER_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project: Morley
+    */
+    registerListener(IComdMeterListener listener,EnComdMeterListenerID serviceId,EnComdMeterEventIds eventIds) generates(EnComdMeterFuncResult funcResult);
+
+    /**
+    *   when the client don`t need to listen the ComdDiag information
+    *   or the the client is death ,will invoke this function
+    *
+    *   @param serviceId : listener Id
+    *
+    *   @return EnComdMeterFuncResult
+    *       @retval EN_METER_RESULT_OK       : operation ok
+    *       @retval EN_METER_RESULT_ERR_PARA : parameter error
+    *       @retval EN_METER_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project: Morley
+    */
+    unRegisterListener(EnComdMeterListenerID serviceId) generates(EnComdMeterFuncResult funcResult);  
+
+//SOC->Meter Send Display Message Interface
+    /**
+    *   Send Command to Meter
+    *
+    *   @param dispData : display pack data
+    *
+    *   @return EnComdMeterFuncResult
+    *       @retval EN_METER_RESULT_OK       : operation ok
+    *       @retval EN_METER_RESULT_ERR_PARA : parameter error
+    *       @retval EN_METER_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project: Morley
+    */
+    meterDispPackDataSendToMeter(StComdToMeterCmdDataInfo dispData) generates(EnComdMeterFuncResult funcResult);                      //Display Data Send Package One
+
+    /**
+    *   Send extend Command to Meter
+    *
+    *   @param dispData : display extend data
+    *
+    *   @return EnComdMeterFuncResult
+    *       @retval EN_METER_RESULT_OK       : operation ok
+    *       @retval EN_METER_RESULT_ERR_PARA : parameter error
+    *       @retval EN_METER_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project: Morley
+    */
+    meterDispPackExtendDataSendToMeter(StComdToMeterCmdDataInfoExten dispExtendData) generates(EnComdMeterFuncResult funcResult);     //Display Data Send Package Two &Three
+};

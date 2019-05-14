@@ -1,0 +1,96 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.common@1.1;
+import @1.0::IComdCommonListener;
+import @1.0::types;
+
+interface IComdCommonListener extends @1.0::IComdCommonListener {
+    /**
+     * Comd informs client of micon usb power setting result
+     *
+     * @param respData: The micon usb power setting result
+     *
+     * Adaptive project: Poc
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_UsbPowSetResp to monitor this function.
+     * This function is the response of commonFuncUsbPowSetReq in
+     * IComdCommon
+     */
+    oneway notifyCommonFuncUsbPowSetResp(StComdCommonUsbPowSetResp respData);               // pending 式樣書衝突 CT 1Fh　04h：USB power setting result response
+
+    /**
+     * Comd informs client of micon usb otg over current status
+     *
+     * @param status: The micon usb otg over current status
+     *
+     * Adaptive project: Poc
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_UsbOtgStatus to monitor this function.
+     * Secondly, client call commonFuncUsbOtgStatusGet to get micon usb otg
+     * over current status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new usb otg over current status from micon
+     */
+    oneway notifyCommonUsbOtgStatus(EnComdCommonNormalOrNotStatus status); // notify client USB OTG overcurrent  status
+
+    /**
+     * Comd informs client of micon usb host over current status
+     *
+     * @param status: The micon usb host over current status
+     *
+     * Adaptive project: Poc
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_UsbHostStatus to monitor this function.
+     * Secondly, client call commonFuncUsbHostStatusGet to get micon usb host
+     * over current status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new usb host over current status from micon
+     */
+    oneway notifyCommonUsbHostStatus(EnComdCommonNormalOrNotStatus status); // notify client USB Host overcurrent  status
+
+    /**
+     * Comd informs client of amigo this time abnormal or not status
+     *
+     * @param amigoStatus: This time amigo abnormal or not status
+     *
+     * Adaptive project: All
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_AmigoStatusInfo to monitor this function.
+     * Secondly, client call commonFuncAmigoStatusInfoGet to get amigo abnormal
+     * or not status
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new amigo this time abnormal or not status from micon
+     */
+    oneway notifyCommonAmigoStatusInfo(EnComdCommonAmigoStatusInfo amigoStatus); // notify client Amigo Status Infomation
+
+    /**
+     * Comd informs client of some status about vcan bus
+     *
+     * @param vcanStatus: Vcan status struct
+     *
+     * Adaptive project: Morley
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_VcanStatus to monitor this function.
+     * Secondly, client call commonFuncVcanStatusGet to get status about vcan
+     * bus.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new status about vcan bus from micon
+     */
+    oneway notifyCommonVcanStatus(StComdCommonVcanStatus vcanStatus); // notify client VCAN Status Infomation
+};

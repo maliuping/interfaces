@@ -1,0 +1,52 @@
+/**
+ * Copyright @ 2013 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.sysctrl@1.0;
+
+/** {@hide} */
+interface ISysCtrlListener {
+    /*
+     * The function will be discard. Don't use it.
+     */
+    getName() generates (string name);
+
+    /*
+     * Only used by servicebase.sysctrl use it to notify servicebase do start.
+     */
+    oneway onStart();
+    /*
+     * Only used by servicebase.sysctrl use it to notify servicebase do suspend.
+     */
+    oneway onSuspend();
+    /*
+     * Only used by servicebase.sysctrl use it to notify servicebase do awake.
+     */
+    oneway onAwake();
+    /*
+     * Only used by servicebase.sysctrl use it to notify servicebase do stop.
+     */
+    oneway onStop();
+    /*
+     * Only used by servicebase.sysctrl use it to notify servicebase do UI resume.
+     */
+    oneway onUIResumed();
+    /*
+     * Only used by servicebase.sysctrl use it to notify servicebase do command.
+     */
+    oneway onCommand(string cmd);
+
+    /*
+     * Only used by servicebase.sysctrl use it to notify service do data clear.
+     */
+    oneway onDataClear(StartupReasons reason, int32_t index);
+};

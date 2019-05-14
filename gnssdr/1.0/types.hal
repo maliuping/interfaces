@@ -1,0 +1,224 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+ package iauto.hardware.gnssdr@1.0;
+
+// gnssdrd return value
+enum EnGnssdrdReturn : uint8_t {
+    EN_GNSSDRD_RETURN_OK                         = 0x00,
+    EN_GNSSDRD_RETURN_NG                         = 0x01,
+    EN_GNSSDRD_RETURN_ERROR_GPS_POINTER_INVALID  = 0x02,
+    EN_GNSSDRD_RETURN_ERROR_GPS_CMD_ERR          = 0x03,
+    EN_GNSSDRD_RETURN_ERROR_GPS_DRIVER_NC        = 0x04,
+    EN_GNSSDRD_RETURN_ERROR_GPS_DRIVER_API_ERROR = 0x05,
+    EN_GNSSDRD_RETURN_ERROR_GPS_PARAMETER_ERROR  = 0x06,
+    EN_GNSSDRD_RETURN_ERROR_GPS_OFF_PROC         = 0x07,
+    EN_GNSSDRD_RETURN_ERROR_GPS_GYRO_RESET       = 0x08,
+    EN_GNSSDRD_RETURN_ERROR_GPS_FOLDER_DELETE    = 0x09,
+};
+
+// gnssdrd listener id
+enum EnGnssdrdListenerID : uint8_t {
+    EN_GNSSDRD_LISTENERID_CARPLAY = 0x00,
+    EN_GNSSDRD_LISTENERID_TEST    = 0xF0,
+};
+
+// gnssdrd event id
+enum EnGnssdrdEventID : uint64_t {
+    EN_GNSSDRD_EID_notifyLocationInfo = 1 << 0,
+    EN_GNSSDRD_EID_notifyAll = 0xFFFFFFFFFFFFFFFF
+};
+
+typedef bitfield<EnGnssdrdEventID> EnGnssdrdEventIDs;
+
+// pulse data (50ms)
+struct StPulseCommonData {
+    uint16_t    pulseCntL;      // pulse count left
+    uint16_t    pulseCntR;      // pulse count right
+    uint16_t    periodCnt;      // period count
+    uint8_t     pulseStateL;    // pulse state left
+    uint8_t     pulseStateR;    // pulse state right
+    uint32_t[5] period;         // speed pulse period
+    uint8_t[5]  periodState;    // state
+    uint8_t     reverseSignal;  // reverse signal
+    uint8_t[2]  byReserved;     // reserved
+};
+
+enum EnReqLocationInfoType : uint8_t {
+    EN_GNSSDRD_LOCATIONINFO_TYPE_GGA = 1 << 0,
+    EN_GNSSDRD_LOCATIONINFO_TYPE_RMC = 1 << 1,
+    EN_GNSSDRD_LOCATIONINFO_TYPE_PASCD = 1 << 2,
+};
+
+typedef bitfield<EnReqLocationInfoType> EnReqLocationInfoTypes;
+
+// location status
+enum EnLocationInfoStatus : uint8_t {
+    EN_GNSSDRD_LOCATIONINFO_STATUS_OK = 0x00,
+    EN_GNSSDRD_LOCATIONINFO_STATUS_NG = 0x01,
+};
+
+// carplay location info
+struct StLocationInfo {
+    EnLocationInfoStatus ggaStatus;      // GPGGA status
+    EnLocationInfoStatus rmcStatus;      // GPRMC status
+    EnLocationInfoStatus pascdStatus;    // PASCD status
+    string              gga;             // GPGGA
+    string              rmc;             // GPRMC
+    string              pascd;           // PASCD
+};
+
+// gyro data
+struct StGyroRawData {
+    float             yaw;             // yaw   [dps]
+    float             pitch;           // pitch [dps]
+    float             roll;            // roll  [dps]
+};
+
+// gsensor raw data
+struct StGsnsRawData {
+    float             x;               // x  [m/s2]
+    float             y;               // y  [m/s2]
+    float             z;               // z  [m/s2]
+};
+
+// sensor raw data (50ms)
+struct StSensorData {
+    StGyroRawData     gyro;            // gyro 3-axis value
+    StGsnsRawData     gsns;            // gsns 3-axis value
+    int16_t           tsns;            // temperature sensor output value [LSB]
+    float             temperature;     // temperature value [degC]
+};
+
+// sensor info of one pack
+struct StSensorInfo {
+    vec<StSensorData>    sensor;       // gyro, gsns and tsns info
+};
+
+// pulse info of one pack
+struct StPulseInfo {
+    vec<StPulseCommonData> pulse;
+};
+
+// gps antenna open status
+enum EnGpsAntennaOpenStatus : uint8_t {
+    EN_GNSSDRD_ANTENNA_NOT_OPEN  = 0x00,      // gps antenna not open
+    EN_GNSSDRD_ANTENNA_OPEN      = 0x01,      // gps antenna open
+    EN_GNSSDRD_ANTENNA_UNKNOWN   = 0xFF,      // unknown status
+};
+
+// gps antenna short status
+enum EnGpsAntennaShortStatus : uint8_t {
+    EN_GNSSDRD_ANTENNA_NOT_SHORT = 0x00,      // gps antenna not short
+    EN_GNSSDRD_ANTENNA_SHORT     = 0x01,      // gps antenna short
+    EN_GNSSDRD_ANTENNA_UNKNOWN   = 0xFF,      // unknown status
+};
+
+// gps antenna status
+struct StGpsAntennaStatus {
+    EnGpsAntennaOpenStatus      antennaOpen;  // gps antenna open status
+    EnGpsAntennaShortStatus     antennaShort; // gps antenna short status
+};
+
+enum GnssLocationFlags : uint16_t {
+    EN_GNSSDRD_HAS_LAT_LONG         = 0x0001,  // has valid latitude and longitude
+    EN_GNSSDRD_HAS_ALTITUDE         = 0x0002,  // has valid altitude
+    EN_GNSSDRD_HAS_SPEED            = 0x0004,  // has valid speed
+    EN_GNSSDRD_HAS_BEARING          = 0x0008,  // has valid bearing
+    EN_GNSSDRD_HAS_HDOP             = 0x0010,  // has valid hdop
+    EN_GNSSDRD_HAS_ACCURACY         = 0x0020,  // has valid accuracy
+};
+
+// location info
+struct StGnssLoctionInfo {
+    bitfield<GnssLocationFlags> locationFlags;  // flags
+    double                      latitude;       // latitude [deg]
+    double                      longitude;      // longitude [deg]
+    float                       altitude;       // altitude [m]
+    float                       speed;          // speed [km/h]
+    float                       bearing;        // bearing [deg]
+    float                       hdop;           // hdop
+    float                       accuracy;       // accuracy
+    uint8_t[6]                  gpsUtcTime;     // year(lower two number), month, day, hour, min, sec
+};
+
+// sensor data for diag
+struct StSensorDiagInfo {
+    float           gyroYawAveVal;  // gyro yaw average value of one pack [LSB]
+    float           gyroYawSigma;   // gyro yaw sigma [LSB]
+    float           gsnsXAveVal;    // gyro x average value of one pack   [LSB]
+    float           gsnsXSigma;     // gyro x sigma   [LSB]
+    float           yawAngle;       // accumulated value within 1 second [deg]
+    float           pitchAngle;     // accumulated value within 1 second [deg]
+};
+
+enum EnGnssMax : uint32_t {
+    SVS_COUNT = 64,   // maximum number of SVs for StGnssSvInfo
+};
+
+// constellation type
+enum EnGnssConstellationType : uint16_t {
+    EN_GNSSDRD_CONSTELLATION_UNKNOWN = 0,
+    EN_GNSSDRD_CONSTELLATION_GPS,
+    EN_GNSSDRD_CONSTELLATION_SBAS,
+    EN_GNSSDRD_CONSTELLATION_GLONASS,
+    EN_GNSSDRD_CONSTELLATION_QZSS,
+    EN_GNSSDRD_CONSTELLATION_BD,
+    EN_GNSSDRD_CONSTELLATION_GALILEO,
+};
+
+// sv info
+struct StGnssSvInfo {
+    /**
+     * Pseudo-random number for the SV, or FCN/OSN number for Glonass. The
+     * distinction is made by looking at constellation field. Values should be
+     * in the range of:
+     *
+     * - GPS:     1-32
+     * - SBAS:    120-151, 183-192
+     * - GLONASS: 1-24, the orbital slot number (OSN), if known.  Or, if not:
+     *            93-106, the frequency channel number (FCN) (-7 to +6) offset by + 100
+     *            i.e. report an FCN of -7 as 93, FCN of 0 as 100, and FCN of +6 as 106.
+     * - QZSS:    193-200
+     * - Galileo: 1-36
+     * - Beidou:  1-37
+     */
+    int16_t svid;
+
+    /**
+     * Defines the constellation of the given SV. Value should be one of those
+     * EN_GNSSDRD_CONSTELLATION_* constants
+     */
+    EnGnssConstellationType constellation;
+
+    /** signal to noise ratio */
+    float snr;
+
+    /** Elevation of SV in degrees. */
+    float elevation;
+
+    /** Azimuth of SV in degrees. */
+    float azimuth;
+};
+
+// sv status
+struct StGnssSvStatus {
+    /** Number of GPS SVs currently visible, refers to the SVs stored in gnssSvList */
+    uint32_t        numSvs;
+
+    /** Number of GPS SVs used to locate */
+    uint32_t        usedSvNum;
+
+    /** Pointer to an array of SVs information for all GNSS constellations */
+    StGnssSvInfo[EnGnssMax:SVS_COUNT]  gnssSvList;
+};

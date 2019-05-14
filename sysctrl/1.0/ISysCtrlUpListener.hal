@@ -1,0 +1,52 @@
+/**
+ * Copyright @ 2013 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.sysctrl@1.0;
+
+import iauto.hardware.sysctrl@1.0::types;
+
+/** {@hide} */
+interface ISysCtrlUpListener {
+    /*
+     * The function will be discard. Don't use it.
+     */
+    oneway onNativeReady();
+
+    /*
+     * Only used by sysctrlmanager.sysctrl notify sysctrlmanager native
+     * service awake finished.
+     */
+    oneway onNativeAwaked();
+
+    /*
+     * Only used by sysctrlmanager.sysctrl notify sysctrlmanager do service stop.
+     */
+    oneway onNotifyDoServiceStop();
+
+    /*
+     * Only used by sysctrlmanager.sysctrl notify sysctrlmanager do android stop
+     */
+    oneway onNotifyDoAndroidStop();
+
+    /*
+     * Only used by sysctrlmanager.sysctrl notify sysctrlmanager do enter
+     * standby for personal data clear
+     */
+    oneway onNotifyDoEnterStandby(StandbyReason reason);
+
+    /*
+     * Only used by sysctrlmanager.sysctrl notify sysctrlmanager do exit
+     * standby for personal data clear
+     */
+    oneway onNotifyDoExitStandby(StandbyReason reason);
+};

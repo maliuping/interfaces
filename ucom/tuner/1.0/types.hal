@@ -1,0 +1,123 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.tuner@1.0;
+
+enum EnComdTunerListenerID : uint8_t {
+    EN_TUNER_LIS_ID_RADIO_APP = 0x00,
+    EN_TUNER_LIS_ID_TM_APP = 0x01,
+    EN_TUNER_LIS_ID_DIAG_APP = 0x02,
+    EN_TUNER_LIS_ID_TEST = 0xFF,
+};
+
+enum EnComdTunerPrestListReqType : uint8_t {
+    EN_PLIST_REQ_BAND_FM1 = 0x00,
+    EN_TUNER_PLIST_REQ_BAND_FM2 = 0x01,
+    EN_TUNER_PLIST_REQ_BAND_FM3 = 0x02,
+    EN_TUNER_PLIST_REQ_BAND_AM1 = 0x03,
+    EN_TUNER_PLIST_REQ_BAND_AM2 = 0x04,
+    EN_TUNER_PLIST_REQ_BAND_CURRENT = 0x05,
+    EN_TUNER_PLIST_REQ_BAND_ALL = 0x06,
+};
+
+enum EnComdTunerSSCMD : uint8_t {
+    EN_TUNER_CMD_START = 0x00,
+    EN_TUNER_CMD_STOP = 0x01,
+};
+
+enum EnComdTunerDirectionCMD : uint8_t {
+    EN_TUNER_CMD_DIRECTION_UP = 0x00,
+    EN_TUNER_CMD_DIRECTION_DOWN = 0x01,
+};
+
+enum EnComdTunerBandInfoType : uint8_t {
+    EN_TUNER_BAND_FM1 = 0x00,
+    EN_TUNER_BAND_FM2 = 0x01,
+    EN_TUNER_BAND_FM3 = 0x02,
+    EN_TUNER_BAND_AM1 = 0x03,
+    EN_TUNER_BAND_AM2 = 0x04,
+    EN_TUNER_BAND_INVALID = 0xFF,
+};
+
+enum EnComdTunerBandAppoint : EnComdTunerBandInfoType {
+    EN_TUNER_BAND_CURRENT = 0x05,
+};
+
+enum EnComdTunerPresetIndex : uint8_t {
+    EN_TUNER_PRESET_UNKNOWN = 0x00,
+    EN_TUNER_PRESET_INDEX1 = 0x01,
+    EN_TUNER_PRESET_INDEX2 = 0x02,
+    EN_TUNER_PRESET_INDEX3 = 0x03,
+    EN_TUNER_PRESET_INDEX4 = 0x04,
+    EN_TUNER_PRESET_INDEX5 = 0x05,
+    EN_TUNER_PRESET_INDEX6 = 0x06,
+};
+
+enum EnComdTunerFuncResult : uint8_t {
+    EN_TUNER_FUNC_RESULT_OK = 0x00,
+    EN_TUNER_FUNC_RESULT_ERR_PARA = 0x01,
+    EN_TUNER_FUNC_RESULT_ERR_SERV = 0x02,
+};
+
+enum EnComdTunerEventId : uint64_t{
+    EN_TUNER_EID_notifyTunerDispInfo = 1 << 0,
+    EN_TUNER_EID_notifyTunerPresetListInfo = 1 << 1,
+};
+
+typedef bitfield<EnComdTunerEventId> EnComdTunerEventIds;
+
+enum EnComdTunerStatusType : uint8_t {
+    EN_TUNER_STATUS_NORMAL = 0x00,
+    EN_TUNER_STATUS_MANUAL_UD = 0x01,
+    EN_TUNER_STATUS_TUNING = 0x02,
+    EN_TUNER_STATUS_SEEK_UD = 0x03,
+    EN_TUNER_STATUS_FAST_UD = 0x04,
+    EN_TUNER_STATUS_BSM = 0x05,
+    EN_TUNER_STATUS_PTY_SEARCH = 0x06,
+    EN_TUNER_STATUS_AF_SEARCH = 0x07,
+    EN_TUNER_STATUS_PI_SEARCH = 0x08,
+    EN_TUNER_STATUS_SCAN = 0x09,
+    EN_TUNER_STATUS_SCAN_HOLD = 0x0A,
+    EN_TUNER_STATUS_OFF = 0xFF,
+};
+
+enum EnComdTunerPSFlagType : uint8_t {
+    EN_TUNER_PS_FLAG_INVALID = 0x00,
+    EN_TUNER_PS_FLAG_VALID = 0x01,
+};
+
+struct StComdTunerChannel{
+    uint8_t channelLow;
+    uint8_t channelHigh;
+};
+
+struct StComdTunerInfo {
+    EnComdTunerBandInfoType band;
+    EnComdTunerPresetIndex presetNo;
+    StComdTunerChannel channel;
+    EnComdTunerStatusType status;
+    EnComdTunerPSFlagType psFlag;
+    uint8_t ptyType;
+    uint8_t[8] psName;
+};
+
+struct StComdPresetList{
+    EnComdTunerBandInfoType bandType;
+    StComdTunerChannel[6] channel;
+};
+
+struct StComdPresetInfo{
+    EnComdTunerBandInfoType bandType;
+    EnComdTunerPresetIndex presetNo;
+    StComdTunerChannel channel;
+};

@@ -1,0 +1,42 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.gnssdr@1.0;
+
+import IGnssdrdListener;
+
+interface IGnssdrd {
+
+    registerListener(IGnssdrdListener listener,EnGnssdrdListenerID serviceId,EnGnssdrdEventIDs eventIds) generates (EnGnssdrdReturn ret);
+
+    unRegisterListener(EnGnssdrdListenerID serviceId) generates (EnGnssdrdReturn ret);
+
+    startLocationInformation(EnReqLocationInfoTypes type) generates (EnGnssdrdReturn ret);
+
+    stopLocationInformation() generates (EnGnssdrdReturn ret);
+
+    deleteGpsSnsData() generates (EnGnssdrdReturn ret);
+
+    getPulseInfo() generates (StPulseInfo pulseInfo, EnGnssdrdReturn ret);
+
+    getSensorRawInfo() generates (StSensorInfo snsInfo, EnGnssdrdReturn ret);
+
+    getGpsAntennaStatus() generates (StGpsAntennaStatus antennaStatus, EnGnssdrdReturn ret);
+
+    getGnssLocationInfo() generates (StGnssLoctionInfo location, EnGnssdrdReturn ret);
+
+    getSvStatus() generates (StGnssSvStatus svStatus, EnGnssdrdReturn ret);
+
+    getSensorDiagInfo() generates (StSensorDiagInfo snsDiagInfo, EnGnssdrdReturn ret);
+
+ };

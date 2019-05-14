@@ -1,0 +1,109 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.vcan@1.0;
+
+/**
+ * Specifies a enum which describe the ComdVcan Client ID
+ * when a new module need to listern the ComdVcan infomation please add a new ID in there   
+ * used in function: registerListener unRegisterListener
+ * Adaptive project:
+ */
+enum EnComdVcanListenerID : uint8_t {
+    EN_VCAN_LIS_ID_VCAN = 0x00,
+    EN_VCAN_LIS_ID_TEST = 0xFF,
+};
+
+/**
+ * Specifies a enum which describe the function execution result
+ * used in function: every function in IComdVcan.hal
+ * Adaptive project:
+ */
+enum EnComdVcanFuncResult : uint8_t {
+    EN_VCAN_FUNC_RESULT_OK = 0x00,
+    EN_VCAN_FUNC_RESULT_ERR_PARA = 0x01,
+    EN_VCAN_FUNC_RESULT_ERR_SERV = 0x02,
+};
+
+/**
+ * Specifies a enum which describe the listern function in IComdVcanListener.hal
+ * used in function: registerListener
+ * Adaptive project:
+ */
+
+enum EnComdVcanEventId : uint64_t{
+    EN_VCAN_EID_notifyVcanACSettingResp = 1 << 0,
+    EN_VCAN_EID_notifyVcanCommDataResp = 1 << 1,
+};
+
+/**
+ * Specifies a bitfield which describe the assemble of EnComdVcanEventId
+ * when you want sonme functions you can bit or the element in EnComdVcanEventId
+ * Adaptive project:
+ */
+typedef bitfield<EnComdVcanEventId> EnComdVcanEventIds;
+
+/***********************CT:68h  SYS->SOC***************************/
+/**
+ * SYS->VCAN :VCAN Common Data Inform Soc,D0 = 00h
+ */
+enum EnComdVcanStatus : uint8_t {
+    EN_VCAN_CLOSE = 0x00,
+    EN_VCAN_OPEN = 0x01,
+};
+
+enum EnComdVcanBusError : uint8_t {
+    EN_VCAN_NORMAL = 0x00,
+    EN_VCAN_BUS_ERROR = 0x01,
+};
+
+enum EnComdVcanPowerStatus : uint8_t {
+    EN_VCAN_SLEEP_PERMIT = 0x00,
+    EN_VCAN_SLEEP_REJECT = 0x01,
+};
+
+struct StComdVcanCommDataInform {
+    EnComdVcanStatus              vcanStatus;  //D1:Vcan Status
+    EnComdVcanBusError            vcanBusErr;  //D2:Vcan Bus Error
+    EnComdVcanPowerStatus    vcanPowerStatus;  //D3:Vcan Power Status
+};
+
+/***********************CT:63h 01h************************/
+enum EnComdVcanAcStatus  : uint8_t {
+    EN_VCAN_AC_OFF = 0x00,
+    EN_VCAN_AC_ON  = 0x01,
+};
+
+enum EnComdVcanDriverAirVentStatus  : uint8_t {
+    EN_VCAN_DRIVER_AIR_OFF  = 0x00,
+    EN_VCAN_DRIVER_AIR_VENT = 0x01,
+    EN_VCAN_DRIVER_AIR_BL   = 0x02,
+    EN_VCAN_DRIVER_AIR_FOOT = 0x03,
+    EN_VCAN_DRIVER_AIR_DF   = 0x04,
+    EN_VCAN_DRIVER_AIR_DEF  = 0x05, 
+};
+
+enum EnComdVcanPassengerAirVentStatus : uint8_t {
+    EN_VCAN_PASSENGER_AIR_OFF  = 0x00,
+    EN_VCAN_PASSENGER_AIR_VENT = 0x01,
+    EN_VCAN_PASSENGER_AIR_BL   = 0x02,
+    EN_VCAN_PASSENGER_AIR_FOOT = 0x03,
+};
+
+struct StComdVcanACDataStatusInform {
+    EnComdVcanAcStatus               acData;
+    uint8_t                          frontFanSpeed; //0~14
+    uint8_t                          rearFanSpeed;  //0~14
+    EnComdVcanDriverAirVentStatus    driverAirVent;
+    EnComdVcanPassengerAirVentStatus passengerAirVent; 
+};

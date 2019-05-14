@@ -1,0 +1,377 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.diag@1.0;
+
+import IComdDiagListener;
+
+interface IComdDiag {
+
+    /**
+     * when a new module need to listen the ComdDiag information
+     * please invoke this function
+     *
+     * @param listener:  client sp pointer
+     * @param serviceId: listener id
+     * @param eventIds:  function that client want to monitor
+     *
+     * @return funcResult:  the status of invoking function: OK in case of success
+     *                  ERR_PARA in case of param is fault or lost, ERR_SERV in case of config is error 
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     *  Adaptive project: Base && Apoo && Morley
+     */
+    registerListener(IComdDiagListener listener,EnComdDiagListenerID serviceId,EnComdDiagEventIds eventIds) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * when the client don`t need to listen the ComdDiag information
+     * or the the client is death ,will invoke this function
+     *
+     * @param serviceId: client listener id
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error 
+     *  
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    unRegisterListener(EnComdDiagListenerID serviceId) generates(EnComdDiagFuncResult funcResult);
+
+//TESTMODE & DIAG
+    /**
+     * Fatory Cold Start request
+     *
+     * @param cause: the cause of Fatory Cold Start
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    diagFactColdStartReq(EnComdDiagFactColdStartCause cause) generates(EnComdDiagFuncResult funcResult);                
+
+    /**
+     * Set Flat Mode status : ON / OFF / Get Current Value 
+     *
+     * @param flatModeCmd:  the status of flat mode
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    diagSetFlatMode(EnComdDiagSetModeCmd flatModeCmd) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * get the AD Value of AUX
+     *
+     * @param none
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    diagAUXADReq() generates(EnComdDiagFuncResult funcResult);
+
+//PANA DIAG
+    /**
+     * Enter pana Diag and notify Micon
+     *
+     * @param none
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagEnterPanaDiag() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * Exit pana Diag and notify Micon
+     *
+     * @param none
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagExitPanaDiag() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * set EQ PIN Flag 
+     *
+     * @param eqPinFlagCmd: the value of EQ PIN Flag
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagSetEQPinFlag(EnComdDiagSetModeCmd eqPinFlagCmd) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * set EQ PIN information
+     *
+     * @param  eqPinCnfoCmd: the information of EN PIN
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagSetEQPinInfo(EnComdPDiagEQPinInfoTypeCmd eqPinCnfoCmd) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * set Amigo-LSI ServiceTool value
+     *
+     * @param amigoLsiSerToolCmd: the mode of Amigo-LSI ServiceTool
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagSetAmigoLSIServiceTool(EnComdDiagSetModeCmd amigoLsiSerToolCmd) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * Enter AM Test Mode
+     *
+     * @param None
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagEnterAMTestMode() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * Enter FM Test Mode
+     *
+     * @param None
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagEnterFMTestMode() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * Exit AM Test Mode
+     *
+     * @param None
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagExitAMTestMode() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * Exit FM Test Mode
+     *
+     * @param None
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagExitFMTestMode() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * Tuner Alignment adjust request
+     *
+     * @param tunerAlignCmd: the interface of tuner Alignment
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagTunerAlignCmd(StComdPDiagTunerAlignCmd tunerAlignCmd) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * get the result of Tuner Alignment adjust request
+     *
+     * @param address: the address of result deposited
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagGetTunerAlignResult(uint8_t[4] address) generates(EnComdDiagFuncResult funcResult);
+
+//NISSAN DIAG
+    /**
+     * change Diag status and mode
+     *
+     * @param modeStatusCmd: Diag Mode and Diag Status
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Morley
+     */
+    nDiagChangeModeAndStatus(StComdNDiagModeAndStatus modeStatusCmd) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * get Diag result data
+     *
+     * @param req: the data type of Diag result
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Morley
+     */
+    nDiagResultDataReq(EnComdNDiagResultDataReqType req) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * clear Diag error information request
+     *
+     * @param req: the type of diag error information
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Morley
+     */
+    nDiagClearErrInfoReq(EnComdNDiagErrInfoClearReqType req) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * request Speaker test
+     *
+     * @param speakerTestData: specific speaker
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Morley
+     */
+    nDiagSpeakerTestReq(StComdNDiagSpeakerTestData speakerTestData) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * Camera power control request
+     *
+     * @param powerReqStatus: status of camera power
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Morley
+     */
+    nDiagCameraPowCtrlReq(EnComdDiagStatus powerReqStatus) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * Initial sequence error information setting request
+     *
+     * @param cmd: status of initial sequence error information setting
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Morley
+     */
+    nDiagInitSeqErrInfoSetReq(EnComdDiagSetModeCmd cmd) generates(EnComdDiagFuncResult funcResult);
+};

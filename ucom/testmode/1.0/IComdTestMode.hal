@@ -1,0 +1,203 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.testmode@1.0;
+
+import IComdTestModeListener;
+
+interface IComdTestMode {
+//Listenner register or unregister
+    /**
+     * when a new module need to listen the ComdDiag information
+     * please invoke this function
+     *
+     * @param listener: client sp pointer
+     * @param serviceId: listener id
+     * @param eventIds: function that client want to monitor
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    registerListener(IComdTestModeListener listener,EnComdTestModeListenerID serviceId,EnComdTestModeEventIds eventIds) generates(EnComdTestModeFuncResult funcResult);
+
+    /**
+     * when the client don`t need to listen the ComdDiag information
+     * or the the client is death ,will invoke this function
+     *
+     * @param serviceId: client listener id
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    unRegisterListener(EnComdTestModeListenerID serviceId) generates(EnComdTestModeFuncResult funcResult);
+
+//TESTMODE
+    /**
+     * soc testmode active info
+     *
+     * @param None
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    testModeActive() generates(EnComdTestModeFuncResult funcResult);
+
+    /**
+     * Testmode UART setting request
+     *
+     * @param status: Serial port startup mode(OFF or ON)
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    testModeUartSetting(EnComdTestModeAutoTestUartStatus status) generates(EnComdTestModeFuncResult funcResult);
+
+    /**
+     * Testmode auto test data request
+     *
+     * @param data: the feedback data from TestMode
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    testModeAutoTestDataFeedBack(vec<uint8_t> data) generates(EnComdTestModeFuncResult funcResult);
+
+    /**
+     * DiranaDSP Tuner ANT control request
+     *
+     * @param req: Specify the change value of the antenna terminal
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    testModeDirDspAntCtrlReq(EnComdTestModeDspAntCtrlReq req) generates(EnComdTestModeFuncResult funcResult);
+
+    /**
+     * Request Key Code
+     * 
+     * @param None
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    testModeKeyCodeReq() generates(EnComdTestModeFuncResult funcResult);
+
+    /**
+     * Requset EMMC AD
+     *
+     * @param None
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    testModeEMMCADReq() generates(EnComdTestModeFuncResult funcResult);
+
+    /**
+     * Requset AUX AD
+     * 
+     * @param None
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    testModeAUXADReq() generates(EnComdTestModeFuncResult funcResult);
+
+//TESTMODE & DIAG
+    /**
+     * Factory Cold Start request
+     *
+     * @param cause: the cause of Fatory Cold Start
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    testModeFactColdStartReq(EnComdTestModeFactColdStartCause cause) generates(EnComdTestModeFuncResult funcResult);
+
+    /**
+     * Set Flat Mode request
+     *
+     * @param flatModeCmd: the status of flat mode(ON / OFF / Get Current Value)
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_TM_FUNC_RESULT_OK: operation OK
+     *     @retval EN_TM_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_TM_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project: Morley
+     */
+    testModeSetFlatMode(EnComdTestModeSetModeCmd flatModeCmd) generates(EnComdTestModeFuncResult funcResult);                          //
+};
+
+

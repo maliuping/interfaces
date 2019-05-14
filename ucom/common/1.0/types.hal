@@ -1,0 +1,678 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.common@1.0;
+
+/**
+ * Specifies a enum which describe the Register ListenerID
+ */
+enum EnComdCommonListenerID  :  uint8_t {
+    EN_COMMON_LIS_ID_MEDIA     = 0x01,
+    EN_COMMON_LIS_ID_VEHICLE   = 0x02,
+    EN_COMMON_LIS_ID_METER     = 0x03,
+    EN_COMMON_LIS_ID_DATA      = 0x04,
+    EN_COMMON_LIS_ID_TESTMODE  = 0x05,
+    EN_COMMON_LIS_ID_DIAG      = 0x06,
+    EN_COMMON_LIS_ID_SYSD      = 0x07,
+    EN_COMMON_LIS_ID_GNSS      = 0x08,
+    EN_COMMON_LIS_ID_TIME      = 0x09,
+    EN_COMMON_LIS_ID_CAMERA    = 0x0A,
+    EN_COMMON_LIS_ID_CONNECT   = 0x0B,
+    EN_COMMON_LIS_ID_TEST      = 0xFF,
+};
+/**
+ * Specifies a enum which describe the Register Event ID
+ */
+enum EnComdCommonEventId : uint64_t{
+    EN_COMMON_EID_MachineKind                = 1 << 0,
+    EN_COMMON_EID_StartErrorMonitor          = 1 << 1,
+    EN_COMMON_EID_ModuleType                 = 1 << 2,
+    EN_COMMON_EID_MiconProjectNum            = 1 << 3,
+    EN_COMMON_EID_EQPin                      = 1 << 4,
+    EN_COMMON_EID_PowerKeyStatus             = 1 << 5,
+    EN_COMMON_EID_FuncVersionResponse        = 1 << 6,
+    EN_COMMON_EID_FuncStartInfoClearResponse = 1 << 7,
+    EN_COMMON_EID_FuncNaviDebugOnResponse    = 1 << 8,
+    EN_COMMON_EID_FuncFactoryDefaultResult   = 1 << 9,
+    EN_COMMON_EID_FuncSpeedPulse             = 1 << 10,
+    EN_COMMON_EID_FuncKeyCode                = 1 << 11,
+    EN_COMMON_EID_MiconStatus                = 1 << 12,
+    EN_COMMON_EID_McanStatus                 = 1 << 13,
+    EN_COMMON_EID_RevStatus                  = 1 << 14,
+    EN_COMMON_EID_ParkingStatus              = 1 << 15,
+    EN_COMMON_EID_FanStatus                  = 1 << 16,
+    EN_COMMON_EID_GpsShortStatus             = 1 << 17,
+    EN_COMMON_EID_GpsOpenStatus              = 1 << 18,
+    EN_COMMON_EID_TemperatureStatus          = 1 << 19,
+    EN_COMMON_EID_IGStatus                   = 1 << 20,
+    EN_COMMON_EID_DiskStatus                 = 1 << 21,
+    EN_COMMON_EID_ILLStatus                  = 1 << 22,
+    EN_COMMON_EID_AutoTestMode               = 1 << 23,
+    EN_COMMON_EID_CommuStatus                = 1 << 24,
+    EN_COMMON_EID_SwitchUserResponse         = 1 << 25,
+    EN_COMMON_EID_AVMComResult               = 1 << 26,
+    EN_COMMON_EID_AVMSwiSigStatus            = 1 << 27,
+    EN_COMMON_EID_AVMConStatus               = 1 << 28,
+    EN_COMMON_EID_BackCamConStatus           = 1 << 29,
+    EN_COMMON_EID_CMF1Status                 = 1 << 30,
+    EN_COMMON_EID_getRTCResponse             = 1 << 31,
+    EN_COMMON_EID_setRTCResponse             = 1 << 32,
+    EN_COMMON_EID_PowLogicType               = 1 << 33,
+};
+typedef bitfield<EnComdCommonEventId> EnComdCommonEventIds;
+
+/**
+ * Specifies a enum which describe the function execution result
+ * used in function : every function in IComdCommon.hal
+ */
+enum EnComdCommonFuncResult : uint8_t {
+    EN_COMMON_RESULT_OK = 0x00,        //OK
+    EN_COMMON_RESULT_ERR_PARA = 0x01,  //Parameter Error
+    EN_COMMON_RESULT_ERR_SERV = 0x02,  //Server Error
+};
+
+/******************************************CT=0xh(initialization).xls*******************************************************/
+/**
+ * CT 01h : Sys To Navi StartInformation    B0 : Production Information
+ */
+enum EnComdCommonProductionInfo : uint8_t {
+    EN_COMMON_NISSNA_BASE = 0x10,	    //  Nissna-Base
+    EN_COMMON_ANDROID_POC = 0x11,	    //  Android POC
+    EN_COMMON_APOO = 0x12,	            //  Apoo
+    EN_COMMON_MORLEY = 0x13,	        //  Morley
+
+    EN_COMMON_UNKNOWN = 0xFF,	        //  UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * CT 01h : Sys To Navi StartInformation    B1 : Sales destination
+ */
+enum EnComdCommonSalesDestinationInfo : uint8_t {
+    EN_COMMON_CHINA = 0x00,	             //China
+    EN_COMMON_INVALID_DESTINATION = 0xFF    //Invalid Destination
+};
+/**
+ * CT 01h : Sys To Navi StartInformation    B2 : Hardware Information
+ */
+enum EnComdCommonHardwareInfo : uint8_t {
+    EN_COMMON_DEFAULT = 0x00,	        // with default, update with project
+    EN_COMMON_UNKNOWN = 0xFF,	        //UNKNOWN status means not update from micon,used in get interface
+};
+
+/**
+ * CT 01h : Sys To Navi StartInformation
+ */
+struct StComdCommonMachineKindData {
+	EnComdCommonProductionInfo          dataB0; //Production Information
+	EnComdCommonSalesDestinationInfo    dataB1; //Sales destination
+    EnComdCommonHardwareInfo            dataB2; //Hardware Information
+};
+
+/**
+* CT 01h : Sys To Navi StartInformation B3 B4
+ */
+enum EnComdCommonStartErrorStatus : uint8_t {
+    EN_COMMON_START_ERROR_STATUS_OFF = 0x00,       //OFF
+    EN_COMMON_START_ERROR_STATUS_ON = 0x01,        //ON
+    EN_COMMON_START_ERROR_STATUS_UNKNOWN = 0xFF    //UNKNOWN status means not update from micon,used in get interface
+
+};
+
+/**
+ * CT 01h : Sys To Navi StartInformation    B5 : Amigo abnormal status notification
+ */
+enum EnComdCommonAmigoStatusInfo : uint8_t {
+    EN_COMMON_OK = 0x00,       //OK
+    EN_COMMON_NG = 0x01,       //NG
+    EN_COMMON_UNKNOWN = 0xFF   //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * CT 01h : Sys To Navi StartInformation    B3 : System Start Error Monitor1
+ * unused
+ */
+struct StComdCommonStartErrorData1 {
+    EnComdCommonStartErrorStatus naviReset;          //Initialization caused NAVI Reset
+    EnComdCommonStartErrorStatus resetStartup;       //Reset startup notification
+    EnComdCommonStartErrorStatus socWatchDog;        //SOC Watchdog reset monitoring
+    EnComdCommonStartErrorStatus bupError;           //ASENSE abnormal history notification
+    EnComdCommonStartErrorStatus accError;           //BSENSE abnormal history notification
+    EnComdCommonStartErrorStatus temperatureError;   //Temperature error history notification
+    EnComdCommonStartErrorStatus rebootReq;          //Reboot request command monitoring
+};
+/**
+ * CT 01h : Sys To Navi StartInformation    B4 : System Start Error Monitor2
+ * unused
+ */
+struct StComdCommonStartErrorData2 {
+    EnComdCommonStartErrorStatus amigoError;             //amigo communication abnormality notification
+    EnComdCommonStartErrorStatus pmicError;              //pmic abnormality notification
+    EnComdCommonStartErrorStatus lviError;               //lvi abnormality notification
+    EnComdCommonStartErrorStatus sysWatchDog;            //sys watchdog abnormality notification
+    EnComdCommonStartErrorStatus illegalAddressError;    //Illegal address exception notification
+    EnComdCommonStartErrorStatus sysTaskError;           //Sys Task notification
+};
+/**
+ * CT 01h : Sys To Navi StartInformation
+ */
+struct StComdCommonStartErrorMonitorData {
+    EnComdCommonStartErrorStatus resetStartup;       //Reset startup notification
+    EnComdCommonStartErrorStatus bupError;           //ASENSE abnormal history notification
+    EnComdCommonStartErrorStatus accError;           //BSENSE abnormal history notification
+    EnComdCommonStartErrorStatus temperatureError;   //Temperature error history notification
+
+    EnComdCommonStartErrorStatus amigoError;             //amigo communication abnormality notification
+    EnComdCommonStartErrorStatus pmicError;              //pmic abnormality notification
+    EnComdCommonStartErrorStatus lviError;               //lvi abnormality notification
+    EnComdCommonStartErrorStatus sysWatchDog;            //sys watchdog abnormality notification
+    EnComdCommonStartErrorStatus illegalAddressError;    //Illegal address exception notification
+    EnComdCommonStartErrorStatus sysTaskError;           //Sys Task notification
+
+    EnComdCommonStartErrorStatus socWatchDog;        //SOC Watchdog reset monitoring
+};
+
+/**
+ * CT 01h : Sys To Navi StartInformation    B6~B10
+ */
+struct StComdCommonModuleTypeData {
+	uint8_t dvdType;    //DVD Module Type
+	uint8_t tunerType;  //Tuner Module Type
+	uint8_t dtvType;    //DTV Module Type
+	uint8_t auxType;    //AUX Module Type
+	uint8_t tmcType;    //TMC/RTIC Module Type
+};
+/**
+ * CT 01h : Sys To Navi StartInformation    B13
+ */
+enum EnComdCommonPowerKeyStatus : uint8_t {
+    EN_COMMON_POWKEY_ON= 0x00,	        //Power Key On
+    EN_COMMON_POWKEY_OFF= 0x01,	    //Power Key Off
+    EN_COMMON_POWKEY_UNKNOWN = 0xFF    //UNKNOWN status means not update from micon,used in get interface
+};
+
+/******************************************CT=1xh(special command).xls*******************************************************/
+/**
+ * CT 10h　00h : Version Info Request
+ */
+enum EnComdCommonVersionType : uint8_t {
+    EN_MICON_VERSION_TYPE = 0x01,	    /*SysMicon	*/
+    EN_AMIGO_VERSION_TYPE = 0x02,		/*AMIGO     */
+    EN_CAN_VERSION_TYPE = 0x03         /*CAN       */
+};
+/**
+ * CT 1Fh　00h : Version Info Response
+ */
+struct StComdCommonVersionData {
+	EnComdCommonVersionType verType;    /*  Version Type	*/
+    uint8_t[5]  miconVersion;               /*  Micon Version   */
+    uint8_t[5]  miconBootVersion;           /*  Micon Boot Version   */
+    uint8_t[8]  amigoProgramVersion;        /*  Amigo Program Version   */
+    uint8_t[8]  amigoDataVersion;           /*  Amigo Data Version   */
+};
+
+/**
+ * CT 10h　01h : Navi Start Error Information Clear Request
+ */
+enum EnComdCommonClearReqCmdType : uint8_t {
+    EN_COMMON_KEEP_REQ = 0x00,     /*Keep 	*/
+    EN_COMMON_CLEAR_REQ = 0x01     /*Clear */
+};
+/**
+ * CT 10h　01h : Navi Start Error Information Clear Request
+ * unused
+ */
+struct StComdCommonStartInfoClearData1 {
+    EnComdCommonClearReqCmdType naviReset;          //Initialization caused NAVI Reset ClearCmd
+    EnComdCommonClearReqCmdType resetStartup;       //Reset startup notification ClearCmd
+    EnComdCommonClearReqCmdType socWatchDog;        //SOC Watchdog reset monitoring ClearCmd
+    EnComdCommonClearReqCmdType accError;           //ASENSE abnormal history notification ClearCmd
+    EnComdCommonClearReqCmdType bupError;           //BSENSE abnormal history notification ClearCmd
+    EnComdCommonClearReqCmdType temperatureError;   //Temperature error history notification ClearCmd
+    EnComdCommonClearReqCmdType rebootReq;          //Reboot request command monitoring ClearCmd
+};
+/**
+ * CT 10h　01h : Navi Start Error Information Clear Request
+ * unused
+ */
+struct StComdCommonStartInfoClearData2 {
+    EnComdCommonClearReqCmdType amigoError;             //amigo communication abnormality notification ClearCmd
+    EnComdCommonClearReqCmdType pmicError;              //pmic abnormality notification ClearCmd
+    EnComdCommonClearReqCmdType lviError;               //lvi abnormality notification ClearCmd
+    EnComdCommonClearReqCmdType sysWatchDog;            //sys watchdog abnormality notification ClearCmd
+    EnComdCommonClearReqCmdType illegalAddressError;    //Illegal address exception notification ClearCmd
+    EnComdCommonClearReqCmdType sysTaskError;           //Sys Task notification ClearCmd
+};
+/**
+ * CT 10h　01h : Navi Start Error Information Clear Request restart demand
+ */
+enum EnComdCommonRestartDemand : uint8_t {
+    EN_COMMON_RESTART = 0x01,        /*need restart 	*/
+    EN_COMMON_NOT_RESTART = 0x02     /*no need restart  */
+};
+/**
+ * CT 10h　01h : Navi Start Error Information Clear Request restart type
+ * used in restartDemand is EN_COMMON_RESTART
+ * if noused please send EN_COMMON_RESTART_INVALID
+ */
+enum EnComdCommonRestartType : uint8_t {
+    EN_COMMON_RESTART_INVALID = 0x00,
+    EN_COMMON_RESTART_B_OFF_ON = 0x01,        /*B OFF->ON*/
+    EN_COMMON_RESTART_MICON_RESET = 0x02      /*MICON_RESET  */
+};
+/**
+ * CT 10h　01h : Navi Start Error Information Clear Request
+ */
+struct StComdCommonStartInfoClearReqCmd {
+    EnComdCommonRestartDemand restartDemand;
+    EnComdCommonRestartType restartType;
+
+    EnComdCommonClearReqCmdType resetStartup;       //Reset startup notification ClearCmd
+    EnComdCommonClearReqCmdType accError;           //ASENSE abnormal history notification ClearCmd
+    EnComdCommonClearReqCmdType bupError;           //BSENSE abnormal history notification ClearCmd
+    EnComdCommonClearReqCmdType temperatureError;   //Temperature error history notification ClearCmd
+
+    EnComdCommonClearReqCmdType amigoError;             //amigo communication abnormality notification ClearCmd
+    EnComdCommonClearReqCmdType pmicError;              //pmic abnormality notification ClearCmd
+    EnComdCommonClearReqCmdType lviError;               //lvi abnormality notification ClearCmd
+    EnComdCommonClearReqCmdType sysWatchDog;            //sys watchdog abnormality notification ClearCmd
+    EnComdCommonClearReqCmdType illegalAddressError;    //Illegal address exception notification ClearCmd
+    EnComdCommonClearReqCmdType sysTaskError;           //Sys Task notification ClearCmd
+
+    EnComdCommonClearReqCmdType socWatchDog;        //SOC Watchdog reset monitoring ClearCmd
+};
+
+/**
+ * CT 1Fh　01h : Navi Start Error Information Clear Response
+ */
+enum EnComdCommonClearResultStatus : uint8_t {
+    EN_COMMON_CLEAR_NG = 0x00,   //NG
+    EN_COMMON_CLEAR_OK = 0x01    //OK
+};
+/**
+ * CT 1Fh　02h : NAVI Debug ON Request Response
+ */
+enum EnComdCommonDebugOnResultStatus : uint8_t {
+    EN_COMMON_DEBUG_ON_NG = 0x00,   //NG
+    EN_COMMON_DEBUG_ON_OK = 0x01    //OK
+};
+/**
+ * CT 1Fh　03h : Restore Factory Default Result
+ */
+enum EnComdCommonFactoryDefResult : uint8_t {
+    EN_AMIGO_RESET_OK  = 0x01,	    //Amigo Factory Default OK
+    EN_AMIGO_RESET_NG  = 0x02,		//Amigo Factory Default OK
+    EN_AMIGO_CMD_ERROR = 0x03      //Amigo Factory Default Command Error
+};
+
+/**
+ * CT 10h　04h : Switch User Request
+ */
+enum EnComdCommonSwitchUserReq : uint8_t {
+    EN_COMMON_DEFAULT_USER     = 0x00,  //Default User
+    EN_COMMON_USER1            = 0x01,  //User1
+    EN_COMMON_USER2            = 0x02,  //User2
+    EN_COMMON_USER3            = 0x03,  //User3
+};
+
+/**
+ * CT 1Fh　04h : Switch User Result
+ */
+enum EnComdCommonSwitchUserRes : uint8_t {
+    EN_COMMON_SWITCH_USER_NG = 0x00,   //NG
+    EN_COMMON_SWITCH_USER_OK = 0x01    //OK
+};
+
+/**
+ * CT 1Fh　04h : Switch User Request Response
+ */
+struct StComdCommonSwitchUserRes {
+    EnComdCommonSwitchUserReq req;
+    EnComdCommonSwitchUserRes res;
+};
+
+/******************************************CT=9xh(speed pulse).xls*******************************************************/
+/**
+ * CT 92h : Speed pulse  (overflow flag)
+ */
+enum EnComdCommonOverFlowFlag : uint8_t {
+    EN_OVERFLOW_FLAG_NO  = 0x00,   //No Overflow
+    EN_OVERFLOW_FLAG_YES = 0x01    //Overflow
+};
+/**
+ * CT 92h : Speed pulse  (direction)
+ */
+enum EnComdCommonDirectionStatus : uint8_t {
+    EN_NOT_REVERSE_STATUS = 0x00,  //No Overflow
+    EN_REVERSE_STATUS = 0x01       //Overflow
+};
+/**
+ * CT 92h : Speed pulse  (One Package Information)
+ */
+struct StComdCommonOnePackageData {
+    uint32_t    totalTimer;         //Total number of hours with all cycles added within 50 ms
+    uint8_t     periodNumPer50ms;   //Period number of pulses within 50 ms
+    uint8_t     pulseNumPer50ms;    //Pulse number of pulses within 50 ms
+    EnComdCommonOverFlowFlag    overflowFlag;   //A flag indicating whether or not the addition time has overflowed
+};
+/**
+ * CT 92h : Speed pulse
+ */
+struct StComdCommonSpeedPulseData {
+    uint8_t     packageConter;  //Number of packets counter
+    StComdCommonOnePackageData     packageOne;  //package one Information
+    StComdCommonOnePackageData     packageTwo;  //package two Information
+    EnComdCommonDirectionStatus    dirStatus;   //moving direction status
+};
+/******************************************CT=Axh(keycode(SYS to NAVI)).xls*******************************************************/
+/**
+ * CT A0h : keycode(SYS to NAVI) Steering Key
+ */
+enum EnComdCommonSteeringKeyType : uint8_t {
+    EN_MCAN_TYPE   =0x00,          //MCAN Key Type
+    EN_STEERING_KEY_A_TYPE   =0x01,//Steering Key Type A
+    EN_STEERING_KEY_B_TYPE   =0x02,//Steering Key Type B
+};
+/**
+ * CT A0h : keycode(SYS to NAVI) Steering Key
+ */
+enum EnComdCommonSteeringKeyCode : uint8_t {
+    EN_STEERING_KEY_NULL       =0x00,  //Null
+    EN_STEERING_KEY_SOURCE			=0x21,  //SOURCE
+    EN_STEERING_KEY_MENUUP			=0x22,  //MENU UP
+    EN_STEERING_KEY_MENUDOWN	  =0x23,  //MENU DOWN
+    EN_STEERING_KEY_TELON		  =0x24,  //TEL ON
+    EN_STEERING_KEY_ENTER	  	=0x25,  //ENTER
+    EN_STEERING_KEY_VOLUP		  =0x26,  //VOLUP
+    EN_STEERING_KEY_VOLDOWN  	=0x27,  //VOLDOWN
+    EN_STEERING_KEY_TELOFF	    =0x28,  //TELOFF
+    EN_STEERING_KEY_BACK			  =0x29,  //BACK
+    EN_STEERING_KEY_DISP			  =0x2A,  //DISP
+};
+/**
+ * CT A0h : keycode(SYS to NAVI) Remote Key
+ */
+enum EnComdCommonRemoteKeyCode : uint8_t {
+    EN_REMOTE_KEY_NULL	    =0x00,//Null
+    EN_REMOTE_KEY_VOLDOWN	=0x41,//VOLDOWN
+    EN_REMOTE_KEY_VOLUP	=0x42,//VOLUP
+    EN_REMOTE_KEY_MUTE		=0x43,//MUTE
+    EN_REMOTE_KEY_SOURCE	=0x44,//SOURCE
+    EN_REMOTE_KEY_REARS	=0x45,//REARS
+    EN_REMOTE_KEY_MENU		=0x46,//MENU
+    EN_REMOTE_KEY_TOP_MENU	=0x47,//TOP_MENU
+    EN_REMOTE_KEY_JOY_UP	=0x48,//JOY_UP
+    EN_REMOTE_KEY_JOY_LEFT	=0x49,//JOY_LEFT
+    EN_REMOTE_KEY_ENTER	=0x4A,//ENTER
+    EN_REMOTE_KEY_JOY_RIGTH=0x4B,//JOY_RIGTH
+    EN_REMOTE_KEY_JOY_DOWN	=0x4C,//JOY_DOWN
+    EN_REMOTE_KEY_AUDIO	=0x4D,//AUDIO
+    EN_REMOTE_KEY_SUBTITLE	=0x4E,//SUBTITLE
+    EN_REMOTE_KEY_ANGLE	=0x4F,//ANGLE
+    EN_REMOTE_KEY_RETURN	=0x50,//RETURN
+    EN_REMOTE_KEY_PREV		=0x51,//PREV
+    EN_REMOTE_KEY_PLAY_PAUSE=0x52,//PLAY_PAUSE
+    EN_REMOTE_KEY_NEXT		=0x53,//NEXT
+    EN_REMOTE_KEY_STOP		=0x54,//STOP
+    EN_REMOTE_KEY_UP 		=0x55,//UP
+    EN_REMOTE_KEY_BAND_ESC	=0x56,//BAND_ESC
+    EN_REMOTE_KEY_LEFT 	=0x57,//LEFT
+    EN_REMOTE_KEY_DOWN		=0x58,//DOWN
+    EN_REMOTE_KEY_RIGHT	=0x59 //RIGHT
+};
+/**
+ * CT A0h : keycode(SYS to NAVI) Hard Key
+ */
+enum EnComdCommonHardKeyCode : uint8_t {
+    EN_HARD_KEY_NULL       =0x00,//Null
+    EN_HARD_KEY_HOME	    =0x01,//HOME
+    EN_HARD_KEY_BACK	    =0x02,//BACK
+    EN_HARD_KEY_VOLUP	    =0x03,//VOLUP
+    EN_HARD_KEY_VOLDOWN	=0x04,//VOLDOWN
+    EN_HARD_KEY_MAP_NAVI	=0x05,//MAP_NAVI
+    EN_HARD_KEY_PHONE		=0x06,//PHONE
+    EN_HARD_KEY_TRACKDN	=0x07,//TRACKDN
+    EN_HARD_KEY_TRACKUP	=0x08,//TRACKUP
+    EN_HARD_KEY_MENU		=0x09,//MENU
+    EN_HARD_KEY_EJECT		=0x0A,//EJECT
+    EN_HARD_KEY_FM_AM		=0x10,//FM_AM
+    EN_HARD_KEY_POWER		=0x11,//POWER
+    EN_HARD_KEY_DISC		=0x12,//DISC
+    EN_HARD_KEY_PALY_PAUSE	=0x13,//PALY_PAUSE
+    EN_HARD_KEY_SRC		=0x14,//SRC
+    EN_HARD_KEY_DISPLAY_OFF=0x15,//DISPLAY_OFF
+    EN_HARD_KEY_MUTE		=0x16,//MUTE
+    EN_HARD_KEY_AUDIO		=0x17,//AUDIO
+    EN_HARD_KEY_HOME_AND_VOLUP =0x1F//HOME&VOLUP
+};
+/**
+ * CT A0h : keycode(SYS to NAVI)
+ */
+struct StComdCommonKeyCodeData {
+    EnComdCommonSteeringKeyType steeringKeyType;//steering key type
+    EnComdCommonSteeringKeyCode steeringKeyCode;//steering key code
+    EnComdCommonRemoteKeyCode   remoteKeyCode;  //remote key code
+    EnComdCommonHardKeyCode     hardKeyCode;    //hard key code
+};
+/******************************************Overview.xls*******************************************************/
+
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonMiconStatus : uint8_t {
+    EN_COMMON_MICON_START_NOT_FINISH = 0x00,   //Micon Start Not Finish
+    EN_COMMON_MICON_START_FINISH = 0x01,       //Micon Start Finish
+    EN_COMMON_MICON_START_UNKNOWN = 0xFF       //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonInitSeqStatus : uint8_t {
+    EN_COMMON_INIT_SEQ_NG = 0x00,      //NG
+    EN_COMMON_INIT_SEQ_OK = 0x01,      //Ok
+    EN_COMMON_INIT_SEQ_UNKNOWN = 0xFF  //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonChannelStatusInfo : uint8_t {
+    EN_COMMON_CHAN_STA_CLOSE = 0x00,       //close
+    EN_COMMON_CHAN_STA_OPEN = 0x01,        //open
+    EN_COMMON_CHAN_STA_UNKNOWN = 0xFF      //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * Overview.xls : Bitdata
+ */
+struct StComdCommonMcanInfo{
+	EnComdCommonInitSeqStatus  meterInitSequence;	            /*  Meter init sequence				*/
+	EnComdCommonInitSeqStatus	stswInitSequence;	            /*  Steering Switch init sequence	*/
+	EnComdCommonChannelStatusInfo   meterChannelStatus;		/*  Meter channel status			*/
+	EnComdCommonChannelStatusInfo   stswChannelStatus;		/*  Steering Switch channel status	*/
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonOnOffStatus : uint8_t {
+    EN_COMMON_OFF = 0x00,          //OFF
+    EN_COMMON_ON = 0x01,           //ON
+    EN_COMMON_UNKNOWN = 0xFF       //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonGpsShortStatus : uint8_t {
+    EN_COMMON_NOT_SHORT = 0x00,    //normal status
+    EN_COMMON_SHORT = 0x01,        //short status
+    EN_COMMON_UNKNOWN = 0xFF       //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonGpsOpenStatus : uint8_t {
+    EN_COMMON_NOT_OPEN = 0x00,     //normal status
+    EN_COMMON_OPEN = 0x01,         //OPEN status
+    EN_COMMON_UNKNOWN = 0xFF       //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonNormalOrNotStatus : uint8_t {
+    EN_COMMON_NORMAL = 0x00,       //normal status
+    EN_COMMON_ABNORMAL = 0x01,     //abnormal status
+    EN_COMMON_UNKNOWN = 0xFF       //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonMicStatus : uint8_t {
+    EN_COMMON_MIC_NOT_IN = 0x00,       //mic not in status
+    EN_COMMON_MIC_IN = 0x01,           //mic in status
+    EN_COMMON_MIC_UNKNOWN = 0xFF       //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonAplReceiveStatus : uint8_t {
+    EN_COMMON_REC_NOT_AVAILABLE = 0x00,  //APL Data Receive not availbale
+    EN_COMMON_REC_AVAILABLE  = 0x01      //disk in status
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonBeepStatus : uint8_t {
+    EN_COMMON_BEEP_NOT_REQ = 0x00,     //No beep request
+    EN_COMMON_BEEP_REQ  = 0x01,            //beep always request Error Status
+    EN_COMMON_BEEP_ONCE_REQ  = 0x02        //beep once request
+};
+/******************************************CT=Bxh(DiagTestMode).xls*******************************************************/
+/**
+ * CT=B5 D0 =05 Auto TestMode
+ */
+enum EnComdCommonAutoTestMode : uint8_t {
+    EN_COMMON_AUTO_TEST_MODE_NULL = 0x00,      //AutoTestMode No command
+    EN_COMMON_AUTO_TEST_MODE_START = 0x01,     //AutoTestMode Start command
+};
+/**
+ * initial communication result between navi and micon
+ */
+enum EnComdCommonCommuStatus : uint8_t {
+    EN_COMMON_COMMU_OK = 0x00,                     //navi and micom communication is normal
+    EN_COMMON_COMMU_ERR_INIT = 0x01,               //navi and micom initial communication error
+    EN_COMMON_COMMU_ERR_PERIOD = 0x02,             //navi and micom period communication error
+    EN_COMMON_COMMU_UNKNOWN = 0xFF,                //UNKNOWN status means not update from ucom
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonAVMSwiSigStatus : uint8_t {
+    EN_COMMON_AVM_SWI_SIG_INACTIVE = 0x00,         // AVM switch signal inactive
+    EN_COMMON_AVM_SWI_SIG_ACTIVE = 0x01,           // AVM switch signal active
+    EN_COMMON_AVM_SWI_SIG_UNKNOWN = 0xFF,          // UNKNOWN status means not update from ucom
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonAVMConStatus : uint8_t {
+    EN_COMMON_AVM_DISCONNECT = 0x00,         // AVM disconnect
+    EN_COMMON_AVM_CONNECT = 0x01,            // AVM connect
+    EN_COMMON_AVM_CON_UNKNOWN = 0xFF,        // UNKNOWN status means not update from ucom
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonBackCamConStatus : uint8_t {
+    EN_COMMON_BACK_CAM_DISCONNECT = 0x00,         // back camera disconnect
+    EN_COMMON_BACK_CAM_CONNECT = 0x01,            // back camera connect
+    EN_COMMON_BACK_CAM_CON_UNKNOWN = 0xFF,        // UNKNOWN status means not update from ucom
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonCMF1Status : uint8_t {
+    EN_COMMON_CMF1_UNKNOWN = 0x00,         // CMF1 status unkown/Invalid or not get from micon
+    EN_COMMON_CMF1_OFF1 = 0x01,            // CMF1 status OFF mode1
+    EN_COMMON_CMF1_OFF2 = 0x02,            // CMF1 status OFF mode2
+    EN_COMMON_CMF1_TEMPO_OFF = 0x03,       // CMF1 status TEMPO OFF mode
+    EN_COMMON_CMF1_TEMPO_ON = 0x04,        // CMF1 status TEMPO ON mode
+    EN_COMMON_CMF1_ON = 0x05,              // CMF1 status ON mode
+    EN_COMMON_CMF1_STATIC_OFF = 0x06,      // CMF1 status STATIC OFF mode
+};
+/**
+ * CT 1Fh　05h : AVM command
+ */
+enum EnComdCommonAVMCommand : uint8_t {
+    EN_COMMON_CAMERA_OFF = 0x01,         // camera off signal pull up ,request not display camera screen
+    EN_COMMON_AVM_SW_ON = 0x02,          // Micon pull up Camera SW Signal Pin
+    EN_COMMON_AVM_SW_OFF = 0x03,         // Micon pull down Camera SW Signal Pin
+};
+/**
+ * CT 1Fh　05h : micon execute AVM command result
+ */
+enum EnComdCommonAVMCommandRes : uint8_t {
+    EN_COMMON_AVM_NG = 0x00,   // micon execute AVM command ng
+    EN_COMMON_AVM_OK = 0x01    // micon execute AVM command ok
+};
+/**
+ * CT 1Fh　05h : AVM switch command result response
+ */
+struct StComdCommonAVMCommandRes {
+    EnComdCommonAVMCommand command;   // the command that client send to micon
+    EnComdCommonAVMCommandRes result; // the result of micon execute AVM command
+};
+/**
+ * CT 12h　01h&&02h : RTC data formate
+ */
+struct StComdCommonRTCData {
+    uint16_t year;   // BCD Code, valid value is 2000h~2099h
+    uint8_t month;   // BCD Code, valid value is 01h~12h
+    uint8_t day;     // BCD Code, valid value is 01h~31h
+    uint8_t hour;    // BCD Code, valid value is 00h~23h
+    uint8_t minute;  // BCD Code, valid value is 00h~59h
+    uint8_t second;  // BCD Code, valid value is 00h~59h
+};
+/**
+ * CT 12h　03h : Set RTC to micon result
+ */
+enum EnComdCommonSetRTCResult : uint8_t {
+    EN_COMMON_SET_RTC_NG = 0x00,     // Set RTC to micon NG
+    EN_COMMON_SET_RTC_OK = 0x01      // Set RTC to micon OK
+};
+/**
+ * CT 01h : B12 vehicle type enum
+ */
+enum EnComdCommonVehicleType : uint8_t {
+    EN_COMMON_VEHICLE_L12F_E = 0x00,   // L12F_E
+    EN_COMMON_VEHICLE_L12F_ZE = 0x01,  // L12F_ZE
+    EN_COMMON_VEHICLE_B12L = 0x02,     // B12L
+    EN_COMMON_VEHICLE_P02F = 0x03,     // P02F
+    EN_COMMON_VEHICLE_P32S = 0x04,     // P32S
+    EN_COMMON_VEHICLE_P32R = 0x05,     // P32R
+    EN_COMMON_VEHICLE_P42M = 0x06,     // P42M
+    EN_COMMON_VEHICLE_L42P = 0x07,     // L42P
+    EN_COMMON_VEHICLE_L21B = 0x08,     // L21B
+    EN_COMMON_VEHICLE_UNKNOW = 0xFF,   // UNKNOWN status means not update from ucom
+};
+/**
+ * CT 01h : B13 EQPIN model power logic type enum
+ */
+enum EnComdCommonPowerLogicType : uint8_t {
+    EN_COMMON_POWER_LOGIC_ACC = 0x00,        // ACC logic
+    EN_COMMON_POWER_LOGIC_CMF1 = 0x01,       // CFM-1
+    EN_COMMON_POWER_LOGIC_CMFB = 0x02,       // CFM-B
+    EN_COMMON_POWER_LOGIC_C1A = 0x03,        // C1A
+    EN_COMMON_POWER_LOGIC_UNKNOWN = 0xFF,    // UNKNOWN status means not update from ucom
+};
+/**
+ * Overview.xls : Bitdata
+ */
+enum EnComdCommonVrHfCtrlType : uint8_t {
+    EN_COMMON_CTRL_HF = 0x00,        // HF control
+    EN_COMMON_CTRL_VR = 0x01,        // VR control
+};

@@ -1,0 +1,126 @@
+/**
+ * Copyright @ 2013 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.sysctrl@1.0;
+
+import ISysCtrlListener;
+import ISysCtrlUpListener;
+import ISysCtrlGenericListener;
+import types;
+
+/** {@hide} */
+interface ISysCtrl {
+
+    /*
+     * The function will be discard. Don't use it.
+     */
+    isAlive() generates (bool ret);
+
+    /*
+    * get boot mode
+    */
+    getBootMode() generates (int32_t bootmode);
+
+    /*
+     * get start up reason
+     */
+    getStartupReason() generates (StartupReasons reason);
+
+    /*
+    * event: 0 as shutdown, 1 as reboot safe mode.
+    * reason: reason include mReboot?+reason
+    */
+    androidStopped(int32_t event, string reason);
+
+    /*
+     * The function will be discard. Don't use it.
+     */
+    registerService(ISysCtrlListener proxy);
+
+    /*
+     * Only used by servicebase.servicebase use it to register service listener and
+     * service name to sysctrl.
+     */
+    registerServiceAndName(ISysCtrlListener proxy, string name);
+    /*
+     * Only used by servicebase.servicebase use it to notify sysctrl start finished.
+     */
+    started(string name);
+    /*
+     * Only used by servicebase.servicebase use it to notify sysctrl suspend finished.
+     */
+    suspended(string name);
+    /*
+     * Only used by servicebase.servicebase use it to notify sysctrl awake finished.
+     */
+    awaked(string name);
+    /*
+     * Only used by servicebase.servicebase use it to notify sysctrl stop finished.
+     */
+    stopped(string name);
+    /*
+     * Only used by servicebase.servicebase use it to notify sysctrl UI resumed.
+     */
+    notifyUIResumed();
+    /*
+     * Only used by servicebase.servicebase use it to notify sysctrl command finished.
+     */
+    commandFinished(string name, string cmd);
+
+    /*
+     * Only used by sysctrlmanager.sysctrlmanager use it to register listener to sysctrl.
+     */
+    registerUpListener(ISysCtrlUpListener l);
+    /*
+     * Only used by sysctrlmanager.sysctrlmanager notify sysctrl java app
+     * service stop finished.
+     */
+    javaServiceStopped();
+    /*
+     * Only used by sysctrlmanager.sysctrlmanager use it to notify sysctrl java
+     * service data clear finished.
+     */
+    javaServiceDataCleared();
+    /*
+     * Only used by sysctrlmanager.sysctrlmanager use it to notify sysctrl java
+     * service all enter standby.
+     */
+    javaServiceEnteredStandby();
+    /*
+     * Only used by sysctrlmanager.sysctrlmanager use it to notify sysctrl java
+     * service all exit standby.
+     */
+    javaServiceExitedStandby();
+
+    /*
+     * Only used by datamanager.datamanager use it to notify sysctrl data clear finished.
+     */
+    dataCleared(bool result, int32_t index, string name);
+
+    /*
+     * Only used by mediamanager.mediamanager use it to notify sysctrl source off finished.
+     */
+    preDataCleared(bool result, string name);
+
+    /*
+     * Diag or UI use it to notify sysctrl do personal data initialize.
+     */
+    startDataClear(StartupReasons reason, string sourceName);
+
+    /*
+     * Service which need to receive callback defined in ISysCtrlGenericListener.hal
+     * should call registerGenericListener first.
+     */
+    registerGenericListener(ISysCtrlGenericListener listener, string serviceName);
+
+};

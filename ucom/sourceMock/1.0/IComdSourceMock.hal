@@ -1,0 +1,35 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.sourceMock@1.0;
+import iauto.hardware.ucom.source@1.0;
+import IComdSourceMockListener;
+
+interface IComdSourceMock {
+
+	registerListener(IComdSourceMockListener listener,EnComdSourceMockListenerID serviceId,EnComdSourceEventIds eventIds) generates (EnComdSourceReturn ret);
+
+	unRegisterListener(EnComdSourceMockListenerID serviceId) generates (EnComdSourceReturn ret);
+
+
+	onReceieveSourceChange(EnComdSourceChangeType type,EnComdSourceChangeStep step,EnComdSourceId targetSourceId,
+	EnComdSourceChangeResult result);
+
+
+	onReceieveSourceMuteOffComplete(EnComdDisplayId displayId, EnComdSourceChangeResult result);
+
+
+	onReceiveLastSourceStatus(EnComdSourceId lastSourceId,EnComdSourceId beforeLastSourceId,EnComdSourceId lastRadioSourceId,EnComdSourceId lastMediaSourceId,EnComdLastSourceRecoveryStsType recoverySts);
+
+	onReceiveMixSourceChange(EnComdMixSourceId mixSourceId, EnComdAudioMixOnOff onOff, EnComdSourceChangeResult result);
+};

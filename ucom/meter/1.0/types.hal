@@ -1,0 +1,153 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.meter@1.0;
+
+/**
+ * Specifies a enum which describe the Register ListenerID
+ */
+enum EnComdMeterListenerID : uint8_t {
+    EN_METER_LIS_ID_METER = 0x00,	     /*For Meter C++ Service		*/
+    EN_METER_LIS_ID_METER_JAVA = 0x01, /*For Meter JAVA Service		*/
+    EN_METER_LIS_ID_TEST = 0xFF,	     /*For Comd Test */
+};
+
+/**
+ * Specifies a enum which describe the Register Event ID
+ */
+enum EnComdMeterEventId : uint64_t{
+	EN_METER_EID_MSG                   = 1 << 0,
+	EN_METER_EID_MSG_SEND_ACK          = 1 << 1,
+};
+
+typedef bitfield<EnComdMeterEventId> EnComdMeterEventIds;
+
+/**
+ * Specifies a enum which describe the function execution result
+ * used in function : every function in IComdMeter.hal
+ */
+enum EnComdMeterFuncResult : uint8_t {
+    EN_METER_RESULT_OK = 0x00,        //OK
+    EN_METER_RESULT_ERR_PARA = 0x01,  //Parameter Error
+    EN_METER_RESULT_ERR_SERV = 0x02,  //Server Error
+};
+
+/**
+ * Specifies a enum which describe the MCAN Channel num information
+ * use for channelNum in ComdMeterCmdDataInfo
+ */
+enum EnComdMcanChannelNum : uint8_t {
+    EN_METER_METER_CHANNEL = 0x00,	/*  Meter channel  */
+    EN_METER_STSW_CHANNEL = 0x01	/*  SteeringSwich channel  */
+};
+
+/**
+ * Specifies a enum which describe the MCAN Interrupt Level information
+ * use for il in ComdMeterCmdDataInfo
+ */
+enum EnComdMcanInterruptLevel : uint8_t {
+    EN_METER_MCAN_IL_TYPE_CMD  = 0x00,	/*  Interrupt Need  */
+    EN_METER_MCAN_IL_TYPE_DATA = 0x01	/*  Interrupt Not Need  */
+};
+
+/**
+ * Specifies a enum which describe the MCAN OPtype information
+ * use for optype in ComdMeterCmdDataInfo
+ */
+enum EnComdMcanOpType : uint8_t {
+	EN_METER_MCAN_OPT_P_SET         = 0x00, /*  Set  		*/
+	EN_METER_MCAN_OPT_P_GET	        = 0x01, /*  Get  		*/
+	EN_METER_MCAN_OPT_P_INCREMENT   = 0x02, /*  Increment  */
+	EN_METER_MCAN_OPT_P_DECREMENT   = 0x03, /*  Decrement  */
+	EN_METER_MCAN_OPT_P_STATUS      = 0x0C, /*  Status  	*/
+	EN_METER_MCAN_OPT_P_INDICATION	= 0x0D, /*  Indication */
+	EN_METER_MCAN_OPT_P_ERROR		= 0x0F  /*  Error  	*/
+};
+
+/**
+ * Specifies a enum which describe the MCAN Channel Status
+ * use for parameter in ComdMcanStatusInfo
+ */
+enum EnComdMcanChannelStatus : uint8_t {
+    EN_METER_MCAN_CHANNEL_CLOSE = 0x00,	/*  channel close  */
+    EN_METER_MCAN_CHANNEL_OPEN = 0x01		/*  channel open   */
+};
+
+/**
+ * Specifies a enum which describe the MCAN init sequence result
+ * use for parameter in ComdMcanStatusInfo
+ */
+enum EnComdMcanInitSequenceResult : uint8_t {
+    EN_METER_MCAN_INIT_NG = 0x00,	/*  Init NG  */
+    EN_METER_MCAN_INIT_OK = 0x01   /*  Init OK  */
+};
+
+/**
+ * Specifies a enum which describe the common status OK or NG
+ */
+enum EnComdMeterCommonStatus: uint8_t {
+    EN_METER_OK = 0x00,		/*  OK  */
+    EN_METER_NG = 0x01,    /*  NG  */
+};
+
+/**
+ * Specifies a struct which describe the MCAN meter cmd information
+ * package one type
+ */
+struct StComdFromMeterCmdDataInfo{
+	EnComdMcanChannelNum		channelNum;		/* Channle num  				*/
+	uint8_t 						funcIdLow;			/* Function ID Low 				*/
+	uint8_t 						funcIdHigh;		/* Function ID High  			*/
+	EnComdMcanOpType 			    optype;				/* Option type  				*/
+	EnComdMcanInterruptLevel	    il;					/* Interrupt level  			*/
+	uint8_t 						paraLenLow;		/* Parameter DLC Low byte		*/
+	uint8_t 						paraLenHigh;		/* Parameter DLC High byte		*/
+	vec<uint8_t> 					para;				/* Parameter  					*/
+};
+
+/**
+ * Specifies a struct which describe the MCAN meter cmd information
+ * package one type
+ */
+struct StComdToMeterCmdDataInfo{
+	uint8_t							totalPackageNum;	     /* total package num			*/
+	uint8_t							packageLen;		        /* len from channelNum to end  */
+	EnComdMcanChannelNum		    channelNum;		       /* Channle num  				  */
+	uint8_t 						funcIdLow;			  /* Function ID Low 			 */
+	uint8_t 						funcIdHigh;		     /* Function ID High  			*/
+	EnComdMcanOpType 			    optype;				/* Option type  			   */
+	EnComdMcanInterruptLevel	    il;				   /* Interrupt level  			  */
+	uint8_t 						paraLenLow;		  /* Parameter DLC Low byte		 */
+	uint8_t 						paraLenHigh;	 /* Parameter DLC High byte		*/
+	vec<uint8_t> 					para;		    /* Parameter  				   */
+};
+
+/**
+ * Specifies a struct which describe Disp Data Send To Meter ACK
+ */
+struct StComdMeterCmdDataSendAck{
+	EnComdMcanChannelNum	channelNum;	     /*  Channle num  			*/
+	uint8_t 				funcIdLow;		/*  Function ID Low 	   */
+	uint8_t 				funcIdHigh;	 /*  Function ID High  		*/
+	EnComdMeterCommonStatus	sendResult;	/*  Meter Send result  	   */
+};
+
+/**
+ * Specifies a struct which describe the MCAN meter cmd information
+ * package two or three type
+ */
+ struct StComdToMeterCmdDataInfoExten {
+	uint8_t packageNum;	/*  Extern Package Num */
+	uint8_t paraLen;	/*  Parameter DLC	*/
+	vec<uint8_t> para; 	/*  Parameter		*/
+};

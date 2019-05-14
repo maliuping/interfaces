@@ -1,0 +1,526 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.common@1.0;
+
+interface IComdCommonListener {
+    // CT=0xh(initialization).xls
+    /**
+     * Comd informs client of machine kind data
+     *
+     * @param machineKindData: Umachine kind data
+     *                          dataB0-> production information
+     *                          dataB1-> Sales destination
+     *                          dataB3-> vehicle intelligence or EqPin
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_MachineKind to monitor this function. Secondly, client call
+     * commonFuncMachineKindGet to get the machine kind data. Finally, comd will
+     * call this function to inform client data change when comd get a new
+     * machine kind data from micon
+     */
+    oneway notifyCommonMachineKind(StComdCommonMachineKindData machineKindData);            //CT 01h: Sys To Navi StartInformation
+
+    /**
+     * Comd informs client of micon start info
+     *
+     * @param startErrorData: Start info. If comd don't update from micon, the
+     *                        data will be UNKNOWN
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_StartErrorMonitor to monitor this function. Secondly,
+     * client call commonFuncStartErrorMonitorGet to get the micon start info.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new start info from micon
+     */
+    oneway notifyCommonStartErrorMonitor(StComdCommonStartErrorMonitorData startErrorData); //CT 01h: Sys To Navi StartInformation
+
+    /**
+     * Comd informs client of some module type such as DVD、DTV...
+     *
+     * @param moduleType: Type struct include DVD\Tuner\AUX\TMC type
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_ModuleType to monitor this function. Secondly,
+     * client call commonFuncModuleTypeGet to get the module type data.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new module type data from micon
+     */
+    oneway notifyCommonModuleType(StComdCommonModuleTypeData moduleType);                   //CT 01h: Sys To Navi StartInformation
+
+    /**
+     * Comd informs client of micon project number
+     *
+     * @param miconProjectNum: Micon project number
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_MiconProjectNum to monitor this function. Secondly,
+     * client call commonFuncMiconProjectNumGet to get the micon project number.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new micon project number from micon
+     */
+    oneway notifyCommonMiconProjectNum(uint8_t miconProjectNum);                            //CT 01h: Sys To Navi StartInformation
+
+    /**
+     * Comd informs client of EqPin data
+     *
+     * @param uEQPin: EqPin data
+     *
+     * Adaptive project: Morley
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_EQPin to monitor this function.
+     * Secondly, client call commonFuncEQPinGet to get the EqPin data.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new EqPin data from micon
+     */
+    oneway notifyCommonEQPin(uint8_t uEQPin);
+
+    // oneway notifyCommonEQPinToVehicleType(EnComdCommonVehicleType vehicleType);           //CT 01h: Sys To Navi StartInformation
+
+    /**
+     * Comd informs client of power key status
+     *
+     * @param powKeyStatus: Power key status
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_PowerKeyStatus to monitor this function.
+     * Secondly, client call commonFuncEQPinGet to get the power key status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new power key status from micon
+     */
+    oneway notifyCommonPowerKeyStatus(EnComdCommonPowerKeyStatus powKeyStatus);             //CT 01h: Sys To Navi StartInformation
+
+    /**
+     * Comd informs client of power logic mode
+     *
+     * @param powLogType: Power logic type
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_PowLogicType to monitor this function.
+     * Secondly, client call commonFuncPowLogTypeGet to get the power logic
+     * type.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new power logic status from micon
+     */
+    oneway notifyCommonPowLogicType(EnComdCommonPowerLogicType powLogType);                 //CT 01h: Sys To Navi StartInformation
+
+//CT=1xh(special command).xls
+    /**
+     * Comd informs client of version info
+     *
+     * @param verDataInfo: The version data that client requested
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_FuncVersionResponse to monitor this function.
+     * This function is the response of commonFuncVersionReq in IComdCommon
+     */
+    oneway notifyCommonFuncVersionResponse(StComdCommonVersionData verDataInfo);                //CT 1Fh　00h：Version Info Response
+
+    /**
+     * Comd informs client of micon start error info clear result
+     *
+     * @param clearResult: The micon start error info clear result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_FuncStartInfoClearResponse to monitor this function.
+     * This function is the response of commonFuncStartInfoClearReq in
+     * IComdCommon
+     */
+    oneway notifyCommonFuncStartInfoClearResponse(EnComdCommonClearResultStatus clearResult);   //CT 1Fh　01h：Navi Start Error Information Clear Response
+
+    /**
+     * Comd informs client of micon receive soc debug on msg result
+     *
+     * @param debugOnResult: The micon receive soc debug on msg result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_FuncNaviDebugOnResponse to monitor this function.
+     * This function is the response of commonFuncNaviDebugOnReq in IComdCommon
+     */
+    oneway notifyCommonFuncNaviDebugOnResponse(EnComdCommonDebugOnResultStatus debugOnResult);  //CT 1Fh　02h：NAVI Debug ON Request Response
+
+    /**
+     * Comd informs client of micon restore factory settings result
+     *
+     * @param resultType: The micon restore factory settings result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_FuncFactoryDefaultResult to monitor this function.
+     * This function is the response of commonFuncFactoryDefaultReq in
+     * IComdCommon
+     */
+    oneway notifyCommonFuncFactoryDefaultResult(EnComdCommonFactoryDefResult resultType);       //CT 1Fh　03h：Restore Factory Default Result
+
+    /**
+     * Comd informs client of micon switch user result
+     *
+     * @param switchUserRes: The micon switch user result
+     *
+     * Adaptive project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_SwitchUserResponse to monitor this function.
+     * This function is the response of commonFuncSwitchUserReq in IComdCommon
+     */
+    oneway notifyCommonFuncSwitchUserResponse(StComdCommonSwitchUserRes switchUserRes);         //CT 1Fh  04h: Switch User Request Response
+
+    /**
+     * Comd informs client of micon AVM action result
+     *
+     * @param respData: The micon AVM action result
+     *
+     * Adaptive project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_AVMComResult to monitor this function.
+     * This function is the response of commonFuncAVMCommand in IComdCommon
+     */
+    oneway notifyCommonFuncAVMCommandResult(StComdCommonAVMCommandRes respData);                //CT 1Fh  05h: micon execute AVM command result response
+
+    /**
+     * Comd informs client of RTC data that stored in micon
+     *
+     * @param data: The RTC data that stored in micon
+     *
+     * Adaptive project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_getRTCResponse to monitor this function.
+     * This function is the response of commonFuncGetRTCReq in IComdCommon
+     */
+    oneway notifyCommonFuncGetRTCResponse(StComdCommonRTCData data);                            //CT 12h  01h: micon response RTC data
+
+    /**
+     * Comd informs client of micon set RTC data result
+     *
+     * @param result: The micon set RTC data result
+     *
+     * Adaptive project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_setRTCResponse to monitor this function.
+     * This function is the response of commonFuncSetRTCReq in IComdCommon
+     */
+    oneway notifyCommonFuncSetRTCResult(EnComdCommonSetRTCResult result);                       //CT 12h  03h: micon responce set RTC result
+
+//CT=Bxh(DiagTestMode).xls
+    /**
+     * Comd informs client start testmode
+     *
+     * @param autoTestMode: The command that start testmode or not
+     *
+     * Adaptive project: Morley
+     *
+     * Client can use registerListener with parameter EN_COMMON_EID_AutoTestMode
+     * to monitor this function.
+     */
+    oneway notifyCommonFuncAutoTestMode(EnComdCommonAutoTestMode autoTestMode);     //CT B5h 05 ：AUTO Testmode
+
+//CT=9xh(speed pulse).xls
+    /**
+     * Comd informs client of micon speed pulse data
+     *
+     * @param speedPlusData: The micon speed pulse data
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_FuncSpeedPulse to monitor this function.
+     */
+    oneway notifyCommonFuncSpeedPulse(StComdCommonSpeedPulseData speedPlusData);    //CT 92h ：Speed pulse
+
+//CT=Axh(keycode(SYS to NAVI)).xls
+    /**
+     * Comd informs client of micon key event
+     *
+     * @param speedPlusData: The micon key event
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_FuncKeyCode to monitor this function.
+     */
+    oneway notifyCommonFuncKeyCode(StComdCommonKeyCodeData keyCode);    //CT A0h: keycode(SYS to NAVI)
+
+//BitData Overview.xls
+    /**
+     * Comd informs client of micon start state
+     *
+     * @param miconStartStatus: Micon start state
+     *
+     * Adaptive project: base
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_MiconStatus to monitor this function.
+     * Secondly, client call commonFuncMiconStatusGet to get the micon start
+     * state.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new micon start state from micon
+     */
+    oneway notifyCommonMiconStatus(EnComdCommonMiconStatus miconStartStatus); //(SYS ->NAVI) BD1_1
+
+    /**
+     * Comd informs client of some status about mcan bus
+     *
+     * @param miconStartStatus: Mcan status struct
+     *
+     * Adaptive project: Morley && Poc
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_McanStatus to monitor this function.
+     * Secondly, client call commonFuncMcanStatusGet to get status about mcan
+     * bus.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new status about mcan bus from micon
+     */
+    oneway notifyCommonMcanStatus(StComdCommonMcanInfo mcanStatusInfo);       //(SYS ->NAVI) BD1_2
+
+    /**
+     * Comd informs client of reverse status
+     *
+     * @param revStatus: REV status
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_RevStatus to monitor this function.
+     * Secondly, client call commonFuncRevStatusGet to get reverse status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new reverse status from micon
+     */
+    oneway notifyCommonRevStatus(EnComdCommonOnOffStatus revStatus);          //(SYS ->NAVI) BD1_2
+
+    /**
+     * Comd informs client of parking status
+     *
+     * @param parkingStatus: PKB status
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_ParkingStatus to monitor this function.
+     * Secondly, client call commonFuncParkingStatusGet to get parking status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new parking status from micon
+     */
+    oneway notifyCommonParkingStatus(EnComdCommonOnOffStatus parkingStatus);  //(SYS ->NAVI) BD1_2
+
+    /**
+     * Comd informs client of fan on off status
+     *
+     * @param fanStatus: Fan status
+     *
+     * Adaptive project: Poc
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_FanStatus to monitor this function.
+     * Secondly, client call commonFuncFanStatusGet to get fan status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new fan status from micon
+     */
+    oneway notifyCommonFanStatus(EnComdCommonOnOffStatus fanStatus);          //(SYS ->NAVI) BD1_5
+
+    /**
+     * Comd informs client of GPS short circuit status
+     *
+     * @param gpsShortStatus: GPS short circuit or not status
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_GpsShortStatus to monitor this function.
+     * Secondly, client call commonFuncGpsShortStatusGet to get GPS short
+     * circuit status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new GPS short circuit status from micon
+     */
+    oneway notifyCommonGpsShortStatus(EnComdCommonGpsShortStatus gpsShortStatus);   //(SYS ->NAVI) BD1_5
+
+    /**
+     * Comd informs client of GPS open circuit status
+     *
+     * @param gpsShortStatus: GPS open circuit or not status
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_GpsOpenStatus to monitor this function.
+     * Secondly, client call commonFuncGpsOpenStatusGet to get GPS open
+     * circuit status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new GPS open circuit status from micon
+     */
+    oneway notifyCommonGpsOpenStatus(EnComdCommonGpsOpenStatus gpsOpenStatus);      //(SYS ->NAVI) BD1_5
+
+    /**
+     * Comd informs client of temperature abnormal or not status
+     *
+     * @param temperatureStatus: Soc temperature abnormal or not status
+     *
+     * Adaptive project: Poc
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_TemperatureStatus to monitor this function.
+     * Secondly, client call commonFuncTemperatureStatusGet to get temperature
+     * abnormal or not status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new temperature abnormal or not status from micon
+     */
+    oneway notifyCommonTemperatureStatus(EnComdCommonNormalOrNotStatus temperatureStatus);      //(SYS ->NAVI) BD1_5
+
+    /**
+     * Comd informs client of IG on off status
+     *
+     * @param igStatus:  IG on off status
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_IGStatus to monitor this function.
+     * Secondly, client call commonFuncIGStatusGet to get IG on off status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new IG on off status from micon
+     */
+    oneway notifyCommonIGStatus(EnComdCommonOnOffStatus igStatus);      //(SYS ->NAVI) BD1_5
+
+    /**
+     * Comd informs client of mic insert or not status
+     *
+     * @param micStatus: Mic insert or not status
+     *
+     * Adaptive project: Apoo
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_DiskStatus to monitor this function.
+     * Secondly, client call commonFuncMicStatusGet to get mic insert or not
+     * status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new mic insert or not status from micon
+     */
+    oneway notifyCommonMicStatus(EnComdCommonMicStatus micStatus);      //(SYS ->NAVI) BD1_5
+
+    /**
+     * Comd informs client of illume open or not status
+     *
+     * @param illStatus: illume open or not status
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_ILLStatus to monitor this function.
+     * Secondly, client call commonFuncILLStatusGet to get illume open or not
+     * status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new illume open or not status from micon
+     */
+    oneway notifyCommonILLStatus(EnComdCommonOnOffStatus illStatus);    //(SYS ->NAVI) BD1_6
+
+    /**
+     * Comd informs client of AVM switch signal active or not status
+     *
+     * @param status: AVM switch signal active or not status
+     *
+     * Adaptive project: Morley
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_AVMSwiSigStatus to monitor this function.
+     * Secondly, client call commonFuncAVMSwiSigStaGet to get AVM switch signal
+     * active or not status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new AVM switch signal active or not status from micon
+     */
+    oneway notifyCommonAVMSwiSigStatus(EnComdCommonAVMSwiSigStatus status);     //notify client AVM switch signal output status
+
+    /**
+     * Comd informs client of AVM connect status
+     *
+     * @param status: AVM connect status
+     *
+     * Adaptive project: Morley
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_AVMConStatus to monitor this function.
+     * Secondly, client call commonFuncAVMConStaGet to get AVM connect status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new AVM connect status from micon
+     */
+    oneway notifyCommonAVMConStatus(EnComdCommonAVMConStatus status);           //notify client AVM connect status
+
+    /**
+     * Comd informs client of back camera connect status
+     *
+     * @param status: Back camera connect status
+     *
+     * Adaptive project: Morley
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_BackCamConStatus to monitor this function.
+     * Secondly, client call commonFuncBackCamConStaGet to get back camera
+     * connect status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new back camera connect status from micon
+     */
+    oneway notifyCommonBackCamConStatus(EnComdCommonBackCamConStatus status);   //notify client back camera connect status
+
+    /**
+     * Comd informs client of CMF1 status
+     *
+     * @param status: CMF1 status
+     *
+     * Adaptive project: base
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_CMF1Status to monitor this function.
+     * Secondly, client call commonFuncCMF1StaGet to get CFM1 status.
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new CMF1 status from micon
+     */
+    oneway notifyCommonCMF1Status(EnComdCommonCMF1Status status);               //notify client CMF1 status
+
+    /**
+     * Comd informs client of soc with micon communication status
+     *
+     * @param status: Soc with micon communication status
+     *
+     * Adaptive project: all
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_CommuStatus to monitor this function.
+     * Secondly, client call commonFuncCommuStatusGet to get soc with micon
+     * communication status.
+     * Finally, comd will call this function to inform client data change when
+     * comd detect soc with micon communication status changed
+     */
+    oneway notifyCommonCommuStatus(EnComdCommonCommuStatus status);     //notify client initial communication result between navi and micon
+};

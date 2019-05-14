@@ -1,0 +1,366 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.source@1.0;
+
+interface IComdSourceListener {
+	/*audio Seting*/
+    /**
+     * Comd informs client micon setting audio tone result
+     *
+     * @param bass: Bass step setting value
+     * @param Midrange: Midange step setting value, unused in current project
+     * @param treble: Treble step setting value
+     * @param result: Micon excute result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replySetAudioTone to monitor this function.
+     * This function is the response of setAudioTone in IComdSource.
+     */
+	oneway replySetAudioToneResult(EnComdAudioToneStep bass
+                                   , EnComdAudioToneStep Midrange
+                                   , EnComdAudioToneStep treble
+                                   , EnComdAudioSetResult result);
+
+    /**
+     * Comd informs client of micon setting fader/balance result
+     *
+     * @param fader: Fader step setting response value
+     * @param balance: Balance step setting response value
+     * @param result: Micon excute result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replySetAudioFaderBalance to monitor this function.
+     * This function is the response of setAudioFaderAndBalance in IComdSource.
+     */
+	oneway replySetAudioFaderAndBalance(EnComdAudioFaderStep fader
+                                        , EnComdAudioFaderStep balance
+                                        , EnComdAudioSetResult result);
+
+    /**
+     * Comd informs client of micon setting loudness result
+     *
+     * @param loudness: Loudness setting value
+     * @param result: Micon excute result
+     *
+     * Adaptive project: base, unused in any project at present
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replySetAudioLoudness to monitor this function.
+     * This function is the response of setAudioLoudness in IComdSource.
+     */
+	oneway replySetAudioLoudness(EnComdAudioLoudnessStep loudness
+                                 , EnComdAudioSetResult result);
+
+    /**
+     * Comd informs client of micon setting aux volume result
+     *
+     * @param auxVolume: aux volume value
+     * @param result: Micon excute result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replySetAudioAuxVol to monitor this function.
+     * This function is the response of setAudioAuxVolume in IComdSource.
+     */
+	oneway replySetAudioAuxVolume(EnComdAudioAuxVolumeGain auxVolume
+                                  , EnComdAudioSetResult result);
+
+    /**
+     * Comd informs client of micon setting asl volume result
+     *
+     * @param aslVolume: ASL volume value
+     * @param result: Micon excute result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replySetAudioASLVol to monitor this function.
+     * This function is the response of setAudioASLVolume in IComdSource.
+     */
+	oneway replySetAudioASLVolume(EnComdAudioASLVolumeGain aslVolume
+                                  , EnComdAudioSetResult result);
+
+    /**
+     * Comd informs client of micon adjust source volume result
+     *
+     * @param sourceId: Source is adjuested
+     * @param volume: Volume value
+     * @param result: Micon excute result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replySetSetAudioSpecificSourceVol to monitor this function.
+     * This function is the response of setAudioSpecificSourceVolume in
+     * IComdSource.
+     */
+	oneway replySetAudioSpecificSourceVolume(EnComdSourceId sourceId
+                                             , int8_t volume
+                                             ,EnComdAudioSetResult result);
+
+    /**
+     * Comd informs client of micon audio key mute result
+     *
+     * @param muteType: Mute on/off
+     * @param result: Micon excute result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replySetAudioKeyMuteState to monitor this function.
+     * This function is the response of setAudioKeyMuteState in IComdSource.
+     */
+	oneway replySetAudioKeyMuteState(EnComdAudioKeyMuteType MuteType
+                                     , EnComdAudioSetResult result);
+
+    /**
+     * Comd informs client of comd excute mix complete
+     *
+     * @param displayId: The location of the sound
+     * @param mixSourceId: Source Id of mix
+     * @param mixMainType: Main source DB when mixing
+     * @param mixOnOff: Mix command type
+     * @param result: Micon excute result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replyAudioMixComplete to monitor this function.
+     * You can find this function in mix sequence with BasicDesign document.
+     */
+	oneway replyAudioMixComplete(EnComdDisplayId displayId
+                                 , EnComdMixSourceId mixSourceId
+                                 , EnComdAudioMixMainType mixMainType
+                                 , EnComdAudioMixOnOff mixOnOff
+                                 , EnComdAudioSetResult result);
+
+    /**
+     * Comd informs client of audio info
+     *
+     * @param audioItemsInfo: The audio info
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_notifyAudioItemsInfo to monitor this function.
+     * This function is the response of requestAudioAllItemInfo in
+     * IComdSource.
+     */
+	oneway notifyAudioItemsInfo(StComdAudioInfo audioItemsInfo);
+
+	/*source change */
+    /**
+     * Comd informs client of comd do source change step ack
+     *
+     * @param displayId: The location of the sound
+     * @param sourceId: Source Id
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_requestSourceChangeAck to monitor this function.
+     * You can find this function in source change sequence with BasicDesign
+     * document.
+     */
+	oneway requestSourceChangeAck(EnComdDisplayId displayId
+                                  , EnComdSourceId sourceId);
+
+    /**
+     * Comd informs client of comd do source change or mix change step of source
+     * paly.
+     *
+     * @param displayId: The location of the sound
+     * @param sourceId: Source Id
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_requestSourcePlay to monitor this function.
+     * You can find this function in source change and mix sequence with
+     * BasicDesign document.
+     */
+	oneway requestSourcePlay(EnComdDisplayId displayId
+                             , EnComdSourceId sourceId);
+
+    /**
+     * Comd informs client of comd do source change or mix change step of action
+     *
+     * @param displayId: The location of the sound
+     * @param sourceId: Source Id
+     * @param requestActionType: Action type
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_requestSourceAction to monitor this function.
+     * You can find this function in source change and mix sequence with
+     * BasicDesign document.
+     */
+	oneway requestSourceAction(EnComdDisplayId displayId
+                               , EnComdSourceId sourceId
+                               , EnComdSourceRequestActionType requestActionType);
+
+	// mix change
+    /**
+     * Comd informs client of comd do mix change step sync current mix
+     *
+     * @param displayId: The location of the sound
+     * @param sourceId: Source Id
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_requestMixChange to monitor this function.
+     * You can find this function in  mix sequence with BasicDesign document.
+     */
+	oneway requestMixChange(EnComdDisplayId displayId
+                            , EnComdSourceId sourceId);
+	// power on compelte
+    /**
+     * Comd informs client of comd do power on complete
+     *
+     * @param displayId: The location of the sound
+     * @param type: Response power temporary on or premanent on
+     * @param ret: Comd excute power on result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replyPowerOnComplete to monitor this function.
+     * You can find this function in power sequence with BasicDesign document.
+     */
+	oneway replyPowerOnComplete(EnComdDisplayId displayId
+                                , EnComdPowerOnType type
+                                , EnComdSourceReturn ret);
+	// power off compelte
+    /**
+     * Comd informs client of comd do power off complete
+     *
+     * @param displayId: The location of the sound
+     * @param ret: Comd excute power on result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replyPowerOffComplete to monitor this function.
+     * You can find this function in power sequence with BasicDesign document.
+     */
+	oneway replyPowerOffComplete(EnComdDisplayId displayId
+                                 , EnComdSourceReturn ret);
+	// power on mute off
+    /**
+     * Comd informs client of comd do power on step mute off
+     *
+     * @param displayId: The location of the sound
+     * @param ret: Comd excute power on result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replyPowerOnMuteOff to monitor this function.
+     * You can find this function in power sequence with BasicDesign document.
+     */
+	oneway replyPowerOnMuteOff(EnComdDisplayId displayId
+                               , EnComdSourceReturn ret);
+	// power off mute on
+    /**
+     * Comd informs client of comd do power off step mute on
+     *
+     * @param displayId: The location of the sound
+     * @param ret: Comd excute power on result
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_replyPowerOffMuteOn to monitor this function.
+     * You can find this function in power sequence with BasicDesign document.
+     */
+	oneway replyPowerOffMuteOn(EnComdDisplayId displayId
+                               , EnComdSourceReturn ret);
+
+    /**
+     * Comd informs client of some sources connect status
+     *
+     * @param sourceConnectInfo: The struct of sources status
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_notifySourceConnectStatus to monitor this function.
+     * If Comd monitor status change ,Comd will call this function to inform
+     * client
+     */
+	oneway notifySourceConnectStatus(StComdSourceConnectStatus sourceConnectInfo);
+
+    /**
+     * Comd informs client of source information
+     *
+     * @param sourceInfo: The struct of sources info
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_notifySourceInfo to monitor this function.
+     * Client must use getSourceInfo after registerListener.
+     * Then if comd monitor the new change ,comd will use this function to
+     * inform client
+     */
+	oneway notifySourceInfo(StComdSourceInfo sourceInfo);
+
+    /**
+     * Comd informs client of power key status
+     *
+     * @param displayId: The display screen
+     * @param powerKeyStatus: Power key status
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_notifySourcePowerKeyStatus to monitor this function.
+     * Client must use getSourcePowerKeyStatus after registerListener.
+     * Then if comd monitor the new change ,comd will use this function to
+     * inform client
+     */
+	oneway notifySourcePowerKeyStatus(EnComdDisplayId displayId
+                                      , EnComdPowerKeyStatus powerKeyStatus);
+    /**
+     * Comd informs client of micon request tuner source change
+     *
+     * @param displayId: The display screen
+     * @param status: Type of request
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_notifySourceTunerRequest to monitor this function.
+     */
+	oneway notifySourceTunerRequest(EnComdDisplayId displayId
+                                    , EnComdTunerRequestStatus status);//Tuner Aligement
+    /**
+     * Comd informs client of micon do carplay mute response
+     *
+     * @param respData: The struct of channel mute data response
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_notifyCarplayAudioChannelMuteResp to monitor this function.
+     */
+	oneway notifyCarplayAudioChannelMuteResp(StAudioChannelMuteResp respData);
+};

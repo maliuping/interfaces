@@ -1,0 +1,85 @@
+/**
+ * Copyright @ 2013 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.gcan@1.0;
+
+import IComdGcanListener;
+
+interface IComdGcan {
+    /**
+     * Client register remote listener pointer to monitor GCAN messages
+     * and status
+     *
+     * @param listener : remote listener pointer
+     * @param serviceId : Client Id
+     * @param canIds : This parameter means the canids that client service
+     *                 want to get from Comd
+     *                 All these canIds wayOff status will be monitored
+     * @param eventIds : the event that client want.
+     *                   event means the function in IComdGcanListener
+     *
+     * @return funcResult : Comd execute function result
+     */
+     registerListener(IComdGcanListener listener
+                     , EnComdGcanListenerID serviceId
+                     , vec<EnComdGcanIdRec> canIds
+                     , EnComdGcanEventIds eventIds)
+        generates(EnComdGcanFuncResult funcResult);
+
+    /**
+     * Client remove remote listener pointer in Comd and Comd no
+     * need to notify Client any messages
+     *
+     * @param serviceId : Client Id
+     *
+     * @return funcResult : Comd execute function result
+     */
+    unRegisterListener(EnComdGcanListenerID serviceId)
+        generates(EnComdGcanFuncResult funcResult);
+
+    /**
+     * Client can use this function to send GCAN messages to canbus
+     *
+     * @param canMsgs : gcan messages, the size can not more than 4
+     *
+     * @return funcResult : Comd execute function result
+     */
+    gcanSendMsg(vec<StComdGcanMsgSend> canMsgs)
+        generates(EnComdGcanFuncResult funcResult);
+
+    /**
+     * Client can use this function to get GCAN connect status
+     * If client register notifyGcanConnStatus event, only use
+     * this function at begging. When gcan connect status change,
+     * the notifyGcanConnStatus will inform the change.
+     *
+     * @return funcResult : Comd execute function result
+     * @return status : gcan connect status
+     */
+    gcanGetConnStatus()
+        generates(EnComdGcanFuncResult funcResult
+                  ,EnComdGcanConnectStatus status);
+
+    /**
+     * Client can use this function to get GCAN canid status
+     *
+     * @param canIds : This parameter means the canids status that client
+     *                 service want to get from Comd
+     *
+     * @return funcResult : Comd execute function result
+     * @return status : gcan connect status
+     */
+    gcanGetCanIdStatus(vec<EnComdGcanIdRec> canIds)
+        generates(EnComdGcanFuncResult funcResult
+                  ,vec<StComdGcanIdStatus> canIdsStatus);
+};

@@ -1,0 +1,76 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.common@1.1;
+import @1.0::types;
+
+enum EnComdCommonEventId : @1.0::EnComdCommonEventId {
+    EN_COMMON_EID_UsbOtgStatus               = 1 << 34,
+    EN_COMMON_EID_UsbHostStatus              = 1 << 35,
+    EN_COMMON_EID_UsbPowSetResp              = 1 << 36,
+    EN_COMMON_EID_AmigoStatusInfo            = 1 << 37,
+    EN_COMMON_EID_VcanStatus                 = 1 << 38,
+};
+/**
+ * USB type define
+ */
+enum EnComdCommonUsbType : uint8_t {
+    EN_COMMON_USB_HOST = 0x00,	             // USB HOST
+    EN_COMMON_USB_OTG = 0x01,	             // USB HOST
+};
+/**
+ * USB power status define
+ */
+enum EnComdCommonUsbPowSta : uint8_t {
+    EN_COMMON_USB_POW_OFF = 0x00,	           // USB POWER OFF
+    EN_COMMON_USB_POW_ON = 0x01,	             // USB POWER ON
+};
+/**
+ * USB power status setting result define
+ */
+enum EnComdCommonUsbPowSetResu : uint8_t {
+    EN_COMMON_USB_SET_SUCCESS = 0x00,	   // USB POWER SETTING SUCESS
+    EN_COMMON_USB_SET_FAILURE = 0x01,	   // USB POWER SETTING FAILURE
+};
+/**
+ * USB power status request struct
+ */
+struct StComdCommonUsbPowSetReq {
+    EnComdCommonUsbType usbType;
+    EnComdCommonUsbPowSta reqStatus;
+};
+/**
+ * USB power status setting response struct
+ */
+struct StComdCommonUsbPowSetResp {
+    EnComdCommonUsbType usbType;
+    EnComdCommonUsbPowSta reqStatus;
+    EnComdCommonUsbPowSetResu setResult;
+};
+
+/**
+ * VCAN sleep allow status
+ */
+enum EnComdCommonVcanSleepPermit : uint8_t {
+    EN_COMMON_VCAN_SLEEP_ALLOW = 0x00,	       // VCAN sleep allow
+    EN_COMMON_VCAN_SLEEP_NOT_ALLOW = 0x01,	   // VCAN sleep not allow
+    EN_COMMON_VCAN_UNKNOWN = 0xFF            //UNKNOWN status means not update from micon,used in get interface
+};
+/**
+ * VCAN bus status struct
+ */
+struct StComdCommonVcanStatus {
+    EnComdCommonChannelStatusInfo vcanChannelStatus;
+    EnComdCommonNormalOrNotStatus vcanBusStatus;
+    EnComdCommonVcanSleepPermit vcanSleepPemit;
+};

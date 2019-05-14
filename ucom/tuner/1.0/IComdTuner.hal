@@ -1,0 +1,395 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.tuner@1.0;
+
+import IComdTunerListener;
+
+interface IComdTuner {
+ //Listenner register or unregister
+    /**
+    *   when a new module need to listen the EnComdTuner information
+    *   please invoke this function
+    *
+    *   @param listener  : client sp pointer
+    *   @param serviceId : listener Id
+    *   @param eventIds  : function that client want to monitor
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    registerListener(IComdTunerListener listener,EnComdTunerListenerID serviceId,EnComdTunerEventIds eventIds) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   when the client don`t need to listen the ComdDiag information
+    *   or the the client is death ,will invoke this function
+    *
+    *   @param serviceId : listener Id
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    unRegisterListener(EnComdTunerListenerID serviceId) generates(EnComdTunerFuncResult funcResult);
+
+ //Send Command to tuner
+    /**
+    *   Client informs micon to Cycle switching in all of bands
+    *
+    *   @param none
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerLoopChangeBand() generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client informs micon to do ChangeBand action
+    *
+    *   @param bandType : The Type Of Band
+    *       EN_TUNER_BAND_FM1 : Band FM1
+    *       EN_TUNER_BAND_FM2 : Band FM2
+    *       EN_TUNER_BAND_FM3 : Band FM3
+    *       EN_TUNER_BAND_AM1 : Band AM1
+    *       EN_TUNER_BAND_AM1 : Band AM2
+    *       EN_TUNER_BAND_INVALID : Band INVALID
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerChangeBand(EnComdTunerBandInfoType bandType) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client informs micon to Single step adjustment in the current band
+    *
+    *   @param direction : Manual status
+    *       EN_TUNER_CMD_DIRECTION_UP : Manual Up
+    *       EN_TUNER_CMD_DIRECTION_DOWN : Manual Down
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerManualTune(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *    Client informs micon to do FastManualTune action
+    *
+    *   @param direction : Fast manual status
+    *       EN_TUNER_CMD_DIRECTION_UP   : Fast manual Up
+    *       EN_TUNER_CMD_DIRECTION_DOWN : Fast manual Down
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerFastManualTune(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client informs micon to do seek action
+    *
+    *   @param direction : Seek status
+    *       EN_TUNER_CMD_DIRECTION_UP   : Seek Up
+    *       EN_TUNER_CMD_DIRECTION_DOWN : Seek Down
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerSeek(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client informs micon to stop seek
+    *
+    *   @param none
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerSeekStop() generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client informs micon to cancel seek
+    *
+    *   @param none
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerSeekCancel() generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client informs micon to do FastSeek action
+    *
+    *   @param direction : FastSeek status
+    *       EN_TUNER_CMD_DIRECTION_UP   : FastSeek Up
+    *       EN_TUNER_CMD_DIRECTION_DOWN : FastSeek Down
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerFastSeek(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client informs micon to do scan action
+    *
+    *   @param cmd : Scan status
+    *       EN_TUNER_CMD_START   : Scan Start
+    *       EN_TUNER_CMD_STOP    : Scan Stop
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerScanUp(EnComdTunerSSCMD cmd) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   The radio station specifies switch instructions
+    *
+    *   @param channel : Band Channel Status
+    *       channelLow : Band Channel Low
+    *       channelHigh : Band Channel High
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerTuneToChannel(StComdTunerChannel channel) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client Request preset list band type and cycle number specification
+    *
+    *   @param bandType : The Type Of Band
+    *       EN_TUNER_BAND_FM1 : Band FM1
+    *       EN_TUNER_BAND_FM2 : Band FM2
+    *       EN_TUNER_BAND_FM3 : Band FM3
+    *       EN_TUNER_BAND_AM1 : Band AM1
+    *       EN_TUNER_BAND_AM1 : Band AM2
+    *       EN_TUNER_BAND_CURRENT : Band current
+    *       EN_TUNER_BAND_INVALID : Band INVALID
+    *
+    *   @param channel : Band Channel Status
+    *       channelLow : Band Channel Low
+    *       channelHigh: Band Channel High
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerTuneBandChannel(EnComdTunerBandAppoint bandType, StComdTunerChannel channel) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client informs micon to do bsm action
+    *
+    *   @param cmd : Bsm Status
+    *       EN_TUNER_CMD_START : Bsm Start
+    *       EN_TUNER_CMD_STOP  : Bsm Stop
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerBsm(EnComdTunerSSCMD cmd) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   Client Request switch to a channel in the specified preset list
+    *
+    *   @param index : Preset Index
+    *       EN_TUNER_PRESET_UNKNOWN : Index UNKNOWN
+    *       EN_TUNER_PRESET_INDEX1  : Index INDEX1
+    *       EN_TUNER_PRESET_INDEX2  : Index INDEX2
+    *       EN_TUNER_PRESET_INDEX3  : Index INDEX3
+    *       EN_TUNER_PRESET_INDEX4  : Index INDEX4
+    *       EN_TUNER_PRESET_INDEX5  : Index INDEX5
+    *       EN_TUNER_PRESET_INDEX6  : Index INDEX6
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerPresetCall(EnComdTunerPresetIndex index) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   client Request Save the channel to the specified preset number
+    *
+    *   @param index : Preset Memory Index
+    *       EN_TUNER_PRESET_UNKNOWN : Index UNKNOWN
+    *       EN_TUNER_PRESET_INDEX1  : Index INDEX1
+    *       EN_TUNER_PRESET_INDEX2  : Index INDEX2
+    *       EN_TUNER_PRESET_INDEX3  : Index INDEX3
+    *       EN_TUNER_PRESET_INDEX4  : Index INDEX4
+    *       EN_TUNER_PRESET_INDEX5  : Index INDEX5
+    *       EN_TUNER_PRESET_INDEX6  : Index INDEX6
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerPresetMemory(EnComdTunerPresetIndex index) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   client request micon replacement channel on preset list
+    *
+    *   @param direction : Preset Tune Direction
+    *       EN_TUNER_CMD_DIRECTION_UP : Tune Up
+    *       EN_TUNER_CMD_DIRECTION_DOWn  : Tune Down
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerPresetTune(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   client informs micon to do FastRelease action
+    *
+    *   @param none
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerFastRelease() generates(EnComdTunerFuncResult funcResult);
+ //Get information of tuner in Comd
+    /**
+    *   client Get StComdTunerInfo information stored in Comd
+    *
+    *   @param none
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerGetDispInfo() generates (StComdTunerInfo tunerDispInfo,EnComdTunerFuncResult funcResult) ;
+
+    /**
+    *   Get the preset list channel data of the specified band type
+    *
+    *   @param bandType
+    *       @param bandType : The Type Of Band
+    *       EN_TUNER_BAND_FM1 : Band FM1
+    *       EN_TUNER_BAND_FM2 : Band FM2
+    *       EN_TUNER_BAND_FM3 : Band FM3
+    *       EN_TUNER_BAND_AM1 : Band AM1
+    *       EN_TUNER_BAND_AM1 : Band AM2
+    *       EN_TUNER_BAND_INVALID : Band INVALID 
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    */
+    tunerGetPresetList(EnComdTunerBandInfoType bandType) generates (StComdPresetList presetList,EnComdTunerFuncResult funcResult);
+ //Request infomation command to tuner
+    /**
+    *   client require tuner information from micon for display
+    *
+    *   @param none
+    *
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    *   Request information of Display comd to tuner
+    */
+    tunerDispInfoReq() generates(EnComdTunerFuncResult funcResult);
+
+    /**
+    *   client require preset information from micon for display
+    *
+    *   @param reqType
+    *       EN_PLIST_REQ_BAND_FM1
+    *       EN_TUNER_PLIST_REQ_BAND_FM2
+    *       EN_TUNER_PLIST_REQ_BAND_FM3 
+    *       EN_TUNER_PLIST_REQ_BAND_AM1
+    *       EN_TUNER_PLIST_REQ_BAND_AM2
+    *       EN_TUNER_PLIST_REQ_BAND_CURRENT
+    *       EN_TUNER_PLIST_REQ_BAND_Morley
+
+    *   @return EnComdTunerFuncResult
+    *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
+    *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *
+    *   Adaptive project : Morley
+    *   If there is no preset list, you need to set the frequency to an invalid value and send this data to soc. 
+    */
+    tunerPresetListInfoReq(EnComdTunerPrestListReqType reqType) generates(EnComdTunerFuncResult funcResult); //COMD_TUNER_PLIST_REQ_BAND_CURRENT as the default in Leepi
+};

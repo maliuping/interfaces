@@ -1,0 +1,270 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+package iauto.hardware.ucom.diag@1.0;
+
+interface IComdDiagListener {
+//TESTMODE & DIAG
+    /**
+     * notify client Factory Cold Start Init end
+     *
+     * @param info: the cause of init and result of Factory Cold
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyDiagFactColdStartInitEnd(StComdDiagFactColdStartInfo info);
+
+    /**
+     * Response Flat Mode information
+     *
+     * @param status: current satus of Flat Mode
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyDiagFlatModeInfoResp(EnComdDiagStatus status);
+
+    /**
+     * notify client AUX AD VALUE(unique id for Leepi hardware)
+     *
+     * @param info: AUX status and AUX AD VALUE
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyDiagAUXADResp(StComdDiagAUXInfo info);
+
+//PANA DIAG
+    /**
+     * Response enter Pana Diag
+     *
+     * @param None
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagEnterPanaDiagResp();
+
+    /**
+     * Response release Pana Diag
+     *
+     * @param None
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagExitPanaDiagResp();
+
+    /**
+     * setting EQ PIN Flag response
+     *
+     * @param status: status of EQ PIN FLAG
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagEQPinFlagResp(EnComdDiagStatus status);
+
+    /**
+     * setting EQ PIN Information response
+     *
+     * @param eqPinInfoType: the type of EQ PIN
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagEQPinInfoResp(EnComdPDiagEQPinInfoType eqPinInfoType);
+
+    /**
+     * Response Amigo-LSI servicetool information
+     * 
+     * @param status: status of Amigo-LSI servicetool
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+
+    oneway notifyPDiagAmigoLSISerToolInfoResp(EnComdDiagStatus status);
+
+    /**
+     * Response AM information
+     *
+     * @param info: AM information
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagEnterAMTestModeResp(StComdPDiagAMInfo info);
+
+    /**
+     * Response FM information
+     * 
+     * @param info: FM information
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagEnterFMTestModeResp(StComdPDiagFMInfo info);
+
+    /**
+     * Response exit AM Diag TestMode
+     *
+     * @param None
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagExitAMTestModeResp();
+
+    /**
+     * Response exit FM Diag TestMode
+     *
+     * @param None
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagExitFMTestModeResp();
+
+    /**
+     * Tuner alignment Command result response
+     *
+     * @param info: Tuner alignment Command
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagTunerAlignInfoResp(StComdPDiagTunerAlignInfo info);
+
+    /**
+     * Tuner Alignment result response
+     *
+     * @param info: Tuner Alignment result、address and data length
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    oneway notifyPDiagTunerAlignResultResp(StComdPDiagTunerAlignResultInfo info);
+
+//NISSAN DIAG
+    /**
+     * Diag change mode and status response
+     * 
+     * @param modeStatusResult: Diag Mode and Diag status
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagChangeModeAndStatusResp(StComdNDiagModeAndStatus modeStatusResult);
+
+    /**
+     * Diag result data response(Init diag result response)
+     *
+     * @param resultData: Init diag result and Init diag counter
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagResultDataInit(StComdNDiagInitResultData resultData);
+
+    /**
+     * Diag result data response(Init Sequence diag result response)
+     * 
+     * @param resultData: Init diag result and Init diag counter
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagResultDataInitSeq(StComdNDiagInitSeqResultData resultData);
+
+    /**
+     * Diag result data response(self diag result response)
+     *
+     * @param resultData: Meter selfdiag result and STW SW result
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagResultDataSelfDiag(StComdNDiagSelfDiagResultData resultData);
+
+    /**
+     * Diag result data response(AV moniter diag result response)
+     *
+     * @param resultData: AV moniter diag result response information
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagResultDataAVMonit(StComdNDiagAVMonitResultData resultData);
+
+    /**
+     * Diag result data response(Error record result response)
+     *
+     * @param resultData: Error record result response information
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagResultDataErrRecord(StComdNDiagErrRecordResultData resultData);
+
+    /**
+     * Diag result data response(Ver response)
+     *
+     * @param resultData: Version Information
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagResultDataVersion(StComdNDiagVerResultData resultData);
+
+    /**
+     * Diag result data response(commection record result response)
+     *
+     * @param resultData: connection result data
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagResultDataConnRecord(StComdNDiagConnRecordResultData resultData);
+
+    /**
+     * Diag error information clear result response(error record clear result response)
+     *
+     * @param resultData: clear error record result(OK or NG)
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagClearErrRecordResult(EnComdDiagResult result);
+
+    /**
+     * Diag error information clear result response(AV counter clear result response )
+     *
+     * @param resultData: clear AV Communication result(OK or NG)
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagClearAVCountResult(EnComdDiagResult result);
+    /**
+     * Diag error information clear result response(unit connect error clear result response)
+     * 
+     * @param result: unit connect error clear result(OK or NG)
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagClearUnitConnResult(EnComdDiagResult result);
+
+    /**
+     * Speaker Test result response
+     *
+     * @param speakerTestData: speaker test result(OFF or ON)
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagSpeakerTestResp(StComdNDiagSpeakerTestData speakerTestData);
+
+    /**
+     * Camera power control result response
+     *
+     * @param powerRespStatus: Camera power control result(OFF or ON)
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagCameraPowCtrlResp(EnComdDiagStatus powerRespStatus);
+
+    /**
+     * Initial sequence error information setting result response
+     *
+     * @param settingRespStatus: initial sequesce error info setting result(OFF or ON)
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyNDiagInitSeqErrInfoSetResp(EnComdDiagStatus settingRespStatus);
+};

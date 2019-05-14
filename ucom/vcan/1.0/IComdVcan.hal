@@ -1,0 +1,80 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.vcan@1.0;
+
+import IComdVcanListener;
+
+interface IComdVcan {
+//Listenner register or unregister
+    /**
+     * when a new module need to listen the ComdDiag information
+     * please invoke this function
+     *
+     * @param listener: client sp pointer
+     * @param serviceId: listener id
+     * @param eventIds: function that client want to monitor
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_VCAN_FUNC_RESULT_OK: operation OK
+     *     @retval EN_VCAN_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_VCAN_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project:
+     */
+    registerListener(IComdVcanListener listener,EnComdVcanListenerID serviceId,EnComdVcanEventIds eventIds) generates(EnComdVcanFuncResult funcResult);
+
+    /**
+     * when the client don`t need to listen the ComdDiag information
+     * or the the client is death ,will invoke this function
+     *
+     * @param serviceId: client listener id
+     *
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_VCAN_FUNC_RESULT_OK: operation OK
+     *     @retval EN_VCAN_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_VCAN_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project:
+     */
+    unRegisterListener(EnComdVcanListenerID serviceId) generates(EnComdVcanFuncResult funcResult);
+
+//CT:88h D0:81h
+    /**
+     * AC Status data request
+     * 
+     * @param None
+     * 
+     * @return funcResult: the result of invoking function: OK in case of success
+     *                     ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *     @retval EN_VCAN_FUNC_RESULT_OK: operation OK
+     *     @retval EN_VCAN_FUNC_RESULT_ERR_PARA: parameter error
+     *     @retval EN_VCAN_FUNC_RESULT_ERR_SERV: service operate error
+     *
+     * Adaptive project:
+     */
+    vcanFuncACStatusReq() generates(EnComdVcanFuncResult funcResult);
+    vcanFuncACDataSet(EnComdVcanAcStatus acData) generates(EnComdVcanFuncResult funcResult);    // CT:6D 01 01   A/C Data Set
+    vcanFuncFrontFanSpeedSet(uint8_t frontFanSpeed) generates(EnComdVcanFuncResult funcResult); // CT:6D 01 02 Front Fan Speed Data Set
+    vcanFuncRearFanSpeedSet(uint8_t rearFanSpeed) generates(EnComdVcanFuncResult funcResult);  // CT:6D 01 03 Rear Fan Speed Data Set 
+    vcanFuncDriverAirVentSet(EnComdVcanDriverAirVentStatus driverAirVent) generates(EnComdVcanFuncResult funcResult); // CT:6D 01 04 Driver Ait Vent Data Set
+    vcanFuncPassengerAirVentSet(EnComdVcanPassengerAirVentStatus passengerAirVent) generates(EnComdVcanFuncResult funcResult); // CT:6D 01 05  Passenger Air Vent Data Set
+
+// get ac Data status from comd
+    vcanFuncACDataGet() generates(StComdVcanACDataStatusInform acDataStatus, EnComdVcanFuncResult funcResult); // get AC Data status from comd
+};

@@ -1,0 +1,67 @@
+/**
+ * Copyright @ 2013 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.sysctrl@1.0;
+
+/**
+ * Specifies a enum which describe android action
+ */
+enum AndroidPowerCtrl : int32_t {
+    ANDROID_SHUTDOWN = 0,
+    ANDROID_REBOOT = 1,
+};
+
+/**
+ * Specifies a enum which describe system boot mode
+ */
+enum SysBootMode : int32_t {
+    SysBootMode_Invalid = -1,
+    SysBootMode_Normal = 0,
+    SysBootMode_Update = 1,
+    SysBootMode_TestMode = 2,
+    SysBootMode_UserUpdate = 3,
+};
+
+/**
+ * Specifies a enum which describe source of req
+ */
+enum ReqSource : int32_t {
+    REQ_FROM_SYSD = 0,
+    REQ_FROM_ANDROID = 1,
+    REQ_FROM_SYSCTRL = 2,
+};
+
+/**
+ * Specifies a enum which describe start up reason
+ */
+
+enum StartupReason : uint16_t {
+    STARTUP_REASON_ACC_ON                 = 1 << 0,
+    STARTUP_REASON_B_ON                   = 1 << 1,
+    STARTUP_REASON_SYSTEM_UPDATE          = 1 << 2,
+    STARTUP_REASON_MAP_DATA_UPDATE        = 1 << 3,
+    STARTUP_REASON_DISK_FULL              = 1 << 4,
+    STARTUP_REASON_FACTORY_RESET          = 1 << 5,
+    STARTUP_REASON_PERSONAL_INFO_INIT     = 1 << 6,
+    STARTUP_REASON_MASTER_DATA_UPDATE     = 1 << 7,
+    STARTUP_REASON_EQ_PIN                 = 1 << 8,
+};
+typedef bitfield<StartupReason> StartupReasons;
+
+/**
+ * Specifies a enum which describe the reason enter standby
+ */
+enum StandbyReason : int32_t {
+    STANDBY_REASON_INVALID = -1,
+    STANDBY_REASON_DIAG_SYSTEM_INIT = 0,
+};

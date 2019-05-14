@@ -1,0 +1,90 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.testmode@1.0;
+
+interface IComdTestModeListener {
+//TESTMODE
+    /**
+     * Testmode UART setting Response 
+     *
+     * @param status: the status of AutoTestMode Uart(ON or OFF)
+     *
+     * @Adaptive project: Base && Morley
+     */
+    oneway notifyTestModeUartSetResult(EnComdTestModeAutoTestUartStatus status);
+
+    /**
+     * Testmode auto test data Response
+     *
+     * @param data: the feedback data from TestMode
+     *
+     * @Adaptive project: Base && Morley
+     */
+    oneway notifyTestModeAutoTestDataResp(vec<uint8_t> data);
+
+    /**
+     * DiranaDSP Tuner ANT control Response
+     *
+     * @param resp: Specify the change value of the antenna terminal
+     *
+     * @Adaptive project: Base && Morley
+     */
+    oneway notifyTestModeDirDspAntCtrlResp(EnComdTestModeDspAntCtrlResp resp);
+
+    /**
+     * Key code(unique id for hardware)
+     *
+     * @param info: the value of Key Code AD
+     *
+     * @Adaptive project: Base && Morley
+     */
+    oneway notifyTestModeKeyCodeResp(StComdTestModeKeyCodeInfo info);
+
+    /**
+     * EMMC AD(unique id for hardware)
+     *
+     * @param info: EMMC AD Value
+     *
+     * @Adaptive project: Base && Morley
+     */
+    oneway notifyTestModeEMMCADResp(StComdTestModeADValue info);                        //
+
+    /**
+     * EMMC AD(unique id for hardware)
+     *
+     * @param info: AUX AD Value
+     *
+     * @Adaptive project: Base && Morley
+     */
+    oneway notifyTestModeAUXADResp(StComdTestModeAUXInfo info);
+
+//TESTMODE & DIAG
+    /**
+     * Factory Cold Start Init end
+     *
+     * @param info: a struct which describe the response information of factory cold start
+     *
+     * @Adaptive project: Base && Morley
+     */
+    oneway notifyTestModeFactColdStartInitEnd(StComdTestModeFactColdStartInfo info);
+
+    /**
+     * Response Flat Mode information
+     *
+     * @param status: TestMode Status (ON or OFF)
+     *
+     * @Adaptive project: Base && Morley
+     */
+    oneway notifyTestModeFlatModeInfoResp(EnComdTestModeStatus status);
+};

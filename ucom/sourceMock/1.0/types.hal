@@ -1,0 +1,46 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.sourceMock@1.0;
+
+
+enum EnComdSourceMockListenerID : uint8_t {
+  EN_MOCKLISTERNER_ID_SOURCEMOCK = 0x00,
+  EN_MOCKLISTERNER_ID_RESERVE1 = 0x01,
+  EN_MOCKLISTERNER_ID_RESERVE2 = 0x02
+};
+
+enum EnComdSourceChangeStep : uint8_t {
+	EN_SOURCE_CHANGE_ACK=0x00,
+	EN_SOURCE_CHANGE_MUTE_ON=0x01,
+	EN_SOURCE_CHANGE_CHANNEL=0x02
+};
+
+enum EnComdSourceChangeType : uint8_t {
+
+	EN_SOURCE_CHANGE_NORMAL=0x01,
+	EN_SOURCE_CHANGE_BACKGROUND=0x02
+
+};
+
+enum EnComdSourceChangeResult : uint8_t {
+	EN_SOURCE_CHANGE_OK=0x00,
+	EN_SOURCE_CHANGE_ERROR=0x01
+};
+
+enum EnComdSourceMockEventId : uint64_t{
+	//Mock
+  EN_SOURCEMOCK_EID_reqSourceChange = 1 << 0,
+  EN_SOURCEMOCK_EID_reqMuteOff = 1 << 1,
+  EN_SOURCEMOCK_EID_reqMixChange = 1 << 2,
+};

@@ -1,0 +1,56 @@
+/**
+ * Copyright @ 2013 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.gcan@1.0;
+
+interface IComdGcanListener {
+    /**
+     * Comd use this function to post GCAN messages to client
+     *
+     * @param canMsgs : gcan messages, the size can not more than 4
+     */
+    oneway notifyGcanMessage(vec<StComdGcanMsgRec> canMsgs);
+
+    /**
+     * Comd use this function to notify client that the GCAN connect
+     * status is changed
+     *
+     * @param status : GCAN connect status
+     */
+    oneway notifyGcanConnStatus(EnComdGcanConnectStatus status);
+
+    /**
+     * Comd use this function to notify client that the GCAN canid
+     * status is way off.If one is way off,Comd will notify client
+     * all canids status that the client register.
+     *
+     * @param canId : GCAN canid
+     */
+    oneway notifyGcanWayOffAllIdStatus(vec<StComdGcanIdStatus> canIdsStatus);
+
+    /**
+     * Comd use this function to notify client the GCAN speed pulse
+     * value
+     *
+     * @param speedPulse : speed pulse value
+     */
+    oneway notifyGcanSpeedPulse(uint32_t speedPulse);
+
+    /**
+     * Comd use this function to notify client the GCAN fuel spray
+     * information
+     *
+     * @param info : fuel spray information
+     */
+    oneway notifyGcanFuelSprayInfo(StComdGcanFuelSprayInfo info);
+};

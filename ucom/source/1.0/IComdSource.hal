@@ -1,0 +1,406 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.source@1.0;
+
+import IComdSourceListener;
+
+interface IComdSource {
+    /**
+     * Client register IComdSourceListener remote pointer in comd source
+     * service
+     *
+     * @param listener: Client remote sp IComdSourceListener pointer
+     * @param serviceId: Client identity defined in comd
+     * @param eventIds: The events that client want to monitor
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Every client want any IComdSourceListener's event must call this
+     * function
+     */
+	registerListener(IComdSourceListener listener
+                     , EnComdSourceListenerID serviceId
+                     , EnComdSourceEventIds eventIds)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client remove registration information in comd source service
+     *
+     * @param serviceId: Client identity defined in comd
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Every client must call this function when he don't need any comd events
+     */
+	unRegisterListener(EnComdSourceListenerID serviceId)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client informs micon set audio tone
+     *
+     * @param bass: Bass step setting value
+     * @param midange: Midange step setting value, unused in current project
+     * @param treble: Treble step setting value
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call replySetAudioToneResult in
+     * IComdSourceListener when micon response the result
+     */
+	setAudioTone(EnComdAudioToneStep bass
+                 , EnComdAudioToneStep midange
+                 , EnComdAudioToneStep treble)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client informs micon set balance/fader tone
+     *
+     * @param fader: Fader step setting value
+     * @param balance: Balance step setting value
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call replySetAudioFaderAndBalance in
+     * IComdSourceListener when micon response the result
+     */
+	setAudioFaderAndBalance(EnComdAudioFaderStep fader
+                            , EnComdAudioFaderStep balance)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client informs micon set loudness value
+     *
+     * @param loudness: Loudness setting value
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: base, unused in any project at present
+     *
+     * Comd will call replySetAudioLoudness in
+     * IComdSourceListener when micon response the result
+     */
+	setAudioLoudness(EnComdAudioLoudnessStep loudness)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client informs micon set aux volume
+     *
+     * @param auxVolume: aux volume value
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Apoo
+     *
+     * Comd will call replySetAudioAuxVolume in
+     * IComdSourceListener when micon response the result
+     */
+	setAudioAuxVolume(EnComdAudioAuxVolumeGain auxVolume)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client informs micon ASL volume adjustment
+     *
+     * @param aslVolume: ASL volume value
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call replySetAudioASLVolume in
+     * IComdSourceListener when micon response the result
+     */
+	setAudioASLVolume(EnComdAudioASLVolumeGain aslVolume)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client informs micon adjust source volume
+     *
+     * @param sourceId: Source need to adjuest
+     * @param type: Volume up/down or Direct step
+     * @param volume: Volume value
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call replySetAudioSpecificSourceVolume in
+     * IComdSourceListener when micon response the result
+     */
+	setAudioSpecificSourceVolume(EnComdSourceId sourceId
+                                 , EnComdAudioVolumeSetType type
+                                 , int8_t volume)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client informs micon do key mute command
+     *
+     * @param muteType: Mute on/off
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call replySetAudioKeyMuteState in
+     * IComdSourceListener when micon response the result
+     */
+	setAudioKeyMuteState(EnComdAudioKeyMuteType muteType)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client informs micon do channel mix
+     *
+     * @param displayId: The location of the sound
+     * @param mixSourceId: Source Id of mix
+     * @param mixMainType: Main source DB when mixing
+     * @param mixOnOff: Mix command type
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: unused in current project,if do mix change used
+     *                   requestMixOn/requestMixOff
+     *
+     * Comd will call replyAudioMixComplete in
+     * IComdSourceListener when micon response the result
+     */
+	requestAudioMix(EnComdDisplayId displayId
+                    , EnComdMixSourceId mixSourceId
+                    , EnComdAudioMixMainType mixMainType
+                    , EnComdAudioMixOnOff mixOnOff)
+        generates (EnComdSourceReturn ret);
+
+    // request mix on
+    /**
+     * Client informs comd do mix source on (if one mix already on, this
+     * function means mix change or mix on together)
+     *
+     * @param displayId: The location of the sound
+     * @param mixSourceId: Source Id of mix
+     * @param mixMainType: Main source DB when mixing
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * You can find detailed mix on sequence in BasicDesign.
+     */
+	requestMixOn(EnComdDisplayId displayId
+                 , EnComdSourceId mixSourceId
+                 , EnComdAudioMixMainType muteAttType)
+        generates (EnComdSourceReturn ret);
+
+    // request mix off
+    /**
+     * Client informs comd do mix source off
+     *
+     * @param displayId: The location of the sound
+     * @param mixSourceId: Source Id of mix
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * You can find detailed mix off sequence in BasicDesign.
+     */
+	requestMixOff(EnComdDisplayId displayId
+                  , EnComdSourceId mixSourceId)
+        generates (EnComdSourceReturn ret);
+
+    // get current mix
+    /**
+     * Client request current mix sourceId from comd
+     *
+     * @param displayId: The location of the sound
+     *
+     * @return mixId: The current mix source that stored in Comd
+     *
+     * Adaptive project: all
+     */
+	getCurrentMix(EnComdDisplayId displayId)
+        generates (EnComdSourceId mixId);
+
+    /**
+     * Client get audio info from comd
+     *
+     * @return allAudioInfo: The audio info
+     *
+     * Adaptive project: all
+     *
+     * This function is used in the case of client wants to get audio info from
+     * comd. If client wants to get from micon, client can use
+     * requestAudioAllItemInfo
+     */
+	getAudioAllItemInfo()
+        generates (StComdAudioInfo allAudioInfo);
+
+    /**
+     * Client get audio info from comd
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call notifyAudioItemsInfo in
+     * IComdSourceListener when micon response the result
+     */
+	requestAudioAllItemInfo()
+        generates (EnComdSourceReturn ret);
+
+	/*source change*/
+    /**
+     * Client request source change
+     *
+     * @param displayId: The location of the sound
+     * @param sourceId: Source Id
+     * @param onOffType: Source command type
+     * @param option: Append option
+
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * You can find detailed source change sequence in BasicDesign.
+     */
+	requestSourceChange(EnComdDisplayId displayId
+                        , EnComdSourceId sourceId
+                        , EnComdSourceOnOff onOffType
+                        , StComdSourceOption option)
+        generates (EnComdSourceReturn ret);
+
+	// request power on
+    /**
+     * Client request power on
+     *
+     * @param displayId: The location of the sound
+     * @param sourceId: Source Id
+     * @param onType: Select power temporary on or premanent on
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * You can find detailed power on sequence in BasicDesign.
+     */
+	requestPowerOn(EnComdDisplayId displayId
+                  , EnComdSourceId sourceId
+                  , EnComdPowerOnType onType)
+        generates (EnComdSourceReturn ret);
+
+	// request power off
+    /**
+     * Client request power off
+     *
+     * @param displayId: The location of the sound
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * You can find detailed power off sequence in BasicDesign.
+     */
+	requestPowerOff(EnComdDisplayId displayId)
+        generates (EnComdSourceReturn ret);
+
+	// request power on status to permanent
+    /**
+     * Client request micon to change power on status from temporary to
+     * permanent
+     *
+     * @param displayId: The location of the sound
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     */
+	requestPowerOnStatusToBePermanent(EnComdDisplayId displayId)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client reply source action result to comd by this function
+     *
+     * @param displayId: The location of the sound
+     * @param sourceId: Source Id
+     * @param actionType: Action type
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * This function used in source change and mix change sequence.
+     * You can find detailed sequence in BasicDesign.
+     */
+	replySourceActionComplete(EnComdDisplayId displayId
+                              , EnComdSourceId sourceId
+                              , EnComdSourceRequestActionType actionType)
+        generates (EnComdSourceReturn ret);
+
+    /**
+     * Client get current source information from comd
+     *
+     * @param displayId: The location of the sound
+     *
+     * @return sourceInfo: Source info
+     *
+     * Adaptive project: all
+     */
+	getSourceInfo(EnComdDisplayId displayId)
+        generates (StComdSourceInfo sourceInfo);
+
+    /**
+     * Client get current power key status from comd
+     *
+     * @param displayId: The location of the sound
+     *
+     * @return powerKeyStatus: Power key status
+     *
+     * Adaptive project: all
+     */
+	getSourcePowerKeyStatus(EnComdDisplayId displayId)
+        generates(EnComdPowerKeyStatus	powerKeyStatus);
+
+    /**
+     * Client get micon source connect status from comd
+     *
+     * @param displayId: The location of the sound
+     *
+     * @return sourceConnectInfo: Micon source connect status
+     *
+     * Adaptive project: all
+     */
+	getSourceConnectStatus(EnComdDisplayId displayId)
+        generates (StComdSourceConnectStatus sourceConnectInfo);
+
+    /**
+     * Carplay request micon do audio mute
+     *
+     * @param muteData: The location of the sound
+     *
+     * @return ret: Comd excute result
+     *
+     * Adaptive project: poc
+     *
+     * Only carplay can use this command
+     * Comd will call notifyCarplayAudioChannelMuteResp in
+     * IComdSourceListener when micon response the result
+     */
+    carplayAppointAudioChannelMute(StAppointAudioChannelMute muteData)
+        generates (EnComdSourceReturn ret);
+};

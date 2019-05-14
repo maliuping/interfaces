@@ -1,0 +1,561 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.diag@1.0;
+
+/**
+ * Specifies a enum which describe the ComdDiag Client ID
+ * when a new module need to listern the ComdDiag infomation please add a new ID in there   
+ * used in function: registerListener unRegisterListener
+ * Adaptive project:Base && Apoo && Morley
+ */
+enum EnComdDiagListenerID : uint8_t {
+    EN_DIAG_LIS_ID_DIAG = 0x00,
+    EN_DIAG_LIS_ID_TEST = 0xFF,
+};
+
+/**
+ * Specifies a enum which describe the function execution result
+ * used in function: every function in IComdDiag.hal
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdDiagFuncResult : uint8_t {
+    EN_DIAG_FUNC_RESULT_OK = 0x00,
+    EN_DIAG_FUNC_RESULT_ERR_PARA = 0x01,
+    EN_DIAG_FUNC_RESULT_ERR_SERV = 0x02,
+};
+
+/**
+ * Specifies a enum which describe the common command of set mode 
+ * used in function: pDiagSetAmigoLSIServiceTool pDiagSetEQPinFlag nDiagInitSeqErrInfoSetReq
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdDiagSetModeCmd : uint8_t {
+    EN_DIAG_SET_MODE_CMD_OFF = 0x00,
+    EN_DIAG_SET_MODE_CMD_ON = 0x01,
+    EN_DIAG_SET_MODE_CMD_GET_CUR = 0x02,
+};
+
+/**
+ * Specifies a enum which describe the cause of factory cold start
+ * used in struct: StComdDiagFactColdStartInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdDiagFactColdStartCause : uint8_t {
+    EN_DIAG_FACT_COLD_START_CAUSE_TM = 0x01,
+    EN_DIAG_FACT_COLD_START_CAUSE_PANA = 0x02,
+    EN_DIAG_FACT_COLD_START_CAUSE_NISSAN = 0x03,
+};
+
+/**
+ * Specifies a enum which describe the initial status of amigo when navi request factory cold start
+ * used in struct: StComdDiagFactColdStartInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdDiagAmigoInitStatus : uint8_t {
+    EN_DIAG_AMIGO_INIT_STATUS_SUC = 0x01,
+    EN_DIAG_AMIGO_INIT_STATUS_FAIL = 0x02,
+    EN_DIAG_AMIGO_INIT_STATUS_REFUSE = 0x03,
+};
+
+/**
+ * Specifies a enum which describe the EQ PIN type of machine
+ * used in funtion: notifyPDiagEQPinInfoResp
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdPDiagEQPinInfoType : uint8_t {
+    EN_PDIAG_EQ_PIN_TYPE_B12L = 0x00,
+    EN_PDIAG_EQ_PIN_TYPE_P32R = 0x01,
+    EN_PDIAG_EQ_PIN_TYPE_L42L_16MC_NWB = 0x02,
+    EN_PDIAG_EQ_PIN_TYPE_P32S_RVM = 0x03,
+    EN_PDIAG_EQ_PIN_TYPE_L12M = 0x04,
+    EN_PDIAG_EQ_PIN_TYPE_L42L_16MC_LWB = 0x05,
+    EN_PDIAG_EQ_PIN_TYPE_L12F = 0x06,
+    EN_PDIAG_EQ_PIN_TYPE_P32S_AVM = 0x07,
+    EN_PDIAG_EQ_PIN_TYPE_P42M_W_O_BOSE = 0x08,
+    EN_PDIAG_EQ_PIN_TYPE_P32R_AVM = 0x09,
+    EN_PDIAG_EQ_PIN_TYPE_P42M_W_BOSE = 0x0A,
+    EN_PDIAG_EQ_PIN_TYPE_NOTDEFINE = 0x0B,
+    EN_PDIAG_EQ_PIN_TYPE_L42L_16MC_NWB_AFF = 0x0C,
+};
+
+/**
+ * Specifies a enum which describe the EQ PIN type of machine that the client wang to set
+ * inherit from EnComdPDiagEQPinInfoType , add get current cmd 
+ * used in funtion: pDiagSetEQPinInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdPDiagEQPinInfoTypeCmd : EnComdPDiagEQPinInfoType {
+    EN_PDIAG_EQ_PIN_TYPE_GET_CUR = 0xFF,
+};
+
+/**
+ * Specifies a enum which describe the ANT status
+ * used in struct: StComdPDiagAMInfo StComdPDiagFMInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdPDiagANTStatus : uint8_t {
+    EN_PDIAG_ANT_STATUS_AUTO = 0x01, 
+    EN_PDIAG_ANT_STATUS_MAIN = 0x04,
+    EN_PDIAG_ANT_STATUS_SUB = 0x05,    
+    EN_PDIAG_ANT_STATUS_FAILED = 0x0E,
+    EN_PDIAG_ANT_STATUS_UNKNOWN = 0x0F,
+};
+
+/**
+ * Specifies a enum which describe the type of band 
+ * used in struct: StComdPDiagTunerAlignCmd StComdPDiagTunerAlignInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdPDiagBandType : uint8_t {
+    EN_PDIAG_BAND_TYPE_AM = 0x00,
+    EN_PDIAG_BAND_TYPE_FM = 0x01,
+};
+
+/**
+ * Specifies a enum which describe the appoint of tuner alignment item
+ * used in struct: StComdPDiagTunerAlignCmd StComdPDiagTunerAlignInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdPDiagTunerAlignItem : uint8_t {
+    EN_PDIAG_TUNER_ALIGN_ITEM_FREQ_OFFSET = 0x01,
+    EN_PDIAG_TUNER_ALIGN_ITEM_RF_TUNE = 0x02,
+    EN_PDIAG_TUNER_ALIGN_ITEM_IQ_GAIN_LOW = 0x03,
+    EN_PDIAG_TUNER_ALIGN_ITEM_IQ_GAIN_UP = 0x04,
+    EN_PDIAG_TUNER_ALIGN_ITEM_S_METER = 0x05,
+    EN_PDIAG_TUNER_ALIGN_ITEM_RF_AGC = 0x06,
+    EN_PDIAG_TUNER_ALIGN_ITEM_DNC_NOISE = 0x07,
+    EN_PDIAG_TUNER_ALIGN_ITEM_MUTE = 0x08,
+};
+
+/**
+ * Specifies a enum which describe the point of band 
+ * used in struct: StComdPDiagTunerAlignCmd StComdPDiagTunerAlignInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdPDiagTunerAlignBandPoint : uint8_t {
+    EN_PDIAG_BAND_POINT_FM_BOTTOM = 0x01,
+    EN_PDIAG_BAND_POINT_FM_MIDDLE = 0x02,
+    EN_PDIAG_BAND_POINT_FM_TOP = 0x03,
+    EN_PDIAG_BAND_POINT_AM_BOTTOM = 0x04,
+    EN_PDIAG_BAND_POINT_AM_MIDDLE = 0x05,
+    EN_PDIAG_BAND_POINT_AM_TOP = 0x06,
+};
+
+/**
+ * Specifies a enum which describe the tuner alignment operation
+ * used in struct: StComdPDiagTunerAlignCmd StComdPDiagTunerAlignInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdPDiagTunerAlignOper : uint8_t {
+    EN_PDIAG_TUNER_ALIGN_OPER_WRITE = 0x00, 
+    EN_PDIAG_TUNER_ALIGN_OPER_READ = 0x01,
+};
+
+/**
+ * Specifies a enum which describe the result of tuner alignment 
+ * used in struct: StComdPDiagTunerAlignInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdPDiagTunerAlignResult : uint8_t {
+    EN_PDIAG_TUNER_ALIGN_RESULT_NG = 0x00,
+    EN_PDIAG_TUNER_ALIGN_RESULT_OK = 0x01,
+};
+
+/**
+ * Specifies a enum which describe the mode of diag or exploit
+ * used in struct: StComdNDiagModeAndStatus
+ * Adaptive project: Base && Morley
+ */
+enum EnComdNDiagMode : uint8_t {
+    EN_NDIAG_MODE_DIAG = 0x00,
+    EN_NDIAG_MODE_EXPLOIT = 0x01,
+};
+
+/**
+ * Specifies a enum which describe the common off/on status in ComdDiag
+ * used in struct: StComdNDiagModeAndStatus StComdNDiagSpeakerTestData
+ * used in function: nDiagCameraPowCtrlReq notifyDiagFlatModeInfoResp notifyDiagAmigoLSISerToolInfoResp 
+ *                   notifyPDiagEQPinFlagResp notifyNDiagCameraPowCtrlResp notifyNDiagInitSeqErrInfoSetResp
+ * Adaptive project: Base && Apoo && Morley 
+ */
+enum EnComdDiagStatus : uint8_t {
+    EN_DIAG_STATUS_OFF = 0x00, 
+    EN_DIAG_STATUS_ON = 0x01,
+};
+
+/**
+ * Specifies a enum which describe the request type of get nissan diag result data  
+ * used in function: nDiagResultDataReq
+ * Adaptive project: Base && Morley
+ */
+enum EnComdNDiagResultDataReqType : uint8_t {
+    EN_NDIAG_RESULT_REQ_TYPE_INIT_DIAG_REQ = 0x01,     //init diag req
+    EN_NDIAG_RESULT_REQ_TYPE_INIT_SEQUENCE_REQ = 0x02, //init Sequence req
+    EN_NDIAG_RESULT_REQ_TYPE_SELF_DIAG_REQ = 0X03,     //self diag req
+    EN_NDIAG_RESULT_REQ_TYPE_AV_MONITER_DIAG = 0x04,   //AV moniter diag
+    EN_NDIAG_RESULT_REQ_TYPE_ERROR_RECORD = 0x05,      //Error record
+    EN_NDIAG_RESULT_REQ_TYPE_ALL_VERSION_REQ = 0x06,   //ALL Version Req
+    EN_NDIAG_RESULT_REQ_TYPE_CONNECT_RECORD = 0x07,    //connect record
+};
+
+/**
+ * Specifies a enum which describe the common result ok/ng in ComdDiag   
+ * used in struct: StComdNDiagInitResultData StComdNDiagAVMonitResultData
+ * used in function: notifyNDiagClearErrRecordResult notifyNDiagClearAVCountResult
+ *                   notifyNDiagClearUnitConnResult notifyNDiagClearSysInitErrResult
+ * Adaptive project: Base && Morley
+ */
+enum EnComdDiagResult : uint8_t {
+    EN_DIAG_RESULT_OK = 0x00,
+    EN_DIAG_RESULT_NG = 0x01,
+};
+
+/**
+ * Specifies a enum which describe init sequence error type  
+ * used in struct: StComdNDiagInitSeqResultData
+ * Adaptive project: Base && Morley
+ */
+enum EnComdNDiagInitSeqErrType : uint8_t {
+    EN_NDIAG_INIT_SEQ_ERR_TYPE_NOERR = 0x00,  //no error
+    EN_NDIAG_INIT_SEQ_ERR_TYPE_METER = 0x01,  //meter error
+    EN_NDIAG_INIT_SEQ_ERR_TYPE_STW_SW = 0x02, //stw sw error
+    EN_NDIAG_INIT_SEQ_ERR_TYPE_ALL = 0x03,    //all error
+};
+
+/**
+ * Specifies a enum which describe special result ok/ng/none in ComdDiag
+ * used in struct: StComdNDiagInitSeqResultData StComdNDiagSelfDiagResultData
+ * Adaptive project: Base && Morley
+ */
+enum EnComdNDiagSpecialResult : uint8_t {
+    EN_NDIAG_SPECIAL_RESULT_OK = 0x00, 
+    EN_NDIAG_SPECIAL_RESULT_NG = 0x01,
+    EN_NDIAG_SPECIAL_RESULT_NONE = 0xFF,
+};
+
+/**
+ * Specifies a enum which describe common validity valid/invalid in ComdDiag
+ * used in struct: StComdNDiagVerResultData
+ * Adaptive project: Base && Morley
+ */
+enum EnComdDiagValidity : uint8_t {
+    EN_DIAG_VALIDITY_VALID = 0x00,
+    EN_DIAG_VALIDITY_INVALID = 0x01,
+};
+
+/**
+ * Specifies a enum which describe connect record exist or inexist in ComdDiag
+ * used in struct: ComdDiagConnRecordResultData
+ * Adaptive project: Base && Morley
+ */
+enum EnComdNDiagConnRecordStatus : uint8_t {
+    EN_DIAG_CONN_RECORD_INEXIST = 0x00,
+    EN_DIAG_CONN_RECORD_EXIST = 0x01,
+};
+
+/**
+ * Specifies a enum which describe the request type of diag error information clear 
+ * used in function: nDiagClearErrInfoReq
+ * Adaptive project: Base && Morley
+ */
+enum EnComdNDiagErrInfoClearReqType : uint8_t {
+    EN_NDIAG_ERR_CLEAR_TYPE_UNIT_CONN = 0x02,
+    EN_NDIAG_ERR_CLEAR_TYPE_AV_COUNT = 0x03,
+    EN_NDIAG_ERR_CLEAR_TYPE_ERR_RECOED = 0x04,
+};
+
+/**
+ * Specifies a enum which describe the listern function in IComdDiagListener.hal
+ * used in function: registerListener
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdDiagEventId : uint64_t{
+    EN_DIAG_EID_notifyDiagFactColdStartInitEnd = 1 << 0,
+    EN_DIAG_EID_notifyDiagFlatModeInfoResp = 1 << 1,
+    EN_DIAG_EID_notifyDiagAUXADResp = 1 << 2,
+    EN_DIAG_EID_notifyPDiagEnterPanaDiagResp = 1 << 3,
+    EN_DIAG_EID_notifyPDiagExitPanaDiagResp = 1 << 4,
+    EN_DIAG_EID_notifyPDiagEQPinFlagResp = 1 << 5,
+    EN_DIAG_EID_notifyPDiagEQPinInfoResp = 1 << 6,
+    EN_DIAG_EID_notifyPDiagAmigoLSISerToolInfoResp = 1 << 7,
+    EN_DIAG_EID_notifyPDiagEnterAMTestModeResp = 1 << 8,
+    EN_DIAG_EID_notifyPDiagEnterFMTestModeResp = 1 << 9, 
+    EN_DIAG_EID_notifyPDiagExitAMTestModeResp = 1 << 10,
+    EN_DIAG_EID_notifyPDiagExitFMTestModeResp = 1 << 11,
+    EN_DIAG_EID_notifyPDiagTunerAlignInfoResp = 1 << 12,
+    EN_DIAG_EID_notifyPDiagTunerAlignResultResp = 1 << 13,
+    EN_DIAG_EID_notifyNDiagChangeModeAndStatusResp = 1 << 14,
+    EN_DIAG_EID_notifyNDiagResultDataInit = 1 <<  15,
+    EN_DIAG_EID_notifyNDiagResultDataInitSeq = 1 << 16,
+    EN_DIAG_EID_notifyNDiagResultDataSelfDiag = 1 << 17,
+    EN_DIAG_EID_notifyNDiagResultDataAVMonit = 1 << 18,
+    EN_DIAG_EID_notifyNDiagResultDataErrRecord = 1 << 19,
+    EN_DIAG_EID_notifyNDiagResultDataVersion = 1 << 20,
+    EN_DIAG_EID_notifyNDiagResultDataConnRecord = 1 << 21,
+    EN_DIAG_EID_notifyNDiagClearErrRecordResult = 1 << 22,
+    EN_DIAG_EID_notifyNDiagClearAVCountResult = 1 << 23,
+    EN_DIAG_EID_notifyNDiagClearUnitConnResult = 1 << 24,
+    EN_DIAG_EID_notifyNDiagSpeakerTestResp = 1 << 25,
+    EN_DIAG_EID_notifyNDiagCameraPowCtrlResp = 1 << 26,
+    EN_DIAG_EID_notifyNDiagInitSeqErrInfoSetResp = 1 << 27,
+};
+
+/**
+ * Specifies a bitfield which describe the assemble of EnComdDiagEventId
+ * when you want sonme functions you can bit or the element in EnComdDiagEventId
+ * Adaptive project: Morley
+ */
+typedef bitfield<EnComdDiagEventId> EnComdDiagEventIds;
+
+/**
+ * Specifies a enum which describe the AUX status
+ * used in struct: StComdDiagAUXInfo
+ * Adaptive project: Base && Apoo && Morley
+ */
+enum EnComdDiagAUXStatus : uint8_t {
+    EN_DIAG_AUX_STATUS_NULL = 0x00,
+    EN_DIAG_AUX_STATUS_AUX_OUT = 0x01,
+    EN_DIAG_AUX_STATUS_AUX_IN = 0x02,
+    EN_DIAG_AUX_STATUS_VTR_IN = 0x03,
+};
+
+/**
+ * Specifies a struct which describe common format of ad values in ComdDiag
+ * used in struct: StComdDiagAUXInfo
+ * Adaptive project:  Base && Apoo && Morley
+ */
+struct StComdDiagADValue{
+    uint8_t adHigh;
+    uint8_t adLow;    
+};
+
+/**
+ * Specifies a struct which describe the AUX response information
+ * used in function: notifyDiagAUXADResp
+ * Adaptive project:  Base && Apoo && Morley
+ */
+struct StComdDiagAUXInfo{
+    EnComdDiagAUXStatus auxStatus;
+    StComdDiagADValue auxAd;
+};
+
+/**
+ * Specifies a struct which describe the response information of factory cold start
+ * used in function: notifyDiagFacColdStartInitEnd
+ * Adaptive project:  Base && Apoo && Morley
+ */
+struct StComdDiagFactColdStartInfo{
+    EnComdDiagFactColdStartCause cause;
+    EnComdDiagAmigoInitStatus status;
+};
+
+/**
+ * Specifies a struct which describe common format of frequency in ComdDiag 
+ * used in struct: StComdPDiagAMInfo StComdPDiagFMInfo StComdPDiagTunerAlignInfo
+ * Adaptive project:  Base && Apoo && Morley
+ */
+struct StComdPDiagFreq{
+    uint8_t frequencyLow;
+    uint8_t frequencyHigh;
+};
+
+/**
+ * Specifies a struct which describe the AM response information
+ * used in function: notifyPDiagEnterAMTestModeResp
+ * Adaptive project:  Base && Apoo && Morley
+ */
+struct StComdPDiagAMInfo{
+    EnComdPDiagANTStatus antStatus;
+    uint8_t receptionLevel;
+    uint8_t frequencyOffset;
+    uint8_t adjacentChannel;
+    uint8_t coChannel;
+    StComdPDiagFreq frequency;
+};
+
+/**
+ * Specifies a struct which describe the FM response information
+ * used in function: notifyPDiagEnterFMTestModeResp
+ * Adaptive project:  Base && Apoo && Morley
+ */
+struct StComdPDiagFMInfo{
+    EnComdPDiagANTStatus antStatus;
+    uint8_t receptionLevel;
+    uint8_t vifBand;
+    uint8_t multipath;
+    uint8_t adjacentNoise;
+    uint8_t frequencyOffset;
+    uint8_t pilot;
+    StComdPDiagFreq frequency;
+};
+
+/**
+ * Specifies a struct which describe the tuner alignment request command
+ * used in function: pDiagTunerAlignCmd
+ * Adaptive project:  Base && Apoo && Morley
+ */
+struct StComdPDiagTunerAlignCmd{
+    EnComdPDiagBandType band;
+    EnComdPDiagTunerAlignItem item;
+    EnComdPDiagTunerAlignBandPoint bandPoint;
+    EnComdPDiagTunerAlignOper operate;
+};
+
+/**
+ * Specifies a struct which describe the tuner alignment request command response infomation
+ * used in function: notifyPDiagTunerAlignInfoResp
+ * Adaptive project:  Base && Apoo && Morley
+ */
+struct StComdPDiagTunerAlignInfo{
+    EnComdPDiagBandType band;
+    EnComdPDiagTunerAlignItem item;
+    EnComdPDiagTunerAlignBandPoint bandPoint;
+    EnComdPDiagTunerAlignResult result;
+    EnComdPDiagTunerAlignOper operate;
+    StComdPDiagFreq frequency;
+    uint8_t destination;
+    uint8_t sgFieldStrength;
+    uint8_t lsiInputFs;
+    uint8_t modulationNo;
+    uint8_t[24] alignResult;
+};
+
+/**
+ * Specifies a struct which describe in the end of tuner alignment result response information
+ * used in function: notifyPDiagTunerAlignResultResp
+ * Adaptive project:  Base && Apoo && Morley
+ */
+struct StComdPDiagTunerAlignResultInfo{
+    uint8_t[4] address;
+    uint8_t size;
+    uint8_t[8] result;
+};
+
+/**
+ * Specifies a struct which describe the mode and status format
+ * used in function: nDiagChangeModeAndStatus notifyNDiagChangeModeAndStatusResp
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagModeAndStatus{
+    EnComdNDiagMode mode;
+    EnComdDiagStatus status;
+};
+
+/**
+ * Specifies a struct which describe the init diag result response information
+ * used in function: notifyNDiagResultDataInit
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagInitResultData{
+    EnComdDiagResult result;
+    uint8_t count;
+};
+
+/**
+ * Specifies a struct which describe the init sequence diag result response information
+ * used in function: notifyNDiagResultDataInitSeq
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagInitSeqResultData{
+    EnComdNDiagSpecialResult result;
+    uint8_t meterSeqCount;
+    uint8_t steerKeySeqCount;
+    EnComdNDiagInitSeqErrType errType;
+};
+
+/**
+ * Specifies a struct which describe the self diag result response information
+ * used in function: notifyNDiagResultDataSelfDiag
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagSelfDiagResultData{
+    EnComdNDiagSpecialResult meterResult;
+    EnComdNDiagSpecialResult stwSwResult;
+};
+
+/**
+ * Specifies a struct which describe the AV moniter diag result response information
+ * used in function: notifyNDiagResultDataAVMonit
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagAVMonitResultData{
+    EnComdDiagResult busOffStatus;
+    uint8_t busOffCount;
+
+    EnComdDiagResult mpdtSendMeterStatus;
+    uint8_t mpdtSendMeterCount;
+
+    EnComdDiagResult mpdtSendSteerStatus;
+    uint8_t mpdtSendItmSteerCount;
+
+    EnComdDiagResult cmfSendSteerStatus;
+    uint8_t cmfSendSteerCount;
+
+    EnComdDiagResult cmfReceiveMeterStatus;
+    uint8_t cmfReceiveMeterCount;
+
+    EnComdDiagResult cmfReceiveSteerStatus;
+    uint8_t cmfReceiveSteerCount;
+};
+
+/**
+ * Specifies a struct which describe the error record response information
+ * used in function: notifyNDiagResultDataErrRecord
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagErrRecordResultData{
+    uint8_t avCommCircuitCount;
+    uint8_t meterConnectErrCount;
+    uint8_t meterInitCommErrCount;
+    uint8_t stwSwInitCommErrCount;
+};
+
+/**
+ * Specifies a struct which describe the version response information
+ * used in function: notifyNDiagResultDataVersion
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagVerResultData{
+    EnComdDiagValidity meterVerValidity;
+    EnComdDiagValidity stswVerValidity;
+    uint8_t[3] meterHardwareVer;
+    uint8_t[3] meterSoftwareVer;
+    uint8_t[3] stwSwHardwareVer;
+    uint8_t[3] stwSwSoftwareVer;
+};
+
+/**
+ * Specifies a struct which describe the connection record response information
+ * used in function: notifyNDiagResultDataConnRecord
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagConnRecordResultData{
+    EnComdNDiagConnRecordStatus meterRecord;
+    EnComdNDiagConnRecordStatus stswRecord;
+};
+
+/**
+ * Specifies a struct which describe the speaker test data format
+ * used in function: nDiagSpeakerTestReq notifyNDiagSpeakerTestResp
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagSpeakerTestData{
+    EnComdDiagStatus subWoofer;
+    EnComdDiagStatus leftFrontDoorSpeaker;
+    EnComdDiagStatus leftRearDoorSpeaker;
+    EnComdDiagStatus rightRearDoorSpeaker;
+    EnComdDiagStatus rightFrontDoorSpeaker;
+    EnComdDiagStatus rightFrontTweeter;
+    EnComdDiagStatus leftFrontTweeter;
+};

@@ -1,0 +1,33 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+package iauto.hardware.ucom.vcan@1.0;
+
+interface IComdVcanListener {
+    /**
+     * notify client AC Data Status
+     *
+     * @param info: AC Data Status Response
+     *
+     * @Adaptive project:
+     */
+    oneway notifyVcanACSettingResp(StComdVcanACDataStatusInform info);
+
+    /**
+     * notify client Common Data
+     *
+     * @param info: Common Data Inform Response
+     *
+     * @Adaptive project:
+     */
+    oneway notifyVcanCommDataResp(StComdVcanCommDataInform info);
+};

@@ -1,0 +1,33 @@
+/**
+ * Copyright @ 2013 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.sysctrl@1.0;
+
+import ISysCtrlCommonListener;
+
+/** {@hide} */
+interface ISysCtrlCommon {
+    /*
+     * The function will be discard. Don't use it.
+     */
+    isAlive() generates (bool ret);
+    /*
+     * The function be used to register listener to sysctrl in order to receive
+     * onAccOffReady notification.
+     */
+    registerListener(ISysCtrlCommonListener l);
+    /*
+     * The function only used by sys.sys use it to notify sysctrl acc off.
+     */
+    accOff();
+};

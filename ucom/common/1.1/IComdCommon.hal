@@ -1,0 +1,102 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.common@1.1;
+import @1.0::IComdCommon;
+import @1.0::types;
+import IComdCommonListener;
+
+interface IComdCommon extends @1.0::IComdCommon {
+    /**
+     * Client requests micon supply power for usb port
+     *
+     * @param reqData: The struct of usb option and power setting
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Poc
+     *
+     * Comd will call notifyCommonFuncUsbPowSetResp in IComdCommonListener
+     * when micon response the usb power setting result
+     */
+    commonFuncUsbPowSetReq(StComdCommonUsbPowSetReq reqData)
+        generates(EnComdCommonFuncResult funcResult);         //CT 10h　04h:   Navi USB power setting request
+
+    /**
+     * Client get usb otg over current or not status from comd
+     *
+     * @return usbOtgstatus: Usb otg over current or not status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Poc
+     *
+     * If comd don't get the data from micon,the status will be
+     * UNKNOWN. However, comd will use notifyCommonUsbOtgStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncUsbOtgStatusGet()
+        generates(EnComdCommonNormalOrNotStatus usbOtgstatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get usb host over current or not status from comd
+     *
+     * @return usbHoststatus: Usb host over current or not status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Poc
+     *
+     * If comd don't get the data from micon,the status will be
+     * UNKNOWN. However, comd will use notifyCommonUsbHostStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncUsbHostStatusGet()
+        generates(EnComdCommonNormalOrNotStatus usbHoststatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get amigo this time abnormal or not status from comd
+     *
+     * @return amigoStatus: Amigo this time abnormal or not status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: All
+     *
+     * If comd don't get the data from micon,the status will be
+     * UNKNOWN. However, comd will use notifyCommonAmigoStatusInfo in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncAmigoStatusInfoGet()
+        generates(EnComdCommonAmigoStatusInfo amigoStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get some status about vcan bus from comd
+     *
+     * @return vcanStatus: Vcan status struct
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * If comd don't get the data from micon,the status will be
+     * UNKNOWN. However, comd will use notifyCommonVcanStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncVcanStatusGet()
+        generates(StComdCommonVcanStatus vcanStatus
+                  , EnComdCommonFuncResult funcResult);
+};

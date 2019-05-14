@@ -1,0 +1,671 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.common@1.0;
+
+import IComdCommonListener;
+
+interface IComdCommon {
+    /**
+     * Client register IComdCommonListener remote pointer in comd common
+     * service
+     *
+     * @param listener: Client remote sp IComdCommonListener pointer
+     * @param serviceId: Client identity defined in comd
+     * @param eventIds: The events that client want to monitor
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Every client want any IComdCommonListener's event must call this
+     * function
+     */
+    registerListener(IComdCommonListener listener
+                     , EnComdCommonListenerID serviceId
+                     , EnComdCommonEventIds eventIds)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client remove registration information in comd common service
+     *
+     * @param serviceId: Client identity defined in comd
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Every client must call this function when he don't need any comd events
+     */
+    unRegisterListener(EnComdCommonListenerID serviceId)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client requests version from micon
+     *
+     * @param versionType: The type of version that client needs
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call notifyCommonFuncVersionResponse in IComdCommonListener
+     * when micon response the version information
+     */
+    commonFuncVersionReq(EnComdCommonVersionType versionType)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client requests micon clear start error flags that saved in micon
+     *
+     * @param clearData: The start error flags that client wants micon to clear
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call notifyCommonFuncStartInfoClearResponse in
+     * IComdCommonListener when micon response the clear result
+     */
+    commonFuncStartInfoClearReq(StComdCommonStartInfoClearReqCmd clearData)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client informs micon that the soc is in debug mode
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call notifyCommonFuncNaviDebugOnResponse in
+     * IComdCommonListener when micon response the result
+     */
+    commonFuncNaviDebugOnReq() generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client informs micon to restore factory settings
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Comd will call notifyCommonFuncFactoryDefaultResult in
+     * IComdCommonListener when micon response the result
+     */
+    commonFuncFactoryDefaultReq() generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client informs micon to do system reset
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: base
+     *
+     * When micon used ASENSE pin to inform soc reboot, soc need call this
+     * function as response. Only used with no WDT.
+     * This function is reserved and doesn't fit any current projects
+     */
+    commonFuncNaviResetReq() generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client informs micon to switch user
+     *
+     * @param switchUserReq: The target user that to switch
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * Comd will call notifyCommonFuncSwitchUserResponse in
+     * IComdCommonListener when micon response the user switch result
+     */
+    commonFuncSwitchUserReq(EnComdCommonSwitchUserReq switchUserReq)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client informs micon to do AVM action
+     *
+     * @param command: The action type that client wants micon to do
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * Comd will call notifyCommonFuncAVMCommandResult in
+     * IComdCommonListener when micon response result
+     */
+    commonFuncAVMCommand(EnComdCommonAVMCommand command)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client requests RTC data from micon
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * Comd will call notifyCommonFuncGetRTCResponse in
+     * IComdCommonListener when micon response RTC data
+     */
+    commonFuncGetRTCReq()
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client sets RTC data to micon
+     *
+     * @param data: The RTC data that set to micon
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * Comd will call notifyCommonFuncSetRTCResult in
+     * IComdCommonListener when micon response RTC data setting result
+     */
+    commonFuncSetRTCReq(StComdCommonRTCData data)
+        generates(EnComdCommonFuncResult funcResult);
+
+
+    // Set BitData  N->S
+    /**
+     * Client informs the usb otg over current status to micon
+     *
+     * @param usbStatus: Usb status is over current or not
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * Only call this function when usb over current status changed
+     */
+    commonFuncUsbOverCurrentStatus(EnComdCommonNormalOrNotStatus usbStatus)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client informs soc start status to micon
+     *
+     * @param aplRecStatus: Soc can receive micon data or not
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: base
+     *
+     * This function is base reserved and unused in most projects
+     */
+    commonFuncAplDataReceiveAvaliableStatus(EnComdCommonAplReceiveStatus aplRecStatus)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client requests micon to make beep1 sound
+     *
+     * @param beepReqStatus: Beep sound type, once or always
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley && Poc
+     */
+    commonFuncBeep1Req(EnComdCommonBeepStatus beepReqStatus)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client requests micon to make beep2 sound
+     *
+     * @param beepReqStatus: Beep sound type, once or always
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley && Poc
+     */
+    commonFuncBeep2Req(EnComdCommonBeepStatus beepReqStatus)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client requests micon to make beep3 sound
+     *
+     * @param beepReqStatus: Beep sound type, once or always
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     */
+    commonFuncBeep3Req(EnComdCommonBeepStatus beepReqStatus)
+        generates(EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client requests micon to change microphone to vr mode or hf mode
+     *
+     * @param ctrlType: The microphone mode that soc wants
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     */
+    commonFuncVrHfCtrlSwitch(EnComdCommonVrHfCtrlType ctrlType)
+        generates(EnComdCommonFuncResult funcResult);
+
+
+    // CT=Exh(version up).xls
+    /**
+     * Client informs micon to start update mode
+     *
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * Micon enter into update mode after client call this function and then
+     * wait WDT.
+     */
+    commonFuncUpdateEnterRequest()
+        generates(EnComdCommonFuncResult funcResult);
+
+
+    // Get information that stored in comd
+    /**
+     * Client get machine kind from comd
+     *
+     * @return machineKindData: machine kind data
+     *                          dataB0-> production information
+     *                          dataB1-> Sales destination
+     *                          dataB3-> vehicle intelligence or EqPin
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * DataB3 implication is indicated by dataB0
+     * If comd don't get the data from micon,the machineKindData will be
+     * UNKNOWN. However, comd will use notifyCommonMachineKind in
+     * IComdCommonListener to inform client after get the newest data from micon
+     */
+    commonFuncMachineKindGet()
+        generates(StComdCommonMachineKindData machineKindData
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get start info from comd
+     *
+     * @return startErrorData: Start info. If comd don't update from micon, the
+     *                         data will be UNKNOWN
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the startErrorData will be
+     * UNKNOWN. However, comd will use notifyCommonStartErrorMonitor in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncStartErrorMonitorGet()
+        generates(StComdCommonStartErrorMonitorData startErrorData
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get some module type such as DVD、DTV...
+     *
+     * @return moduleTypeData: Type struct include DVD\Tuner\AUX\TMC type
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the moduleTypeData will be
+     * UNKNOWN. However, comd will use notifyCommonModuleType in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncModuleTypeGet()
+        generates(StComdCommonModuleTypeData moduleTypeData
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get micon project number from comd
+     *
+     * @return miconProjectNumData: Micon project number
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the miconProjectNumData will be
+     * UNKNOWN. However, comd will use notifyCommonMiconProjectNum in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncMiconProjectNumGet()
+        generates(uint8_t miconProjectNumData
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get EqPin data from comd
+     *
+     * @return uEQPinData: EqPin data
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * If comd don't get the data from micon,the uEQPinData will be
+     * UNKNOWN. However, comd will use notifyCommonEQPin in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncEQPinGet()
+        generates(uint8_t uEQPinData
+                  , EnComdCommonFuncResult funcResult);
+
+    // commonFuncEQPinToVehicleTypeGet() generates(EnComdCommonVehicleType vehicleType,EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get power logic mode from comd
+     *
+     * @return powLogType: Power logic type
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the powLogType will be
+     * UNKNOWN. However, comd will use notifyCommonPowLogicType in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncPowLogTypeGet()
+        generates (EnComdCommonPowerLogicType powLogType
+                   , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get power key status from comd
+     *
+     * @return powKeyStatus: Power key status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the powKeyStatus will be
+     * UNKNOWN. However, comd will use notifyCommonPowerKeyStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncPowerKeyStatusGet()
+        generates(EnComdCommonPowerKeyStatus powKeyStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    // Get BitData status S->N at first time
+    /**
+     * Client get micon start state from comd
+     *
+     * @return miconStartStatus: Micon start state
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: base
+     *
+     * If comd don't get the data from micon,the miconStartStatus will be
+     * UNKNOWN. However, comd will use notifyCommonMiconStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncMiconStatusGet()
+        generates(EnComdCommonMiconStatus miconStartStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get some status about mcan bus from comd
+     *
+     * @return mcanStatusData: Mcan status struct
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley && Poc
+     *
+     * If comd don't get the data from micon,the mcanStatusData will be
+     * UNKNOWN. However, comd will use notifyCommonMcanStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncMcanStatusGet()
+        generates(StComdCommonMcanInfo mcanStatusData
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get reverse status from comd
+     *
+     * @return revStatus: REV status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the revStatus will be
+     * UNKNOWN. However, comd will use notifyCommonRevStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncRevStatusGet()
+        generates(EnComdCommonOnOffStatus revStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get parking status from comd
+     *
+     * @return parkingStatus: Parking status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the parkingStatus will be
+     * UNKNOWN. However, comd will use notifyCommonParkingStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncParkingStatusGet()
+        generates(EnComdCommonOnOffStatus parkingStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get fan on off status from comd
+     *
+     * @return fanStatus: Fan status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Poc
+     *
+     * If comd don't get the data from micon,the fanStatus will be
+     * UNKNOWN. However, comd will use notifyCommonFanStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncFanStatusGet()
+        generates(EnComdCommonOnOffStatus fanStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get GPS short circuit or not status from comd
+     *
+     * @return gpsShortStatus: GPS short circuit or not status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the gpsShortStatus will be
+     * UNKNOWN. However, comd will use notifyCommonGpsShortStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncGpsShortStatusGet()
+        generates(EnComdCommonGpsShortStatus gpsShortStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get GPS open circuit or not status from comd
+     *
+     * @return gpsOpenStatus: GPS open circuit or not status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the gpsOpenStatus will be
+     * UNKNOWN. However, comd will use notifyCommonGpsOpenStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncGpsOpenStatusGet()
+        generates(EnComdCommonGpsOpenStatus gpsOpenStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get soc temperature abnormal or not status from comd
+     *
+     * @return temperatureStatus: Soc temperature abnormal or not status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Poc
+     *
+     * If comd don't get the data from micon,the temperatureStatus will be
+     * UNKNOWN. However, comd will use notifyCommonTemperatureStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncTemperatureStatusGet()
+        generates(EnComdCommonNormalOrNotStatus temperatureStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get IG on off status from comd
+     *
+     * @return igStatus: IG on off status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the igStatus will be
+     * UNKNOWN. However, comd will use notifyCommonIGStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncIGStatusGet()
+        generates(EnComdCommonOnOffStatus igStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get mic insert or not status from comd
+     *
+     * @return micStatus: Mic insert or not status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Apoo
+     *
+     * If comd don't get the data from micon,the micStatus will be
+     * UNKNOWN. However, comd will use notifyCommonMicStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncMicStatusGet()
+        generates(EnComdCommonMicStatus micStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get illume open or not status from comd
+     *
+     * @return illStatus: Illume open or not status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the illStatus will be
+     * UNKNOWN. However, comd will use notifyCommonILLStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncILLStatusGet()
+        generates(EnComdCommonOnOffStatus illStatus
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get CMF1 status from comd
+     *
+     * @return status: CMF1 status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: base
+     *
+     * If comd don't get the data from micon,the status will be
+     * UNKNOWN. However, comd will use notifyCommonCMF1Status in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncCMF1StaGet()
+        generates(EnComdCommonCMF1Status status
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get AVM switch signal active or not status from comd
+     *
+     * @return status: AVM switch signal active or not status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * If comd don't get the data from micon,the status will be
+     * UNKNOWN. However, comd will use notifyCommonAVMSwiSigStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncAVMSwiSigStaGet()
+        generates(EnComdCommonAVMSwiSigStatus status
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get AVM connect status from comd
+     *
+     * @return status: AVM connect status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * If comd don't get the data from micon,the status will be
+     * UNKNOWN. However, comd will use notifyCommonAVMConStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncAVMConStaGet()
+        generates(EnComdCommonAVMConStatus status
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client get back camera connect status from comd
+     *
+     * @return status: Back camera connect status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     * If comd don't get the data from micon,the status will be
+     * UNKNOWN. However, comd will use notifyCommonBackCamConStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncBackCamConStaGet()
+        generates(EnComdCommonBackCamConStatus status
+                  , EnComdCommonFuncResult funcResult);
+
+    // special function
+    /**
+     * Client get soc with micon communication status
+     *
+     * @return status: Soc communication status with micon
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: all
+     *
+     * If comd don't get the data from micon,the status will be
+     * UNKNOWN. However, comd will use notifyCommonCommuStatus in
+     * IComdCommonListener to inform client after get the newest data from
+     * micon
+     */
+    commonFuncCommuStatusGet()
+        generates(EnComdCommonCommuStatus status
+                  , EnComdCommonFuncResult funcResult);
+};

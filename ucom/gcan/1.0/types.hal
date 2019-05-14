@@ -1,0 +1,169 @@
+/**
+ * Copyright @ 2013 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.gcan@1.0;
+
+/**
+ * EnComdGcanListenerID: Only client id is defined in there can use
+ *                     GCAN listener event.If you want use GCAN function
+ *                     please tell us to add one.
+ */
+enum EnComdGcanListenerID : uint8_t {
+    VEHICLE_INFO = 0x00,	/*For VEHICLE_INFO client APP */
+    TEST = 0xFF,	        /*For Comd Test */
+};
+
+/**
+ * EnComdGcanFuncResult: Comd execute function result
+ */
+enum EnComdGcanFuncResult : uint8_t {
+    OK = 0x00,
+    ERR_PARA = 0x01,
+    ERR_SERV = 0x02,
+    ERR_GCAN_DISCONNECT = 0x03,
+};
+
+/**
+ * EnComdGcanConnectStatus: GCAN connect status
+ *                        UNKNOW means initial communication with micon is
+ *                        not finished.
+ */
+enum EnComdGcanConnectStatus : uint8_t {
+    CONNECT = 0x00,
+    DISCONNECT = 0x01,
+    UNKNOW = 0xFF,
+};
+
+/**
+ * EnComdGcanIdStatus: GCANId status
+ */
+enum EnComdGcanIdStatus : uint8_t {
+    NOT_RECEIVE = 0x00,
+    RECEIVING = 0x01,
+    WAY_OFF = 0x02,
+};
+
+/**
+ * EnComdGcanIdRec: GCAN receive canid's list
+ */
+enum EnComdGcanIdRec : uint32_t {
+    AC1DCE  = 0x7CE00000,    //customize
+    ACN1S04 = 0x38100000,
+    ACN1S05 = 0x38200000,
+    ACN1S06 = 0x38300000,
+    ACN1S07 = 0x3B000000,
+    ACN1S08 = 0x38c00000,
+    ACN1S10 = 0x3A300000,    //Aircon
+    AVN1S06 = 0x38800000,    //Aircon
+    AVN1S39 = 0x58A00000,    //DMS
+    AVN1S44 = 0x6F900000,    //customize
+    AVN1S52 = 0x37700000,    //Seat
+    BDB1S01 = 0x62000000,
+    BDB1S08 = 0x62400000,
+    CGW1F01 = 0x33100000,    //DMS
+    DGT1D70 = 0x77000000,    //customize
+    DGT1DC6 = 0x7C600000,    //customize
+    DST1S02 = 0x6A100000,    //Seat
+    ECB1S08 = 0x0B400000,	   //VSC1S03
+    ECO1S01 = 0x16300000,
+    ECT1S92 = 0x3BC00000,
+    ECU1D78 = 0x77800000,    //customize
+    EHV1S90 = 0x3B600000,
+    EHV1S93	= 0x3CE00000,
+    EHV1S96	= 0x3F400000,
+    ENG1F03 = 0x3F900000,
+    ENG1F07 = 0x1C400000,
+    ENG1S03 = 0x2C400000,
+    ENG1S28 = 0x3D300000,
+    MET1S01 = 0x61000000,
+    MET1S02 = 0x61100000,
+    MET1S03 = 0x61800000,
+    MET1S04	= 0x61900000,
+    MET1S05 = 0x61A00000,
+    MET1S07 = 0x61C00000,
+    MET1S09 = 0x61300000,
+    MET1S12 = 0x61600000,
+    MET1S18 = 0x3E000000,
+    MET1S19 = 0x6F000000,
+    PLG1S06 = 0x43200000,
+    PST1S02 = 0x6B100000,    //Seat
+    RCN1S02 = 0x6C900000,    //Seat
+    STR1S01 = 0x02500000,
+    STR1S02 = 0x42300000,
+    UCB1S01 = 0x69A00000,    //customize
+    UCB1S02 = 0x69B00000,    //customize
+};
+
+/**
+ * EnComdGcanIdSend: GCAN send canid's list
+ */
+enum EnComdGcanIdSend : uint32_t {
+    AVN1S04 = 0x38E00000,
+    AVN1S05 = 0x38700000,
+};
+
+/**
+ * EnComdGcanVehicleType: vehicle type
+ */
+enum EnComdGcanVehicleType : uint8_t {
+    COMPETITION = 0x00,
+    HV = 0x01,
+};
+
+/**
+ * EnComdGcanEventId: The event list
+ */
+enum EnComdGcanEventId : uint64_t {
+    notifyGcanMessage = 1 << 0,
+    notifyGcanConnStatus = 1 << 1,
+    notifyGcanWayOffAllIdStatus = 1 << 2,
+    notifyGcanSpeedPulse = 1 << 3,
+    notifyGcanFuelSprayInfo = 1 << 4
+};
+
+/**
+ * EnComdGcanEventIds: The event list that client can choose
+ */
+typedef bitfield<EnComdGcanEventId> EnComdGcanEventIds;
+
+/**
+ * StComdGcanMsgRec: GCAN receive message struct
+ */
+struct StComdGcanMsgRec {
+    EnComdGcanIdRec canId;
+    vec<uint8_t> data;
+};
+
+/**
+ * StComdGcanMsgSend: GCAN receive message struct
+ */
+struct StComdGcanMsgSend {
+    EnComdGcanIdSend canId;
+    vec<uint8_t> data;
+};
+
+/**
+ * StComdGcanIdStatus: GCANId status 
+ */
+struct StComdGcanIdStatus {
+    EnComdGcanIdRec canId;
+    EnComdGcanIdStatus status;
+};
+
+/**
+ * StComdGcanFuelSprayInfo: fuel Spray information
+ */
+struct StComdGcanFuelSprayInfo {
+    uint32_t fuelSpray;
+    EnComdGcanVehicleType vehicleType;
+};
