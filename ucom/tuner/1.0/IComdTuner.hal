@@ -21,16 +21,19 @@ interface IComdTuner {
     *   when a new module need to listen the EnComdTuner information
     *   please invoke this function
     *
-    *   @param listener  : client sp pointer
-    *   @param serviceId : listener Id
-    *   @param eventIds  : function that client want to monitor
+    *   @param listener  : Client remote sp IComdTunerListener pointer
+    *   @param serviceId : Client identity defined in comd
+    *   @param eventIds  : The events that client want to monitor
     *
-    *   @return EnComdTunerFuncResult
+    *   @return EnComdTunerFuncResult :Comd excute result
     *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
+    *   
+    *   Every client want any IComdTuner Listener's event must call this
+    *   function
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     registerListener(IComdTunerListener listener,EnComdTunerListenerID serviceId,EnComdTunerEventIds eventIds) generates(EnComdTunerFuncResult funcResult);
 
@@ -38,14 +41,16 @@ interface IComdTuner {
     *   when the client don`t need to listen the ComdDiag information
     *   or the the client is death ,will invoke this function
     *
-    *   @param serviceId : listener Id
+    *   @param serviceId : Client identity defined in comd
     *
     *   @return EnComdTunerFuncResult
     *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
+    *
+    *   Every client must call this function when he don't need any comd events
     */
     unRegisterListener(EnComdTunerListenerID serviceId) generates(EnComdTunerFuncResult funcResult);
 
@@ -60,12 +65,14 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
+    *
+    *   The  band Types is FM1、FM2、AM
     */
     tunerLoopChangeBand() generates(EnComdTunerFuncResult funcResult);
 
     /**
-    *   Client informs micon to do ChangeBand action
+    *   The client notifies Micon to switch to FM1, FM2 or AM1
     *
     *   @param bandType : The Type Of Band
     *       EN_TUNER_BAND_FM1 : Band FM1
@@ -80,7 +87,9 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
+    *   
+    *   Specified band type Specify FM1, FM2 or AM1 to switch
     */
     tunerChangeBand(EnComdTunerBandInfoType bandType) generates(EnComdTunerFuncResult funcResult);
 
@@ -96,7 +105,9 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
+    *
+    *   Specify direction tuner single step adjustment
     */
     tunerManualTune(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
 
@@ -112,7 +123,25 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
+    *   
+    *   direction up:
+    *   Send this command to Micon on long press During Seek Up / Down
+    *   Micon stops Seek Up / Down if it receives 21h, enters Non Stop Manual Up
+    *   Send FFh to Micon when released and cancel Non Stop Manual Down
+    *
+    *   Otherwise:
+    *       If Micon receives 21h, it will enter Non Stop Manual Up
+    *       Send FFh to Micon when released and stop Non Stop Manual Up
+    *
+    *   direction down:
+    *   Send this command to Micon on long press During Seek Down
+    *   Micon stops Seek Up / Down if it receives 22h, enters Non Stop Manual Down
+    *   Send FFh to Micon when released and cancel Non Stop Manual Down
+    *
+    *   Otherwise:
+    *      If Micon receives 22h, it enters Non Stop Seek Down
+    *      Send FFh to Micon when released and cancel Non Stop Manual Down
     */
     tunerFastManualTune(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
 
@@ -128,7 +157,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerSeek(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
 
@@ -142,7 +171,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerSeekStop() generates(EnComdTunerFuncResult funcResult);
 
@@ -156,7 +185,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerSeekCancel() generates(EnComdTunerFuncResult funcResult);
 
@@ -172,7 +201,23 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
+
+    *    direction up:
+    *    Send this command to Micon on long press Seek Up   
+    *    Micon aborts Seek Up if it receives OAh Send FFh to Micon when released and do nothing
+    *    
+    *    Otherwise:
+    *       Micon enters Non Stop Seek Up if it receives OAh
+    *    Release FFh to Micon at time of release and enter Seek Up
+    *
+    *    direction down:
+    *    Send this command to Micon on long press During Seek Down
+    *    Micon aborts Seek Down if it receives OBh Send FFh to Micon when released and do nothing
+    *    
+    *   Otherwise:
+    *       If Micon receives OBh, it enters Non Stop Seek Down
+    *       Send off FFh to Micon and enter Seek Down
     */
     tunerFastSeek(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
 
@@ -188,7 +233,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerScanUp(EnComdTunerSSCMD cmd) generates(EnComdTunerFuncResult funcResult);
 
@@ -204,7 +249,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerTuneToChannel(StComdTunerChannel channel) generates(EnComdTunerFuncResult funcResult);
 
@@ -229,7 +274,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerTuneBandChannel(EnComdTunerBandAppoint bandType, StComdTunerChannel channel) generates(EnComdTunerFuncResult funcResult);
 
@@ -245,7 +290,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerBsm(EnComdTunerSSCMD cmd) generates(EnComdTunerFuncResult funcResult);
 
@@ -266,7 +311,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerPresetCall(EnComdTunerPresetIndex index) generates(EnComdTunerFuncResult funcResult);
 
@@ -287,7 +332,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerPresetMemory(EnComdTunerPresetIndex index) generates(EnComdTunerFuncResult funcResult);
 
@@ -303,7 +348,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerPresetTune(EnComdTunerDirectionCMD direction) generates(EnComdTunerFuncResult funcResult);
 
@@ -317,7 +362,9 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
+    *
+    *   This command is used when releasing Fast Seek / Tune Up / Down.
     */
     tunerFastRelease() generates(EnComdTunerFuncResult funcResult);
  //Get information of tuner in Comd
@@ -331,7 +378,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerGetDispInfo() generates (StComdTunerInfo tunerDispInfo,EnComdTunerFuncResult funcResult) ;
 
@@ -352,7 +399,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     */
     tunerGetPresetList(EnComdTunerBandInfoType bandType) generates (StComdPresetList presetList,EnComdTunerFuncResult funcResult);
  //Request infomation command to tuner
@@ -366,7 +413,7 @@ interface IComdTuner {
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     *   Request information of Display comd to tuner
     */
     tunerDispInfoReq() generates(EnComdTunerFuncResult funcResult);
@@ -381,14 +428,14 @@ interface IComdTuner {
     *       EN_TUNER_PLIST_REQ_BAND_AM1
     *       EN_TUNER_PLIST_REQ_BAND_AM2
     *       EN_TUNER_PLIST_REQ_BAND_CURRENT
-    *       EN_TUNER_PLIST_REQ_BAND_Morley
+    *       EN_TUNER_PLIST_REQ_BAND_all
 
     *   @return EnComdTunerFuncResult
     *       @retval EN_TUNER_FUNC_RESULT_OK       : operation ok
     *       @retval EN_TUNER_FUNC_RESULT_ERR_PARA : parameter error
     *       @retval EN_TUNER_FUNC_RESULT_ERR_SERV : service operate error
     *
-    *   Adaptive project : Morley
+    *   Adaptive project : all
     *   If there is no preset list, you need to set the frequency to an invalid value and send this data to soc. 
     */
     tunerPresetListInfoReq(EnComdTunerPrestListReqType reqType) generates(EnComdTunerFuncResult funcResult); //COMD_TUNER_PLIST_REQ_BAND_CURRENT as the default in Leepi

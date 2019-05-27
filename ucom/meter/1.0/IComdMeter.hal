@@ -21,16 +21,19 @@ interface IComdMeter {
     *   when a new module need to listen the EnComdTuner information
     *   please invoke this function
     *
-    *   @param listener  : client sp pointer
-    *   @param serviceId : listener Id
-    *   @param eventIds  : function that client want to monitor
+    *   @param listener  : Client remote sp IComdMeterListener pointer
+    *   @param serviceId : Client identity defined in comd
+    *   @param eventIds  : The events that client want to monitor
     *
-    *   @return EnComdMeterFuncResult
+    *   @return EnComdMeterFuncResult : Comd excute result
     *       @retval EN_METER_RESULT_OK       : operation ok
     *       @retval EN_METER_RESULT_ERR_PARA : parameter error
     *       @retval EN_METER_RESULT_ERR_SERV : service operate error
     *
     *   Adaptive project: Morley
+    *
+    *   Every client want any IComdMeter Listener's event must call this
+    *   function
     */
     registerListener(IComdMeterListener listener,EnComdMeterListenerID serviceId,EnComdMeterEventIds eventIds) generates(EnComdMeterFuncResult funcResult);
 
@@ -38,14 +41,16 @@ interface IComdMeter {
     *   when the client don`t need to listen the ComdDiag information
     *   or the the client is death ,will invoke this function
     *
-    *   @param serviceId : listener Id
+    *   @param serviceId : Client identity defined in comd
     *
-    *   @return EnComdMeterFuncResult
+    *   @return EnComdMeterFuncResult : Comd excute result
     *       @retval EN_METER_RESULT_OK       : operation ok
     *       @retval EN_METER_RESULT_ERR_PARA : parameter error
     *       @retval EN_METER_RESULT_ERR_SERV : service operate error
     *
     *   Adaptive project: Morley
+    *
+    *   Every client must call this function when he don't need any comd events
     */
     unRegisterListener(EnComdMeterListenerID serviceId) generates(EnComdMeterFuncResult funcResult);  
 
@@ -61,6 +66,8 @@ interface IComdMeter {
     *       @retval EN_METER_RESULT_ERR_SERV : service operate error
     *
     *   Adaptive project: Morley
+    *
+    *   SOC needs to be sent when Meter is connected
     */
     meterDispPackDataSendToMeter(StComdToMeterCmdDataInfo dispData) generates(EnComdMeterFuncResult funcResult);                      //Display Data Send Package One
 
@@ -75,6 +82,8 @@ interface IComdMeter {
     *       @retval EN_METER_RESULT_ERR_SERV : service operate error
     *
     *   Adaptive project: Morley
+    *
+    *   SOC needs to be sent when Meter is connected
     */
     meterDispPackExtendDataSendToMeter(StComdToMeterCmdDataInfoExten dispExtendData) generates(EnComdMeterFuncResult funcResult);     //Display Data Send Package Two &Three
 };

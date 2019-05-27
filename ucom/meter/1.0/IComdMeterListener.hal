@@ -18,22 +18,26 @@ interface IComdMeterListener {
     /**
     *   Notify Meter display  data information
     *
-    *   @param meterInfo : notify display pack data
+    *   @param meterInfo : display pack data
     *   
     *   @return none
     *
     *   Adaptive project :Morley
+    *
+    *   Micon sends Meter information to the SOC
     */
     oneway notifyMeterDispDataInfo(StComdFromMeterCmdDataInfo meterInfo);      //Meter Message Inform
 
     /**
     *   Notify Meter display data send ACK
     *
-    *   @param meterInfo : notify display data send Ack
+    *   @param meterInfo : display data send Ack
     *   
     *   @return none
     *
     *   Adaptive project :Morley
+    *
+    *   Micon notifies the SOC of the results
     */
     oneway notifyMeterDispDataSendAck(StComdMeterCmdDataSendAck sendAck);      //MCAN Message Send Result
 };

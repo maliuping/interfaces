@@ -20,7 +20,7 @@ interface IComdTunerListener {
      *
      * @param info: the tuner display information
      *
-     * Adaptive project: Morley
+     * Adaptive project: all
      */
     oneway notifyTunerDispInfo(StComdTunerInfo info);
     /**
@@ -28,7 +28,7 @@ interface IComdTunerListener {
      *
      * @param info: the tuner preset list information
      *
-     * Adaptive project: Morley
+     * Adaptive project: all
      */
     oneway notifyTunerPresetListInfo(StComdPresetInfo info);
 };
