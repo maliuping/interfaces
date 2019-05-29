@@ -20,6 +20,7 @@ enum EnComdCommonEventId : @1.0::EnComdCommonEventId {
     EN_COMMON_EID_UsbPowSetResp              = 1 << 36,
     EN_COMMON_EID_AmigoStatusInfo            = 1 << 37,
     EN_COMMON_EID_VcanStatus                 = 1 << 38,
+    EN_COMMON_EID_C1A_HSState                = 1 << 39,
 };
 /**
  * USB type define
@@ -73,4 +74,16 @@ struct StComdCommonVcanStatus {
     EnComdCommonChannelStatusInfo vcanChannelStatus;
     EnComdCommonNormalOrNotStatus vcanBusStatus;
     EnComdCommonVcanSleepPermit vcanSleepPemit;
+};
+
+/**
+ * C1A_HS state information
+ */
+enum EnComdCommonC1A_HSState : uint8_t {
+    EN_COMMON_C1A_HS_UNKOWN = 0x00,	        // state unknown
+    EN_COMMON_C1A_HS_OFF = 0x01,	        // state OFF_STATE
+    EN_COMMON_C1A_HS_SELECTIVE_OFF = 0x02,  // state SELECTIVE_OFF_STATE
+    EN_COMMON_C1A_HS_MMI_OFF = 0x03,	    // state MMI_OFF_STATE
+    EN_COMMON_C1A_HS_ON = 0x04,	            // state ON_STATE
+    EN_COMMON_C1A_HS_REPROGRAMMING = 0x05   // state REPROGRAMMING_STATE
 };
