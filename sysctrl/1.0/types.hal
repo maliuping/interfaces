@@ -65,3 +65,14 @@ enum StandbyReason : int32_t {
     STANDBY_REASON_INVALID = -1,
     STANDBY_REASON_DIAG_SYSTEM_INIT = 0,
 };
+
+/**
+ * Specifies a enum which describe the specific actions by sysctrlmanager
+ */
+enum PowerActionType : int32_t {
+    POWER_ACTION_TYPE_PRESTART = 0,       // OFF STATE to MMI OFF STATE
+    POWER_ACTION_TYPE_FULL_START = 1,     // MMI OFF STATE to ON STATE(pre state is OFF STATE)
+    POWER_ACTION_TYPE_RESTORE_START = 2,  // MMI OFF STATE to ON STATE(pre state is ON STATE)
+    POWER_ACTION_TYPE_FAKE_STOP = 3,      // ON STATE to MMI OFF STATE
+    POWER_ACTION_TYPE_SHUTDOWN = 4,       // MMI OFF STATE to OFF STATE
+ };

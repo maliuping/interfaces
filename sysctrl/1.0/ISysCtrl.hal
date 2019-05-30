@@ -101,6 +101,11 @@ interface ISysCtrl {
      * service all exit standby.
      */
     javaServiceExitedStandby();
+    /*
+     * Only used by sysctrlmanager.sysctrlmanager use it to notify sysctrl java
+     * service action finished.
+     */
+     // powerActionResult(string serviceName, PowerActionType powerActionType, bool result);
 
     /*
      * Only used by datamanager.datamanager use it to notify sysctrl data clear finished.
