@@ -20,6 +20,25 @@ LOCAL_VENDOR_MODULE := true
 
 
 #
+# Build types.hal (EnComdCommonC1A_HSState)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonC1A_HSState.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdCommonC1A_HSState
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
 # Build types.hal (EnComdCommonEventId)
 #
 GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonEventId.java
@@ -229,6 +248,25 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android.hidl.base-V1.0-java-static \
     iauto.hardware.ucom.common-V1.0-java-static \
 
+
+#
+# Build types.hal (EnComdCommonC1A_HSState)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonC1A_HSState.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdCommonC1A_HSState
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
 
 #
 # Build types.hal (EnComdCommonEventId)

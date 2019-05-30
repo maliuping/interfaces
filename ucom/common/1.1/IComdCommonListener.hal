@@ -93,4 +93,19 @@ interface IComdCommonListener extends @1.0::IComdCommonListener {
      * comd get a new status about vcan bus from micon
      */
     oneway notifyCommonVcanStatus(StComdCommonVcanStatus vcanStatus); // notify client VCAN Status Infomation
+
+    /**
+     * Comd informs client of C1A_HS state
+     *
+     * @param c1ahsStatus: C1A_HS state
+     *
+     * Adaptive project: Morley
+     *
+     * Firstly, client can use registerListener with parameter
+     * EN_COMMON_EID_C1A_HSState to monitor this function.
+     * Secondly, client call commonFuncC1A_HSStateGet to get state about C1A_HS
+     * Finally, comd will call this function to inform client data change when
+     * comd get a new state about C1A_HS from micon
+     */
+    oneway notifyCommonC1A_HSState(EnComdCommonC1A_HSState c1ahsStatus);
 };
