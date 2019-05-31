@@ -28,6 +28,7 @@ enum EnComdCommonListenerID  :  uint8_t {
     EN_COMMON_LIS_ID_TIME      = 0x09,
     EN_COMMON_LIS_ID_CAMERA    = 0x0A,
     EN_COMMON_LIS_ID_CONNECT   = 0x0B,
+    EN_COMMON_LIS_ID_SYSCTRL   = 0x0C,
     EN_COMMON_LIS_ID_TEST      = 0xFF,
 };
 /**
