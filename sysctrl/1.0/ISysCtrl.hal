@@ -65,9 +65,17 @@ interface ISysCtrl {
      */
     awaked(string name);
     /*
+     * Only used by servicebase.servicebase use it to notify sysctrl awake finished.
+     */
+    restoreAwaked(string name);
+    /*
      * Only used by servicebase.servicebase use it to notify sysctrl stop finished.
      */
     stopped(string name);
+    /*
+     * Only used by servicebase.servicebase use it to notify sysctrl fake stop finished.
+     */
+    fakeStopped(string name);
     /*
      * Only used by servicebase.servicebase use it to notify sysctrl UI resumed.
      */
@@ -105,7 +113,7 @@ interface ISysCtrl {
      * Only used by sysctrlmanager.sysctrlmanager use it to notify sysctrl java
      * service action finished.
      */
-     // powerActionResult(string serviceName, PowerActionType powerActionType, bool result);
+     powerActionResult(string serviceName, PowerActionType powerActionType, bool result);
 
     /*
      * Only used by datamanager.datamanager use it to notify sysctrl data clear finished.

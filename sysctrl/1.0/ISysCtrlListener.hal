@@ -32,10 +32,18 @@ interface ISysCtrlListener {
      * Only used by servicebase.sysctrl use it to notify servicebase do awake.
      */
     oneway onAwake();
+     /*
+     * Only used by servicebase.sysctrl use it to notify servicebase do restore awake.
+     */
+    oneway onRestoreAwake();
     /*
      * Only used by servicebase.sysctrl use it to notify servicebase do stop.
      */
     oneway onStop();
+    /*
+     * Only used by servicebase.sysctrl use it to notify servicebase do fake stop.
+     */
+    oneway onFakeStop();
     /*
      * Only used by servicebase.sysctrl use it to notify servicebase do UI resume.
      */
