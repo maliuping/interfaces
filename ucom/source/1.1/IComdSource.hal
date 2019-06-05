@@ -1,0 +1,35 @@
+/**
+ * Copyright @ 2017 - 2018 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+ package iauto.hardware.ucom.source@1.1;
+ import @1.0::IComdSource;
+ import @1.0::types;
+ import IComdSourceListener;
+
+ interface IComdSource extends @1.0::IComdSource {
+    /**
+     * Client inform micon specific tuner source Mute on or Mute off
+     * 
+     * @param sourceId: sourceId of tuner source
+     * @param muteType: mute on or off
+     * 
+     * @return ret: Comd excute command
+     *
+     * Adaptive project: Morley
+     */
+     setTunerSourceMute(EnComdSourceId sourceId, EnComdAudioKeyMuteType muteType)
+        generates (EnComdSourceReturn ret);                                                                                         
+ };
+
+
+
