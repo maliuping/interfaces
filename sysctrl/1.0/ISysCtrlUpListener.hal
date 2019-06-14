@@ -54,5 +54,5 @@ interface ISysCtrlUpListener {
      *Only used by sysctrlmanager.sysctrl notify sysctrlmanager do prepare start,full start
      *restore start, fake stop and shutdown according to powerActionType.
      */
-     onNotifyPowerAction(PowerActionType powerActionType);
+    oneway onNotifyPowerAction(PowerActionType powerActionType);
 };
