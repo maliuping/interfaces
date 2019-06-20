@@ -482,6 +482,7 @@ struct StComdNDiagInitSeqResultData{
 struct StComdNDiagSelfDiagResultData{
     EnComdNDiagSpecialResult meterResult;
     EnComdNDiagSpecialResult stwSwResult;
+    EnComdNDiagSpecialResult ivcMcanResult;
 };
 
 /**
@@ -502,11 +503,23 @@ struct StComdNDiagAVMonitResultData{
     EnComdDiagResult cmfSendSteerStatus;
     uint8_t cmfSendSteerCount;
 
+    EnComdDiagResult mpdtSendMNaviStatus;
+    uint8_t mpdtSendMNaviCount;
+
+    EnComdDiagResult mpdtSendIvcStatus;
+    uint8_t mpdtSendIvcCount;
+
     EnComdDiagResult cmfReceiveMeterStatus;
     uint8_t cmfReceiveMeterCount;
 
     EnComdDiagResult cmfReceiveSteerStatus;
     uint8_t cmfReceiveSteerCount;
+
+    EnComdDiagResult cmfReceiveMNaviStatus;
+    uint8_t cmfReceiveMNaviCount;
+
+    EnComdDiagResult cmfReceiveIvcStatus;
+    uint8_t cmfReceiveIvcCount;
 };
 
 /**
@@ -519,6 +532,10 @@ struct StComdNDiagErrRecordResultData{
     uint8_t meterConnectErrCount;
     uint8_t meterInitCommErrCount;
     uint8_t stwSwInitCommErrCount;
+    uint8_t meternaviConnectErrCount;
+    uint8_t meternaviInitCommErrCount;
+    uint8_t ivcConnectErrCount;
+    uint8_t ivcInitCommErrCount;
 };
 
 /**
@@ -543,6 +560,7 @@ struct StComdNDiagVerResultData{
 struct StComdNDiagConnRecordResultData{
     EnComdNDiagConnRecordStatus meterRecord;
     EnComdNDiagConnRecordStatus stswRecord;
+    EnComdNDiagConnRecordStatus ivcMcanRecord;
 };
 
 /**
