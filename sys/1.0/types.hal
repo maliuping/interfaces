@@ -86,12 +86,4 @@ enum SysdPropertyNameID : int32_t {
         uint8_t[2]    month;
         uint8_t[2]    day;
         uint8_t[4]    serialNum;
-/* tmp add for build,below */
-        uint8_t[2]    factoryNo;
-        uint8_t       gpsType;
-        uint8_t       engineType;
-        uint8_t       config;
-        uint8_t[8]    reserve;
-        uint8_t[2]    supplier;
-        uint8_t[12]   customize;
 };
