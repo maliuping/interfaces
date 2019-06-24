@@ -78,9 +78,17 @@ enum SysdPropertyNameID : int32_t {
   * Specifies a struct which describe vehicle authid info.
   */
  struct VehicleAuthIDInfo {
+        uint8_t       brandName;
+        uint8_t       vendorId;
+        uint8_t[3]    modelNo;
+        uint8_t       differenceCode;
+        uint8_t[2]    year;
+        uint8_t[2]    month;
+        uint8_t[2]    day;
+        uint8_t[4]    serialNum;
+/* tmp add for build,below */
         uint8_t[2]    factoryNo;
         uint8_t       gpsType;
-        uint8_t[5]    modelNo;
         uint8_t       engineType;
         uint8_t       config;
         uint8_t[8]    reserve;
