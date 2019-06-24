@@ -1,0 +1,111 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.tuner@1.1;
+import @1.0::types;
+
+enum EnComdTunerEventId : @1.0::EnComdTunerEventId{
+    EN_TUNER_EID_notifyTunerstationlistinfo = 1 << 2,
+    EN_TUNER_EID_notifyTunerstaionlistdata = 1 << 3,
+};
+
+/**
+ * Specifies a enum which describe the statinlist update
+ */
+ enum EnComdStationListCmd : uint8_t {
+    EN_STATIONLIST_UPDATE_STATRT = 0x00,
+    EN_STATIONLIST_UPDATE_STOP = 0x01,
+ };
+
+/**
+ * Specifies a enum which describe the current frequence
+ */
+enum EnComdCurFrequence : uint8_t {
+    EN_CURRENT_FREQUENCE_NO = 0x00,
+    EN_CURRENT_FREQUENCE_YES = 0x01,
+};
+
+ /**
+ * Specifies a enum which describe the tp idicator
+ */
+ enum EnComdTpIndicator : uint8_t {
+     EN_TPIDICATOR_OFF = 0x00,
+     EN_TPIDICATOR_ON = 0x01,
+ };
+
+/**
+ * Specifies a enum which describe the statinlist display
+ */
+ enum EnComdStationDisplay :uint8_t {
+    EN_STATION_DIS_OFF = 0x00,
+    EN_STATION_DIS_ON = 0x01,
+ };
+
+/**
+ * Specifies a enum which describe the bandtype
+ */
+ enum EnComdTunerBandType : uint8_t {
+    EN_TUNER_BAND_FM = 0x00,
+    EN_TUNER_BAND_AM = 0x01,
+    EN_TUNER_BAND_LW = 0x02,
+ };
+
+/**
+ * Specifies a struct  which describe the statinlist data request
+ */
+ struct  StComdStationListdataReq {
+    EnComdTunerBandType bandType;
+    uint8_t preListNum;
+    uint8_t listNum;
+ };
+
+ /**
+ * Specifies a struct  which describe the picode
+ */
+struct StComdPiCode {
+    uint8_t piCodelow;
+    uint8_t piCodehigh;
+};
+
+/**
+ * Specifies a struct  which describe the statinlist data
+ */
+struct StComdStationlistdata {
+    EnComdTunerBandType bandtype;
+    EnComdCurFrequence freq;
+    EnComdTunerPSFlagType psFlag;
+    EnComdTpIndicator indicat;
+    EnComdTunerPresetIndex index;
+    uint8_t ptyType;
+    StComdTunerChannel channel;
+    uint8_t[8] psName;
+    StComdPiCode pcode;
+};
+
+/**
+ * Specifies a struct  which describe the statinlist info response
+ */
+struct StComdStationListinfoRes {
+    EnComdTunerBandType bandType;
+    uint8_t listLength;
+    uint8_t curFreq;
+};
+
+/**
+ * Specifies a struct  which describe the statinlist data response
+ */
+ struct StComdStationListdataRes {
+    uint8_t preIndex;
+    uint8_t recNum;
+    StComdStationlistdata[4] data;
+ };

@@ -1,0 +1,105 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.tuner@1.1;
+import @1.0::IComdTuner;
+import @1.0::types;
+import IComdTunerListener;
+
+interface IComdTuner extends @1.0::IComdTuner {
+    /**
+     * Client requests micon do stationlist update
+     *
+     * @param reqData: Stationlist update start/stop
+     *     EN_STATIONLIST_UPDATE_STATRT = 0x00  //udpate start
+     *     EN_STATIONLIST_UPDATE_STOP = 0x01    //udpate stop
+     *
+     * @return funcResult: EnComdTunerFuncResult
+     *     EN_TUNER_FUNC_RESULT_OK = 0x00,
+     *     EN_TUNER_FUNC_RESULT_ERR_PARA = 0x01,
+     *     EN_TUNER_FUNC_RESULT_ERR_SERV = 0x02,
+     *
+     * Adaptive project: all
+     *
+    */
+     tunerStationListUpdate(EnComdStationListCmd cmd) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+     * Client requests micon display stationlist
+     *
+     * @param info: EnComdStationDisplay off/on
+     *      EN_STATION_DIS_OFF = 0x00,  //display stationlist 
+     *      EN_STATION_DIS_ON = 0x01,   //no display stationlist
+     *
+     * @return funcResult: EnComdTunerFuncResult
+     *     EN_TUNER_FUNC_RESULT_OK = 0x00,
+     *     EN_TUNER_FUNC_RESULT_ERR_PARA = 0x01,
+     *     EN_TUNER_FUNC_RESULT_ERR_SERV = 0x02,
+     *
+     * Adaptive project: all
+     *
+    */
+     tunerStationListDisplay(EnComdStationDisplay info) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+     * Client requests stationlist info 
+     *
+     * @param info: EnComdTunerBandType 
+     *     EN_TUNER_BAND_FM = 0x00,
+     *     EN_TUNER_BAND_AM = 0x01,
+     *     EN_TUNER_BAND_LW = 0x02,
+     *
+     * @return funcResult: EnComdTunerFuncResult
+     *     EN_TUNER_FUNC_RESULT_OK = 0x00,
+     *     EN_TUNER_FUNC_RESULT_ERR_PARA = 0x01,
+     *     EN_TUNER_FUNC_RESULT_ERR_SERV = 0x02,
+     *
+     * Adaptive project: all
+     *
+    */
+     tunerStationListInfoReq(EnComdTunerBandType info) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+     * Client requests stationlist data
+     *
+     * @param info: StComdStationListdataReq 
+     *     EnComdTunerBandType bandType;  //band type
+     *     uint8_t preListNum;  //total  stationlist numbers
+     *     uint8_t listNum;     //The number of stationlists sent per data request
+     *
+     * @return funcResult: EnComdTunerFuncResult
+     *     EN_TUNER_FUNC_RESULT_OK = 0x00,
+     *     EN_TUNER_FUNC_RESULT_ERR_PARA = 0x01,
+     *     EN_TUNER_FUNC_RESULT_ERR_SERV = 0x02,
+     *
+     * Adaptive project: all
+     *
+    */
+     tunerStationListDataReq(StComdStationListdataReq info) generates(EnComdTunerFuncResult funcResult);
+
+    /**
+     * Client request radiosounds  mute/on 
+     *
+     * @param cmd: EnComdRadioMute 
+     *     EN_RADIO_PLAY = 0x00,  //radio sounds play
+     *     EN_RADIO_MUTE = 0x01,  //radio sounds mute
+     * @return funcResult: EnComdTunerFuncResult
+     *     EN_TUNER_FUNC_RESULT_OK = 0x00,
+     *     EN_TUNER_FUNC_RESULT_ERR_PARA = 0x01,
+     *     EN_TUNER_FUNC_RESULT_ERR_SERV = 0x02,
+     *
+     * Adaptive project: all
+     *
+    */
+     tunerRadioSounds (EnComdRadioMute cmd) generates(EnComdTunerFuncResult funcResult);
+};
