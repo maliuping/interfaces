@@ -13,6 +13,11 @@
 
 package iauto.hardware.ucom.tuner@1.0;
 
+enum EnComdRadioMute : uint8_t {
+    EN_RADIO_PLAY = 0x00,
+    EN_RADIO_MUTE = 0x01,
+};
+
 enum EnComdTunerListenerID : uint8_t {
     EN_TUNER_LIS_ID_RADIO_APP = 0x00,
     EN_TUNER_LIS_ID_TM_APP = 0x01,
@@ -88,6 +93,7 @@ enum EnComdTunerStatusType : uint8_t {
     EN_TUNER_STATUS_PI_SEARCH = 0x08,
     EN_TUNER_STATUS_SCAN = 0x09,
     EN_TUNER_STATUS_SCAN_HOLD = 0x0A,
+    EN_TUNER_STATUS_STATIONLIST_UPDATEING = 0x0B,
     EN_TUNER_STATUS_OFF = 0xFF,
 };
 
@@ -102,6 +108,7 @@ struct StComdTunerChannel{
 };
 
 struct StComdTunerInfo {
+    EnComdRadioMute cmd;
     EnComdTunerBandInfoType band;
     EnComdTunerPresetIndex presetNo;
     StComdTunerChannel channel;
