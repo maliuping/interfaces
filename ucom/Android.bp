@@ -9,5 +9,6 @@ subdirs = [
     "sourceMock/1.0",
     "testmode/1.0",
     "tuner/1.0",
+    "tuner/1.1",
     "vcan/1.0",
 ]
