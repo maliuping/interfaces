@@ -21,6 +21,7 @@ enum EnComdCommonEventId : @1.0::EnComdCommonEventId {
     EN_COMMON_EID_AmigoStatusInfo            = 1 << 37,
     EN_COMMON_EID_VcanStatus                 = 1 << 38,
     EN_COMMON_EID_C1A_HSState                = 1 << 39,
+    EN_COMMON_EID_CanSpeedPulse              = 1 << 40, 
 };
 /**
  * USB type define
@@ -74,6 +75,13 @@ struct StComdCommonVcanStatus {
     EnComdCommonChannelStatusInfo vcanChannelStatus;
     EnComdCommonNormalOrNotStatus vcanBusStatus;
     EnComdCommonVcanSleepPermit vcanSleepPemit;
+};
+
+/**
+ * get speed pulse by can signal
+ */
+struct StComdCommonCansignalSpeed {
+    uint8_t cansignalspeed;
 };
 
 /**

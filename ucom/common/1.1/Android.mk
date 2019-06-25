@@ -134,6 +134,25 @@ $(GEN): $(LOCAL_PATH)/types.hal
 LOCAL_GENERATED_SOURCES += $(GEN)
 
 #
+# Build types.hal (StComdCommonCansignalSpeed)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/StComdCommonCansignalSpeed.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.StComdCommonCansignalSpeed
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
 # Build types.hal (StComdCommonUsbPowSetReq)
 #
 GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/StComdCommonUsbPowSetReq.java
@@ -358,6 +377,25 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
         iauto.hardware.ucom.common@1.1::types.EnComdCommonVcanSleepPermit
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (StComdCommonCansignalSpeed)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/StComdCommonCansignalSpeed.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.StComdCommonCansignalSpeed
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)

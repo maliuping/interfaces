@@ -461,6 +461,7 @@ struct StComdCommonKeyCodeData {
     EnComdCommonSteeringKeyCode steeringKeyCode;//steering key code
     EnComdCommonRemoteKeyCode   remoteKeyCode;  //remote key code
     EnComdCommonHardKeyCode     hardKeyCode;    //hard key code
+    uint8_t knobvalue;
 };
 /******************************************Overview.xls*******************************************************/
 
