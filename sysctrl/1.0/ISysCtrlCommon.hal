@@ -30,4 +30,8 @@ interface ISysCtrlCommon {
      * The function only used by sys.sys use it to notify sysctrl acc off.
      */
     accOff();
+    /*
+     * The function only used by sys.sys use it to notify sys initialize complete.
+     */
+    sysInitComplete();
 };
