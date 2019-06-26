@@ -108,4 +108,18 @@ interface IComdCommonListener extends @1.0::IComdCommonListener {
      * comd get a new state about C1A_HS from micon
      */
     oneway notifyCommonC1A_HSState(EnComdCommonC1A_HSState c1ahsStatus);
+
+
+    //CT=9xh(speed pulse).xls
+    /**
+     * Comd informs client of micon speed pulse data by can signal
+     *
+     * @param cansignalspeed: The micon speed pulse data
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_CanSpeedPulse to monitor this function.
+     */
+     oneway notifyCommonCanSignalSpeedPulse(StComdCommonCansignalSpeed cansignalspeed);    //CT 92h ：Speed pulse
 };
