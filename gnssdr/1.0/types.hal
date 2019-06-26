@@ -78,11 +78,24 @@ struct StLocationInfo {
     string              pascd;           // PASCD
 };
 
+enum EnGyroFlags : uint8_t {
+    EN_GNSSDRD_GYRO_HAS_YAW = 1 << 0,
+    EN_GNSSDRD_GYRO_HAS_PITCH = 1 << 1,
+    EN_GNSSDRD_GYRO_HAS_ROLL = 1 << 2,
+};
+
 // gyro data
 struct StGyroRawData {
     float             yaw;             // yaw   [dps]
     float             pitch;           // pitch [dps]
     float             roll;            // roll  [dps]
+    bitfield<EnGyroFlags> gyroFlags;   // flag
+};
+
+enum EnGsnsFlags : uint8_t {
+    EN_GNSSDRD_GSNS_HAS_X = 1 << 0,
+    EN_GNSSDRD_GSNS_HAS_Y = 1 << 1,
+    EN_GNSSDRD_GSNS_HAS_Z = 1 << 2,
 };
 
 // gsensor raw data
@@ -90,6 +103,7 @@ struct StGsnsRawData {
     float             x;               // x  [m/s2]
     float             y;               // y  [m/s2]
     float             z;               // z  [m/s2]
+    bitfield<EnGsnsFlags> gnssFlags;   // flag
 };
 
 // sensor raw data (50ms)
@@ -103,11 +117,13 @@ struct StSensorData {
 // sensor info of one pack
 struct StSensorInfo {
     vec<StSensorData>    sensor;       // gyro, gsns and tsns info
+    uint8_t              seqNum;       // sequence number[1-255]
 };
 
 // pulse info of one pack
 struct StPulseInfo {
     vec<StPulseCommonData> pulse;
+    uint8_t                seqNum;      // sequence number[1-255]
 };
 
 // gps antenna open status
@@ -177,6 +193,14 @@ enum EnGnssConstellationType : uint16_t {
     EN_GNSSDRD_CONSTELLATION_GALILEO,
 };
 
+/**
+ * Flags that indicate information about the satellite
+ */
+enum EnGnssSvStatus : uint8_t {
+    NONE                  = 0,
+    USED_IN_FIX           = 1,
+};
+
 // sv info
 struct StGnssSvInfo {
     /**
@@ -209,6 +233,9 @@ struct StGnssSvInfo {
 
     /** Azimuth of SV in degrees. */
     float azimuth;
+
+    /** sv flag **/
+    EnGnssSvStatus svStatus;
 };
 
 // sv status
