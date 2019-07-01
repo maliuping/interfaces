@@ -1,0 +1,112 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.vehicle@1.0;
+
+interface IComdVehicleListener {
+    /**
+     * @brief Comd informs client of vehicle status
+     *
+     * @param [IN] respData: vehicle status
+     *
+     * @return None
+     *
+     * From: 02.CT=8xh(vehicle data).xls (0x81 0x01 0x02)
+     *
+     * Adaptive Project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_VEHICLE_EID_VehicleStatus to monitor this function.
+     */
+    oneway notifyVehicleFuncVehicleStatusResp(StComdVehicleVehicleStatus respData);
+
+    /**
+     * @brief Comd informs client of steering angle & camera data
+     *
+     * @param [IN] respData: steering angle & camera data
+     *
+     * @return None
+     *
+     * From: 02.CT=8xh(vehicle data).xls (0x81 0x01 0x03)
+     *
+     * Adaptive Project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_VEHICLE_EID_SteeringAngleCamera to monitor this function.
+     */
+    oneway notifyVehicleFuncSteeringAngleCameraDataResp(StComdVehicleSteeringAngleCameraData respData);
+
+    /**
+     * @brief Comd informs client of seat data
+     *
+     * @param [IN] respData: seat data
+     *
+     * @return None
+     *
+     * From: 02.CT=8xh(vehicle data).xls (0x81 0x01 0x04)
+     *
+     * Adaptive Project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_VEHICLE_EID_SeatInfo to monitor this function.
+     */
+    oneway notifyVehicleFuncSeatDataResp(StComdVehicleSeatData respData);
+
+    /**
+     * @brief Comd informs client of avm data
+     *
+     * @param [IN] respData: avm data
+     *
+     * @return None
+     *
+     * From: 02.CT=8xh(vehicle data).xls (0x81 0x01 0x05)
+     *
+     * Adaptive Project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_VEHICLE_EID_AvmInfo to monitor this function.
+     */
+    oneway notifyVehicleFuncAvmDataResp(StComdVehicleAvmData respData);
+
+    /**
+     * @brief Comd informs client of fota data
+     *
+     * @param [IN] respData: fota data
+     *
+     * @return None
+     *
+     * From: 02.CT=8xh(vehicle data).xls (0x81 0x01 0x06)
+     *
+     * Adaptive Project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_VEHICLE_EID_FotaInfo to monitor this function.
+     */
+    oneway notifyVehicleFuncFotaDataResp(StComdVehicleFotaData respData);
+
+    /**
+     * @brief Comd informs client of day night mode
+     *
+     * @param [IN] respData: day night mode
+     *
+     * @return None
+     *
+     * From: 01.Overview.xls
+     *
+     * Adaptive Project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_VEHICLE_EID_DayNight to monitor this function.
+     */
+    oneway notifyVehicleFuncDayNightModeResp(EnComdVehicleDayNightMode respData);
+};

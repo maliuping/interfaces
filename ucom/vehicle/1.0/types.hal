@@ -1,0 +1,755 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.vehicle@1.0;
+
+/**
+ * Specifies a enum which describe the register listener ID
+ */
+enum EnComdVehicleListenerID : uint8_t {
+    EN_VEHICLE_LIS_ID_VEHICLEINFO = 0x01,
+    EN_VEHICLE_LIS_ID_CAMERA      = 0x02,
+    EN_VEHICLE_LIS_ID_DCM         = 0x03,
+    EN_VEHICLE_LIS_ID_ADAS        = 0x04,
+    EN_VEHICLE_LIS_ID_TEST        = 0xFF,
+};
+
+/**
+ * Specifies a enum which describe the function execution result
+ * used in function : every function in IComdVehicle.hal
+ */
+enum EnComdVehicleFuncResult : uint8_t {
+    EN_VEHICLE_RESULT_OK = 0x00,        // OK
+    EN_VEHICLE_RESULT_ERR_PARA = 0x01,  // Parameter Error
+    EN_VEHICLE_RESULT_ERR_SERV = 0x02,  // Server Error
+};
+
+/**
+ * Specifies a enum which describe the vehicle can ID(Send)
+ */
+enum EnComdVehicleCanIdSend : uint32_t {
+    ADASISV2_A101      = 0x0000025E,  // ADAS
+    ADASISV2_A102      = 0x000003A0,  // ADAS
+    ADASISV2_A103      = 0x0000054C,  // ADAS
+    ADASISV2_A104      = 0x000003A1,  // ADAS
+    ADASISV2_A105      = 0x000003A3,  // ADAS
+    ADASISV2_A106      = 0x000006A1,  // ADAS
+    IVI_A5             = 0x000003C7,  // AVM/POWER
+    IVI_USERSETPREF_A5 = 0x000005B8,  // Seat
+    NAV_TO_DTOOL       = 0x00000767,  // Diag
+};
+
+/**
+ * Specifies a enum which describe the vehicle can ID(Receive)
+ */
+enum EnComdVehicleCanIdRecv : uint32_t {
+    AVM_A1               = 0x000005B3,  // AVM/DTC
+    BCM_A110             = 0x00000477,  // POWER
+    BCM_A112             = 0x00000479,  // POWER
+    BCM_A113             = 0x0000047A,  // POWER
+    DSMU_A1              = 0x000005BC,  // Seat
+    DSMU_A102            = 0x0000058E,  // Seat
+    DTOOL_to_NAV         = 0x00000747,  // Diag
+    METER_A104           = 0x00000451,  // Vehicle
+    PSCU_A101            = 0x000005DF,  // Seat/DTC
+    PSCU_R1              = 0x000005BF,  // Seat
+    STRG_A1              = 0x000000A8,  // SWC
+    TCU_A101             = 0x000003F4,  // FOTA
+    USM_A101             = 0x00000453,  // Diag/POWER/SWC
+    VDC_A114             = 0x00000439,  // Vehicle/DTC
+    VDC_A6               = 0x000000AB,  // SWC
+    VDC_A9               = 0x0000028A,  // Vehicle
+    VEHICLEID_CANHS_R_01 = 0x0000069F,  // Diag
+};
+
+/**
+ * Specifies a enum which describe the register event ID
+ */
+enum EnComdVehicleEventId : uint64_t {
+    EN_VEHICLE_EID_ACStatus                 = 1 << 0,
+    EN_VEHICLE_EID_VehicleStatus            = 1 << 1,
+    EN_VEHICLE_EID_SteeringAngleCamera      = 1 << 2,
+    EN_VEHICLE_EID_SeatInfo                 = 1 << 3,
+    EN_VEHICLE_EID_AvmInfo                  = 1 << 4,
+    EN_VEHICLE_EID_FotaInfo                 = 1 << 5,
+    EN_VEHICLE_EID_DayNight                 = 1 << 6,
+};
+
+typedef bitfield<EnComdVehicleEventId> EnComdVehicleEventIds;
+
+/**
+ * 02.CT=6xh(CAN data).xls
+ *
+ * CT: 0x68 0x01
+ *
+ * Send Vehicle Can Message
+ */
+struct StComdVehicleVcanMsg {
+    EnComdVehicleCanIdSend canId;
+    uint8_t                dlc;
+    uint8_t[8]             data;
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x02
+ *
+ * Night Rheostated Light Signal Status
+ */
+enum EnComdVehicleLightStatus : uint8_t {
+    EN_VEHICLE_LIGHT_NORMAL        = 0x00,  // Normal
+    EN_VEHICLE_LIGHT_SIGNAL_SUDDEN = 0xFE,  // Signal Sudden
+    EN_VEHICLE_LIGHT_NOT_GET       = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x02
+ *
+ * Parking Brake Status
+ */
+enum EnComdVehicleParkingBrakeStatus : uint8_t {
+    EN_VEHICLE_PARKING_BRAKE_RESERVED      = 0x00,  // Not Uesd
+    EN_VEHICLE_PARKING_BRAKE_NOT_APPLIED   = 0x01,  // Automatic or Manual Parking Brake not applied
+    EN_VEHICLE_PARKING_BRAKE_APPLIED       = 0x02,  // Automatic or Manual Parking Brake applied
+    EN_VEHICLE_PARKING_BRAKE_UNAVAILABLE   = 0x03,  // Unavailable
+    EN_VEHICLE_PARKING_BRAKE_SIGNAL_SUDDEN = 0xFE,  // Signal Sudden
+    EN_VEHICLE_PARKING_BRAKE_NOT_GET       = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x02
+ *
+ * DistanceTotalizer Status
+ */
+enum EnComdVehicleDistanceStatus : uint8_t {
+    EN_VEHICLE_DISTANCE_NORMAL        = 0x00,  // Normal
+    EN_VEHICLE_DISTANCE_SIGNAL_SUDDEN = 0xFE,  // Signal Sudden
+    EN_VEHICLE_DISTANCE_NOT_GET       = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x02
+ *
+ * Vehicle Status
+ */
+struct StComdVehicleVehicleStatus {
+    uint8_t                          lightMaxPercent;
+    EnComdVehicleLightStatus         lightStatus;
+    EnComdVehicleParkingBrakeStatus  parkingBrakeStatus;
+    uint8_t                          distanceHighByte;
+    uint8_t                          distanceMiddleByte;
+    uint8_t                          distanceMiddleLowByte;
+    uint8_t                          distanceLowByte;
+    EnComdVehicleDistanceStatus      distanceStatus;
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x03
+ *
+ * Swa Sensor Internal Status
+ */
+enum EnComdVehicleSwaSensorStatus : uint8_t {
+    EN_VEHICLE_SWA_SENSOR_NOT_CALIBRATED_NOT_INDEXED = 0x00,  // Not Calibrated, Not Indexed
+    EN_VEHICLE_SWA_SENSOR_NOT_CALIBRATED_INDEXED     = 0x01,  // Not Calibrated, Indexed
+    EN_VEHICLE_SWA_SENSOR_FAULT                      = 0x02,  // Fault
+    EN_VEHICLE_SWA_SENSOR_RESERVED1                  = 0x03,  // Reserved
+    EN_VEHICLE_SWA_SENSOR_CALIBRATED_NOT_INDEXED     = 0x04,  // Calibrated, Not Indexed
+    EN_VEHICLE_SWA_SENSOR_CALIBRATED_INDEXED         = 0x05,  // Calibrated, Indexed
+    EN_VEHICLE_SWA_SENSOR_RESERVED2                  = 0x06,  // Reserved
+    EN_VEHICLE_SWA_SENSOR_RESERVED3                  = 0x07,  // Reserved
+    EN_VEHICLE_SWA_SENSOR_SIGNAL_SUDDEN              = 0xFE,  // Signal Sudden
+    EN_VEHICLE_SWA_SENSOR_NOT_GET                    = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x03
+ *
+ * Steering Wheel Angle Corrected Status
+ */
+enum EnComdVehicleSteeringAngleStatus : uint8_t {
+    EN_VEHICLE_STEERING_ANGLE_NORMAL        = 0x00,  // Normal
+    EN_VEHICLE_STEERING_ANGLE_SIGNAL_SUDDEN = 0xFE,  // Signal Sudden
+    EN_VEHICLE_STEERING_ANGLE_NOT_GET       = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x03
+ *
+ * Steering Angle & Camera Data
+ */
+struct StComdVehicleSteeringAngleCameraData {
+    EnComdVehicleSwaSensorStatus      swaSensorStatus;
+    uint8_t                           steeringAngleHighByte;
+    uint8_t                           steeringAngleLowByte;
+    EnComdVehicleSteeringAngleStatus  steeringAngleStatus;
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Dr Lumbar Display Request X Axis
+ */
+enum EnComdVehicleDrLumbarDisplayReqXAxis : uint8_t {
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_X_AXIS_NO_REQ        = 0x00,  // No Display Request
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_REQ_X_AXIS_FRONTWARD = 0x01,  // X Axis Frontward
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_REQ_X_AXIS_BACKWARD  = 0x02,  // X Axis Backward
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_REQ_NOT_MONITORED    = 0x03,  // Not Monitored
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_SIGNAL_SUDDEN        = 0xFE,  // Signal Sudden
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_NOT_GET              = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Dr Lumbar Display Request Z Axis
+ */
+enum EnComdVehicleDrLumbarDisplayReqZAxis : uint8_t {
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_Z_AXIS_NO_REQ        = 0x00,  // No Display Request
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_REQ_Z_AXIS_FRONTWARD = 0x01,  // Z Axis Frontward
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_REQ_Z_AXIS_BACKWARD  = 0x02,  // Z Axis Backward
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_REQ_NOT_MONITORED    = 0x03,  // Not Monitored
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_SIGNAL_SUDDEN        = 0xFE,  // Signal Sudden
+    EN_VEHICLE_DR_LUMBAR_DISPLAY_NOT_GET              = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Driver Massage Intensity State
+ */
+enum EnComdVehicleDriverMsgIntensityState : uint8_t {
+    EN_VEHICLE_DRIVER_MSG_NO_INTENSITY  = 0x00,  // No Intensity
+    EN_VEHICLE_DRIVER_MSG_INTEMSITY1    = 0x01,  // Intensity 1
+    EN_VEHICLE_DRIVER_MSG_INTEMSITY2    = 0x02,  // Intensity 2
+    EN_VEHICLE_DRIVER_MSG_INTEMSITY3    = 0x03,  // Intensity 3
+    EN_VEHICLE_DRIVER_MSG_INTEMSITY4    = 0x04,  // Intensity 4
+    EN_VEHICLE_DRIVER_MSG_INTEMSITY5    = 0x05,  // Intensity 5
+    EN_VEHICLE_DRIVER_MSG_RESERVED1     = 0x06,  // Not Used
+    EN_VEHICLE_DRIVER_MSG_RESERVED2     = 0x07,  // Not Used
+    EN_VEHICLE_DRIVER_MSG_SIGNAL_SUDDEN = 0x0E,  // Signal Sudden
+    EN_VEHICLE_DRIVER_MSG_NOT_GET       = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Driver Massage Program State
+ */
+enum EnComdVehicleDriverMsgProgramState : uint8_t {
+    EN_VEHICLE_DRIVER_MSG_NO_RUNNING       = 0x00,  // Message No Running
+    EN_VEHICLE_DRIVER_MSG_PROGRAM1_RUNNING = 0x01,  // Program 1 Running
+    EN_VEHICLE_DRIVER_MSG_PROGRAM2_RUNNING = 0x02,  // Program 2 Running
+    EN_VEHICLE_DRIVER_MSG_PROGRAM3_RUNNING = 0x03,  // Program 3 Running
+    EN_VEHICLE_DRIVER_MSG_SIGNAL_SUDDEN    = 0x0E,  // Signal Sudden
+    EN_VEHICLE_DRIVER_MSG_NOT_GET          = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Driver Massage Velocity State
+ */
+enum EnComdVehicleDriverMsgVelocityState : uint8_t {
+    EN_VEHICLE_DRIVER_MSG_NO_VELOCITY   = 0x00,  // No Velocity
+    EN_VEHICLE_DRIVER_MSG_VELOCITY1     = 0x01,  // Velocity 1
+    EN_VEHICLE_DRIVER_MSG_VELOCITY2     = 0x02,  // Velocity 2
+    EN_VEHICLE_DRIVER_MSG_VELOCITY3     = 0x03,  // Velocity 3
+    EN_VEHICLE_DRIVER_MSG_VELOCITY4     = 0x04,  // Velocity 4
+    EN_VEHICLE_DRIVER_MSG_VELOCITY5     = 0x05,  // Velocity 5
+    EN_VEHICLE_DRIVER_MSG_RESERVED1     = 0x06,  // Not Used
+    EN_VEHICLE_DRIVER_MSG_RESERVED2     = 0x07,  // Not Used
+    EN_VEHICLE_DRIVER_MSG_SIGNAL_SUDDEN = 0x0E,  // Signal Sudden
+    EN_VEHICLE_DRIVER_MSG_NOT_GET       = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Driver Front Height Display Request
+ */
+enum EnComdVehicleDriverFrontHeightDisplayReq : uint8_t {
+    EN_VEHICLE_DRIVER_FRONT_HEIGHT_NO_DISPLAY_REQ      = 0x00,  // No Display Request
+    EN_VEHICLE_DRIVER_FRONT_HEIGHT_RAISE_DISPLAY_REQ   = 0x01,  // Raise Display Request
+    EN_VEHICLE_DRIVER_FRONT_HEIGHT_DESCENT_DISPLAY_REQ = 0x02,  // Descent Display Request
+    EN_VEHICLE_DRIVER_FRONT_HEIGHT_REQ_NOT_MONITORED   = 0x03,  // Not Monitored
+    EN_VEHICLE_DRIVER_FRONT_HEIGHT_SIGNAL_SUDDEN       = 0x0E,  // Signal Sudden
+    EN_VEHICLE_DRIVER_FRONT_HEIGHT_NOT_GET             = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Driver Recliner Display Request
+ */
+enum EnComdVehicleDriverReclinerDisplayReq : uint8_t {
+    EN_VEHICLE_DRIVER_RECLINER_NO_DISPLAY_REQ              = 0x00,  // No Display Request
+    EN_VEHICLE_DRIVER_RECLINER_MOVING_FORWARD_DISPLAY_REQ  = 0x01,  // Recliner Moving Forward Display Request
+    EN_VEHICLE_DRIVER_RECLINER_MOVING_BACKWARD_DISPLAY_REQ = 0x02,  // Recliner Moving Backward Display
+    EN_VEHICLE_DRIVER_RECLINER_REQ_NOT_MONITORED           = 0x03,  // Request Not Monitored
+    EN_VEHICLE_DRIVER_RECLINER_SIGNAL_SUDDEN               = 0x0E,  // Signal Sudden
+    EN_VEHICLE_DRIVER_RECLINER_NOT_GET                     = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Driver Back Height Display Request
+ */
+enum EnComdVehicleDriverBackHeightDisplayReq : uint8_t {
+    EN_VEHICLE_DRIVER_BACK_HEIGHT_NO_DISPLAY_REQ      = 0x00,  // No Display Request
+    EN_VEHICLE_DRIVER_BACK_HEIGHT_RAISE_DISPLAY_REQ   = 0x01,  // Raise Display Request
+    EN_VEHICLE_DRIVER_BACK_HEIGHT_DESCENT_DISPLAY_REQ = 0x02,  // Descent Display Request
+    EN_VEHICLE_DRIVER_BACK_HEIGHT_REQ_NOT_MONITORED   = 0x03,  // Not Monitored
+    EN_VEHICLE_DRIVER_BACK_HEIGHT_SIGNAL_SUDDEN       = 0x0E,  // Signal Sudden
+    EN_VEHICLE_DRIVER_BACK_HEIGHT_NOT_GET             = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Driver Massage Activation State
+ */
+enum EnComdVehicleDriverMsgActivationState : uint8_t {
+    EN_VEHICLE_DRIVER_MSG_OFF           = 0x00,  // Massage OFF
+    EN_VEHICLE_DRIVER_MSG_ON            = 0x01,  // Massage ON
+    EN_VEHICLE_DRIVER_MSG_SIGNAL_SUDDEN = 0x0E,  // Signal Sudden
+    EN_VEHICLE_DRIVER_MSG_NOT_GET       = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Driver Sliding Display Request
+ */
+enum EnComdVehicleDriverSlidingDisplayReq : uint8_t {
+    EN_VEHICLE_DRIVER_SLIDING_NO_DISPLAY_REQ       = 0x00,  // No Display Request
+    EN_VEHICLE_DRIVER_SLIDING_FORWARD_DISPLAY_REQ  = 0x01,  // Sliding Forward Display Request
+    EN_VEHICLE_DRIVER_SLIDING_BACKWARD_DISPLAY_REQ = 0x02,  // Sliding Backward Display Request
+    EN_VEHICLE_DRIVER_SLIDING_REQ_NOT_MONITORED    = 0x03,  // Not Monitored
+    EN_VEHICLE_DRIVER_SLIDING_SIGNAL_SUDDEN        = 0x0E,  // Signal Sudden
+    EN_VEHICLE_DRIVER_SLIDING_NOT_GET              = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Seat Settings Display Request
+ */
+enum EnComdVehicleSeatSettingDisplayReq : uint8_t {
+    EN_VEHICLE_SEAT_SETTING_NO_DISPLAY_REQ = 0x00,  // No Display Request
+    EN_VEHICLE_SEAT_SETTING_DISPLAY_REQ    = 0x01,  // Seat Settings Display Request
+    EN_VEHICLE_SEAT_SETTING_SIGNAL_SUDDEN  = 0x0E,  // Signal Sudden
+    EN_VEHICLE_SEAT_SETTING_NOT_GET        = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Passenger Massage Program State
+ */
+enum EnComdVehiclePassangerMsgProgramState : uint8_t {
+    EN_VEHICLE_PASSANGER_MSG_NOT_RUNNING      = 0x00,  // Massage Not Running
+    EN_VEHICLE_PASSANGER_MSG_PROGRAM1_RUNNING = 0x01,  // Program 1 Running
+    EN_VEHICLE_PASSANGER_MSG_PROGRAM2_RUNNING = 0x02,  // Program 2 Running
+    EN_VEHICLE_PASSANGER_MSG_PROGRAM3_RUNNING = 0x03,  // Program 3 Running
+    EN_VEHICLE_PASSANGER_MSG_SIGNAL_SUDDEN    = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_MSG_NOT_GET          = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Passenger Sliding Display Request
+ */
+enum EnComdVehiclePassangerSlidingDisplayReq : uint8_t {
+    EN_VEHICLE_PASSANGER_SLIDING_NO_DISPLAY_REQ       = 0x00,  // No Display Request
+    EN_VEHICLE_PASSANGER_SLIDING_FORWARD_DISPLAY_REQ  = 0x01,  // Sliding Forward Display Request
+    EN_VEHICLE_PASSANGER_SLIDING_BACKWARD_DISPLAY_REQ = 0x02,  // Sliding Backward Display Request
+    EN_VEHICLE_PASSANGER_SLIDING_REQ_NOT_MONITORED    = 0x03,  // Not Monitored
+    EN_VEHICLE_PASSANGER_SLIDING_SIGNAL_SUDDEN        = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_SLIDING_NOT_GET              = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Passenger Back Height Display Request
+ */
+enum EnComdVehiclePassangerBackHeightDisplayReq : uint8_t {
+    EN_VEHICLE_PASSANGER_BACK_HEIGHT_NO_DISPLAY_REQ       = 0x00,  // No Display Request
+    EN_VEHICLE_PASSANGER_BACK_HEIGHT_FORWARD_DISPLAY_REQ  = 0x01,  // Sliding Forward Display Request
+    EN_VEHICLE_PASSANGER_BACK_HEIGHT_BACKWARD_DISPLAY_REQ = 0x02,  // Sliding Backward Display Request
+    EN_VEHICLE_PASSANGER_BACK_HEIGHT_REQ_NOT_MONITORED    = 0x03,  // Not Monitored
+    EN_VEHICLE_PASSANGER_BACK_HEIGHT_SIGNAL_SUDDEN        = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_BACK_HEIGHT_NOT_GET              = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Passenger Massage Velocity State
+ */
+enum EnComdVehiclePassangerMsgVelocityState : uint8_t {
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_NO_INTENSITY  = 0x00,  // No Intensity
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_INTENSITY1    = 0x01,  // Intensity 1
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_INTENSITY2    = 0x02,  // Intensity 2
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_INTENSITY3    = 0x03,  // Intensity 3
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_INTENSITY4    = 0x04,  // Intensity 4
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_INTENSITY5    = 0x05,  // Intensity 5
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_RESERVED1     = 0x06,  // Not Uesd
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_RESERVED2     = 0x07,  // Not Uesd
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_SIGNAL_SUDDEN = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_NOT_GET       = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Passenger Massage Intensity State
+ */
+enum EnComdVehiclePassangerMsgIntensityState : uint8_t {
+    EN_VEHICLE_PASSANGER_MSG_NO_VELOCITY            = 0x00,  // No Velocity
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY1              = 0x01,  // Velocity 1
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY2              = 0x02,  // Velocity 2
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY3              = 0x03,  // Velocity 3
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY4              = 0x04,  // Velocity 4
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY5              = 0x05,  // Velocity 5
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_RESERVED1     = 0x06,  // Not Uesd
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_RESERVED2     = 0x07,  // Not Uesd
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_SIGNAL_SUDDEN = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_MSG_VELOCITY_NOT_GET       = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Passenger Front Height Display Request
+ */
+enum EnComdVehiclePassangerFrontHeightDisplayReq : uint8_t {
+    EN_VEHICLE_PASSANGER_FRONT_HEIGHT_NO_DISPLAY_REQ      = 0x00,  // No Display Request
+    EN_VEHICLE_PASSANGER_FRONT_HEIGHT_RAISE_DISPLAY_REQ   = 0x01,  // Raise Display Request
+    EN_VEHICLE_PASSANGER_FRONT_HEIGHT_DESCENT_DISPLAY_REQ = 0x02,  // Descent Display Request
+    EN_VEHICLE_PASSANGER_FRONT_HEIGHT_REQ_NOT_MONITORED   = 0x03,  // Not Monitored
+    EN_VEHICLE_PASSANGER_FRONT_HEIGHT_SIGNAL_SUDDEN       = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_FRONT_HEIGHT_NOT_GET             = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Passenger Recliner Display Request
+ */
+enum EnComdVehiclePassangerReclinerDisplayReq : uint8_t {
+    EN_VEHICLE_PASSANGER_RECLINER_NO_DISPLAY_REQ              = 0x00,  // No Display Request
+    EN_VEHICLE_PASSANGER_RECLINER_MOVING_FORWARD_DISPLAY_REQ  = 0x01,  // Recliner Moving Forward Display Request
+    EN_VEHICLE_PASSANGER_RECLINER_MOVING_BACKWARD_DISPLAY_REQ = 0x02,  // Recliner Moving Backward Display
+    EN_VEHICLE_PASSANGER_RECLINER_REQ_NOT_MONITORED           = 0x03,  // Not Monitored
+    EN_VEHICLE_PASSANGER_RECLINER_SIGNAL_SUDDEN               = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_RECLINER_NOT_GET                     = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Passenger Seat MMI Request
+ */
+enum EnComdVehiclePassangerSeatMmiReq : uint8_t {
+    EN_VEHICLE_PASSANGER_SEAT_MMI_NO_REQ        = 0x00,  // Multimedia Seat Settings Not Requested
+    EN_VEHICLE_PASSANGER_SEAT_MMI_REQ           = 0x01,  // Multimedia Seat Settings Requested
+    EN_VEHICLE_PASSANGER_SEAT_MMI_SIGNAL_SUDDEN = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_SEAT_MMI_NOT_GET       = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Passenger Massage Activation State
+ */
+enum EnComdVehiclePassangerMsgActivationState : uint8_t {
+    EN_VEHICLE_PASSANGER_MSG_OFF           = 0x00,  // Massage OFF
+    EN_VEHICLE_PASSANGER_MSG_ON            = 0x01,  // Massage ON
+    EN_VEHICLE_PASSANGER_MSG_SIGNAL_SUDDEN = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_MSG_NOT_GET       = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Ps Lumbar Display Request X Axis
+ */
+enum EnComdVehiclePsLumbarDisplayReqXAxis : uint8_t {
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_X_AXIS_NO_REQ        = 0x00,  // No Display Request
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_REQ_X_AXIS_FRONTWARD = 0x01,  // X Axis Frontward
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_REQ_X_AXIS_BACKWARD  = 0x02,  // X Axis Backward
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_REQ_NOT_MONITORED    = 0x03,  // Not Monitored
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_SIGNAL_SUDDEN        = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_NOT_GET              = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Ps Lumbar Display Request Z Axis
+ */
+enum EnComdVehiclePsLumbarDisplayReqZAxis : uint8_t {
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_Z_AXIS_NO_REQ        = 0x00,  // No Display Request
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_REQ_Z_AXIS_FRONTWARD = 0x01,  // Z Axis Frontward
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_REQ_Z_AXIS_BACKWARD  = 0x02,  // Z Axis Backward
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_REQ_NOT_MONITORED    = 0x03,  // Not Monitored
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_SIGNAL_SUDDEN        = 0x0E,  // Signal Sudden
+    EN_VEHICLE_PS_LUMBAR_DISPLAY_NOT_GET              = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x04
+ *
+ * Seat Data
+ */
+struct StComdVehicleSeatData {
+    EnComdVehicleDrLumbarDisplayReqXAxis         drXAxis;
+    EnComdVehicleDrLumbarDisplayReqZAxis         drZAxis;
+    EnComdVehicleDriverMsgIntensityState         driverMsgIntensityState;
+    EnComdVehicleDriverMsgProgramState           driverMsgProgramState;
+    EnComdVehicleDriverMsgVelocityState          driverMsgVelocityState;
+    EnComdVehicleDriverFrontHeightDisplayReq     driverFrontHeightDisplayReq;
+    EnComdVehicleDriverReclinerDisplayReq        driverReclinerDisplayReq;
+    EnComdVehicleDriverBackHeightDisplayReq      driverBackHeightDisplayReq;
+    EnComdVehicleDriverMsgActivationState        driverMsgActivationState;
+    EnComdVehicleDriverSlidingDisplayReq         driverSlidingDisplayReq;
+    EnComdVehicleSeatSettingDisplayReq           seatSettingDisplayReq;
+    EnComdVehiclePassangerMsgProgramState        passangerMsgProgramState;
+    EnComdVehiclePassangerSlidingDisplayReq      passangerSlidingDisplayReq;
+    EnComdVehiclePassangerBackHeightDisplayReq   passangerBackHeightDisplayReq;
+    EnComdVehiclePassangerMsgVelocityState       passangerMsgVelocityState;
+    EnComdVehiclePassangerMsgIntensityState      passangerMsgIntensityState;
+    EnComdVehiclePassangerFrontHeightDisplayReq  passangerFrontHeightDisplayReq;
+    EnComdVehiclePassangerReclinerDisplayReq     passangerReclinerDisplayReq;
+    EnComdVehiclePassangerSeatMmiReq             passangerSeatMmiReq;
+    EnComdVehiclePassangerMsgActivationState     passangerMsgActivationState;
+    EnComdVehiclePsLumbarDisplayReqXAxis         psXAxis;
+    EnComdVehiclePsLumbarDisplayReqZAxis         psZAxis;
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x05
+ *
+ * AVM Initialization State
+ */
+enum EnComdVehicleAvmInitState : uint8_t {
+    EN_VEHICLE_AVM_INITIAL_STATUS_COMPLETED     = 0x00,  // Initialization Completed
+    EN_VEHICLE_AVM_INITIAL_STATUS_ON_GOING      = 0x01,  // Initialization On Going
+    EN_VEHICLE_AVM_INITIAL_STATUS_SIGNAL_SUDDEN = 0xFE,  // Signal Sudden
+    EN_VEHICLE_AVM_INITIAL_STATUS_NOT_GET       = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x05
+ *
+ * AVM Sound Request
+ */
+enum EnComdVehicleAvmSoundReq : uint8_t {
+    EN_VEHICLE_AVM_SOUND_ALERT_NOT_REQ       = 0x00,  // Sound Alert Not Requested
+    EN_VEHICLE_AVM_SOUND_ALERT_REQ           = 0x01,  // Sound Alert Requested
+    EN_VEHICLE_AVM_SOUND_ALERT_SIGNAL_SUDDEN = 0x0E,  // Signal Sudden
+    EN_VEHICLE_AVM_SOUND_ALERT_NOT_GET       = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x05
+ *
+ * AVM Sound Type
+ */
+enum EnComdVehicleAvmSoundType : uint8_t {
+    EN_VEHICLE_AVM_SOUND_TYPE_NORMAL        = 0x00,  // Normal Sound
+    EN_VEHICLE_AVM_SOUND_TYPE_ERROR         = 0x01,  // Error Sound
+    EN_VEHICLE_AVM_SOUND_TYPE_SIGNAL_SUDDEN = 0x0E,  // Signal Sudden
+    EN_VEHICLE_AVM_SOUND_TYPE_NOT_GET       = 0x0F,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x05
+ *
+ * AVM Display Request
+ */
+enum EnComdVehicleAvmDisplayReq : uint8_t {
+    EN_VEHICLE_AVM_DISPLAY_NO_REQ        = 0x00,  // No Request
+    EN_VEHICLE_AVM_DISPLAY_REQ           = 0x01,  // Request
+    EN_VEHICLE_AVM_DISPLAY_SIGNAL_SUDDEN = 0xFE,  // Signal Sudden
+    EN_VEHICLE_AVM_DISPLAY_NOT_GET       = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x05
+ *
+ * AVM Data
+ */
+struct StComdVehicleAvmData {
+    EnComdVehicleAvmInitState   avmInitState;
+    EnComdVehicleAvmSoundReq    avmSoundReq;
+    EnComdVehicleAvmSoundType   avmSoundType;
+    EnComdVehicleAvmDisplayReq  avmDisplayReq;
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x06
+ *
+ * IVC FOTA Status
+ */
+enum EnComdVehicleIvcFotaStatus : uint8_t {
+    EN_VEHICLE_IVC_FOTA_IDLE                     = 0x00,  // IDLE
+    EN_VEHICLE_IVC_FOTA_INVENTORY_IN_PROGRESS    = 0x01,  // Inventory In Progress
+    EN_VEHICLE_IVC_FOTA_DOWNLOAD_IN_PROGRESS     = 0x02,  // Download In Progress
+    EN_VEHICLE_IVC_FOTA_DOWNLOAD_COMPLETED       = 0x03,  // Download Completed
+    EN_VEHICLE_IVC_FOTA_CHECK_IN_PROGRESS        = 0x04,  // Check In Progress
+    EN_VEHICLE_IVC_FOTA_CHECK_COMPLETED          = 0x05,  // Check Completed
+    EN_VEHICLE_IVC_FOTA_READY_FOR_INSTALL        = 0x06,  // Ready For Install
+    EN_VEHICLE_IVC_FOTA_INSTALLATION_IN_PROGRESS = 0x07,  // Installation In Progress
+    EN_VEHICLE_IVC_FOTA_INSTALLATION_COMPLETED   = 0x08,  // Installation Completed
+    EN_VEHICLE_IVC_FOTA_READY_FOR_ACTIVE         = 0x09,  // Ready For Active
+    EN_VEHICLE_IVC_FOTA_ACTIVATION_IN_PROGRESS   = 0x0A,  // Activation In Progress
+    EN_VEHICLE_IVC_FOTA_ACTIVATION_COMPLETED     = 0x0B,  // Activation Completed
+    EN_VEHICLE_IVC_FOTA_CANCELATION_IN_PROGRESS  = 0x0C,  // Cancelation In Progress
+    EN_VEHICLE_IVC_FOTA_CANCELATION_COMPLETED    = 0x0D,  // Cancelation Completed
+    EN_VEHICLE_IVC_FOTA_ROLLBACK_IN_PROGRESS     = 0x0E,  // Rollback In Progress
+    EN_VEHICLE_IVC_FOTA_ROLLBACK_COMPLETED       = 0x0F,  // Rollback Completed
+    EN_VEHICLE_IVC_FOTA_SETTING_IN_PROGRESS      = 0x10,  // Setting In Progress
+    EN_VEHICLE_IVC_FOTA_SETTING_COMPLETED        = 0x11,  // Setting Completed
+    EN_VEHICLE_IVC_FOTA_DOWNLOAD_ERROR           = 0x12,  // Download Error
+    EN_VEHICLE_IVC_FOTA_INSTALLATION_ERROR       = 0x13,  // Installation Error
+    EN_VEHICLE_IVC_FOTA_ACTIVATION_ERROR         = 0x14,  // Activation Error
+    EN_VEHICLE_IVC_FOTA_RESERVED1                = 0x15,  // Reserved
+    EN_VEHICLE_IVC_FOTA_RESERVED2                = 0x16,  // Reserved
+    EN_VEHICLE_IVC_FOTA_RESERVED3                = 0x17,  // Reserved
+    EN_VEHICLE_IVC_FOTA_RESERVED4                = 0x18,  // Reserved
+    EN_VEHICLE_IVC_FOTA_RESERVED5                = 0x19,  // Reserved
+    EN_VEHICLE_IVC_FOTA_RESERVED6                = 0x1A,  // Reserved
+    EN_VEHICLE_IVC_FOTA_RESERVED7                = 0x1B,  // Reserved
+    EN_VEHICLE_IVC_FOTA_RESERVED8                = 0x1C,  // Reserved
+    EN_VEHICLE_IVC_FOTA_RESERVED9                = 0x1D,  // Reserved
+    EN_VEHICLE_IVC_FOTA_RESERVED10               = 0x1E,  // Reserved
+    EN_VEHICLE_IVC_FOTA_INVALID                  = 0x1F,  // Invalid
+    EN_VEHICLE_IVC_FOTA_SIGNAL_SUDDEN            = 0xFE,  // Signal Sudden
+    EN_VEHICLE_IVC_FOTA_NOT_GET                  = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x06
+ *
+ * IVC FOTA Busy Flag
+ */
+enum EnComdVehicleIvcFotaBusyFlag : uint8_t {
+    EN_VEHICLE_IVC_FOTA_BUSY          = 0x00,  // IVC FOTA Busy
+    EN_VEHICLE_IVC_FOTA_READY         = 0x01,  // IVC FOTA Ready
+    EN_VEHICLE_IVC_FOTA_SIGNAL_SUDDEN = 0xFE,  // Signal Sudden
+    EN_VEHICLE_IVC_FOTA_NOT_GET       = 0xFF,  // Not Get
+};
+
+/**
+ * 02.CT=8xh(vehicle data).xls
+ *
+ * CT: 0x81 0x01 0x06
+ *
+ * FOTA Data
+ */
+struct StComdVehicleFotaData {
+    uint8_t                       ivcFotaProgress;
+    EnComdVehicleIvcFotaStatus    ivcFotaStatus;
+    EnComdVehicleIvcFotaBusyFlag  ivcFotaBusyFlag;
+};
+
+/**
+ * 01.Overview.xls
+ *
+ * Bit Data
+ *
+ * Day Night Mode
+ */
+enum EnComdVehicleDayNightMode : uint8_t {
+    EN_VEHICLE_DAY_NIGHT_MODE_DAY         = 0x00,  // Day
+    EN_VEHICLE_DAY_NIGHT_MODE_TWILIGHT    = 0x01,  // Twilight
+    EN_VEHICLE_DAY_NIGHT_MODE_NIGHT       = 0x02,  // Night
+    EN_VEHICLE_DAY_NIGHT_MODE_UNAVAILABLE = 0x03,  // Unavailable
+};

@@ -1,0 +1,76 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.vehicle@1.0;
+
+import IComdVehicleListener;
+
+interface IComdVehicle {
+    /**
+     * @brief Client register IComdVehicleListener remote pointer in comd
+     *        vehicle service
+     *
+     * @param [IN] listener: Client remote sp IComdVehicleListener pointer
+     * @param [IN] serviceId: Client identity defined in comd
+     * @param [IN] eventIds: The events that client want to monitor
+     *
+     * @return Comd excute result
+     *
+     * @retval EN_VEHICLE_RESULT_OK:        OK
+     * @retval EN_VEHICLE_RESULT_ERR_PARA:  Parameter error
+     * @retval EN_VEHICLE_RESULT_ERR_SERV:  Server error
+     *
+     * Adaptive Project: Morley
+     *
+     * Every client want any IComdVehicleListener's event must call this
+     * function
+     */
+    registerListener(IComdVehicleListener listener
+                     , EnComdVehicleListenerID serviceId
+                     , EnComdVehicleEventIds eventIds)
+        generates(EnComdVehicleFuncResult funcResult);
+
+    /**
+     * @brief Client remove registration information in comd vehicle service
+     *
+     * @param [IN] serviceId: Client identity defined in comd
+     *
+     * @return Comd excute result
+     *
+     * @retval EN_VEHICLE_RESULT_OK:        OK
+     * @retval EN_VEHICLE_RESULT_ERR_PARA:  Parameter error
+     * @retval EN_VEHICLE_RESULT_ERR_SERV:  Server error
+     *
+     * Adaptive Project: Morley
+     *
+     * Every client must call this function when he don't need any comd events
+     */
+    unRegisterListener(EnComdVehicleListenerID serviceId)
+        generates(EnComdVehicleFuncResult funcResult);
+
+    /**
+     * @brief Client requests vehicle can message from micon
+     *
+     * @param [IN] canMsg: The vehicle can messages that client wants to send to micon
+     *
+     * @return Comd excute result
+     *
+     * @retval EN_VEHICLE_RESULT_OK:        OK
+     * @retval EN_VEHICLE_RESULT_ERR_PARA:  Parameter error
+     * @retval EN_VEHICLE_RESULT_ERR_SERV:  Server error
+     *
+     * Adaptive Project: Morley
+     */
+    vehicleFuncVcanSendMsg(StComdVehicleVcanMsg canMsg)
+        generates(EnComdVehicleFuncResult funcResult);
+};
