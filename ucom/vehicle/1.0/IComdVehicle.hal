@@ -73,4 +73,118 @@ interface IComdVehicle {
      */
     vehicleFuncVcanSendMsg(StComdVehicleVcanMsg canMsg)
         generates(EnComdVehicleFuncResult funcResult);
+
+    /**
+     * @brief Client get vehicle status from comd
+     *
+     * @param None
+     *
+     * @return status: vehicle status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Morley
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyVehicleFuncVehicleStatusResp in
+     * IComdVehicleListener to inform client after get the newest
+     * data from micon.
+     */
+    vehicleFuncVehicleStatusGet()
+        generates(StComdVehicleVehicleStatus status
+                  , EnComdVehicleFuncResult funcResult);
+
+    /**
+     * @brief Client get steering angle & camera data from comd
+     *
+     * @param None
+     *
+     * @return data: steering angle & camera data
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Morley
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyVehicleFuncSteeringAngleCameraDataResp
+     * in IComdVehicleListener to inform client after get the newest
+     * data from micon.
+     */
+    vehicleFuncSteeringAngleCameraDataGet()
+        generates(StComdVehicleSteeringAngleCameraData data
+                  , EnComdVehicleFuncResult funcResult);
+
+    /**
+     * @brief Client get seat data from comd
+     *
+     * @param None
+     *
+     * @return data: seat data
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Morley
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyVehicleFuncSeatDataResp in
+     * IComdVehicleListener to inform client after get the newest
+     * data from micon.
+     */
+    vehicleFuncSeatDataGet()
+        generates(StComdVehicleSeatData data
+                  , EnComdVehicleFuncResult funcResult);
+
+    /**
+     * @brief Client get avm data from comd
+     *
+     * @param None
+     *
+     * @return data: avm data
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Morley
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyVehicleFuncAvmDataResp in
+     * IComdVehicleListener to inform client after get the newest
+     * data from micon.
+     */
+    vehicleFuncAvmDataGet()
+        generates(StComdVehicleAvmData data
+                  , EnComdVehicleFuncResult funcResult);
+
+    /**
+     * @brief Client get fota data from comd
+     *
+     * @param None
+     *
+     * @return data: fota data
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Morley
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyVehicleFuncFotaDataResp in
+     * IComdVehicleListener to inform client after get the newest
+     * data from micon.
+     */
+    vehicleFuncFotaDataGet()
+        generates(StComdVehicleFotaData data
+                  , EnComdVehicleFuncResult funcResult);
+
+    /**
+     * @brief Client get day night mode from comd
+     *
+     * @param None
+     *
+     * @return mode: day night mode
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Morley
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyVehicleFuncDayNightModeResp in
+     * IComdVehicleListener to inform client after get the newest
+     * data from micon.
+     */
+    vehicleFuncDayNightModeGet()
+        generates(EnComdVehicleDayNightMode mode
+                  , EnComdVehicleFuncResult funcResult);
 };

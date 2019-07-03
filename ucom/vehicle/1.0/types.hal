@@ -431,8 +431,8 @@ enum EnComdVehiclePassangerBackHeightDisplayReq : uint8_t {
     EN_VEHICLE_PASSANGER_BACK_HEIGHT_FORWARD_DISPLAY_REQ  = 0x01,  // Sliding Forward Display Request
     EN_VEHICLE_PASSANGER_BACK_HEIGHT_BACKWARD_DISPLAY_REQ = 0x02,  // Sliding Backward Display Request
     EN_VEHICLE_PASSANGER_BACK_HEIGHT_REQ_NOT_MONITORED    = 0x03,  // Not Monitored
-    EN_VEHICLE_PASSANGER_BACK_HEIGHT_SIGNAL_SUDDEN        = 0x0E,  // Signal Sudden
-    EN_VEHICLE_PASSANGER_BACK_HEIGHT_NOT_GET              = 0x0F,  // Not Get
+    EN_VEHICLE_PASSANGER_BACK_HEIGHT_SIGNAL_SUDDEN        = 0xFE,  // Signal Sudden
+    EN_VEHICLE_PASSANGER_BACK_HEIGHT_NOT_GET              = 0xFF,  // Not Get
 };
 
 /**
