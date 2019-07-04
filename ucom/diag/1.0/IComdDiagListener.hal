@@ -267,4 +267,14 @@ interface IComdDiagListener {
      * Adaptive project: Base && Morley
      */
     oneway notifyNDiagInitSeqErrInfoSetResp(EnComdDiagStatus settingRespStatus);
+
+    /*********PANA DIAG*******/
+    /**
+     * Request key backlight and set key backlight response
+     *
+     * @param keybacklight: the value of key backlight
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyPDiagKeyBacklightResp(uint8_t keybacklight);
 };
