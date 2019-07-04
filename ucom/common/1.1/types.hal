@@ -21,7 +21,8 @@ enum EnComdCommonEventId : @1.0::EnComdCommonEventId {
     EN_COMMON_EID_AmigoStatusInfo            = 1 << 37,
     EN_COMMON_EID_VcanStatus                 = 1 << 38,
     EN_COMMON_EID_C1A_HSState                = 1 << 39,
-    EN_COMMON_EID_CanSpeedPulse              = 1 << 40, 
+    EN_COMMON_EID_CanSpeedPulse              = 1 << 40,
+    EN_COMMON_EID_FanSettingStatus           = 1 << 41, 
 };
 /**
  * USB type define
@@ -68,6 +69,16 @@ enum EnComdCommonVcanSleepPermit : uint8_t {
     EN_COMMON_VCAN_SLEEP_NOT_ALLOW = 0x01,	   // VCAN sleep not allow
     EN_COMMON_VCAN_UNKNOWN = 0xFF            //UNKNOWN status means not update from micon,used in get interface
 };
+
+/**
+ * speed pulse signal status
+ */
+enum EnComdCommonSpeedSignalState : uint8_t {
+    EN_COMMON_VCAN_SPEED_SIGNAL_NORMAL = 0x00,
+    EN_COMMON_VCAN_SPEED_SIGNAL_PASS = 0xFE,
+    EN_COMMON_VCAN_SPEED_SIGNAL_NORECEIVE = 0xFF,
+};
+
 /**
  * VCAN bus status struct
  */
@@ -81,7 +92,8 @@ struct StComdCommonVcanStatus {
  * get speed pulse by can signal
  */
 struct StComdCommonCansignalSpeed {
-    uint8_t cansignalspeed;
+    uint16_t cansignalspeed;
+    EnComdCommonSpeedSignalState signalstate;
 };
 
 /**
@@ -95,3 +107,21 @@ enum EnComdCommonC1A_HSState : uint8_t {
     EN_COMMON_C1A_HS_ON = 0x04,	            // state ON_STATE
     EN_COMMON_C1A_HS_REPROGRAMMING = 0x05   // state REPROGRAMMING_STATE
 };
+
+/**
+* Specifies a enum which describe FAN setting request command
+*/
+enum EnComdFanControType : uint8_t {
+    EN_COMMON_FAN_CONTROL_STOP = 0x00,
+    EN_COMMON_FAN_CONTROL_RUN = 0x01,
+    EN_COMMON_FAN_CONTROL_CURRENT = 0xFF,
+};
+
+/**
+ * Specifies a enum which describe FAN setting response command
+ */
+enum EnComdFanSettingStatus : uint8_t {
+    EN_COMMON_FAN_SETTING_STOP = 0x00,
+    EN_COMMON_FAN_SETTING_RUN = 0x01,
+};
+

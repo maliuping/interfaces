@@ -309,6 +309,7 @@ enum EnComdDiagEventId : uint64_t{
     EN_DIAG_EID_notifyNDiagSpeakerTestResp = 1 << 25,
     EN_DIAG_EID_notifyNDiagCameraPowCtrlResp = 1 << 26,
     EN_DIAG_EID_notifyNDiagInitSeqErrInfoSetResp = 1 << 27,
+    EN_DIAG_EID_notifyPDiagKeyBacklightResp = 1 << 28,
 };
 
 /**
