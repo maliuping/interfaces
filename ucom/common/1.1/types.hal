@@ -22,7 +22,7 @@ enum EnComdCommonEventId : @1.0::EnComdCommonEventId {
     EN_COMMON_EID_VcanStatus                 = 1 << 38,
     EN_COMMON_EID_C1A_HSState                = 1 << 39,
     EN_COMMON_EID_CanSpeedPulse              = 1 << 40,
-    EN_COMMON_EID_FanSettingStatus           = 1 << 41, 
+    EN_COMMON_EID_FanSettingStatus           = 1 << 41,
 };
 /**
  * USB type define
@@ -124,4 +124,3 @@ enum EnComdFanSettingStatus : uint8_t {
     EN_COMMON_FAN_SETTING_STOP = 0x00,
     EN_COMMON_FAN_SETTING_RUN = 0x01,
 };
-

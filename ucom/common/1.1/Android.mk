@@ -58,6 +58,25 @@ $(GEN): $(LOCAL_PATH)/types.hal
 LOCAL_GENERATED_SOURCES += $(GEN)
 
 #
+# Build types.hal (EnComdCommonSpeedSignalState)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonSpeedSignalState.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdCommonSpeedSignalState
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
 # Build types.hal (EnComdCommonUsbPowSetResu)
 #
 GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonUsbPowSetResu.java
@@ -128,6 +147,44 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
         iauto.hardware.ucom.common@1.1::types.EnComdCommonVcanSleepPermit
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (EnComdFanControType)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdFanControType.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdFanControType
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (EnComdFanSettingStatus)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdFanSettingStatus.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdFanSettingStatus
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
@@ -307,6 +364,25 @@ $(GEN): $(LOCAL_PATH)/types.hal
 LOCAL_GENERATED_SOURCES += $(GEN)
 
 #
+# Build types.hal (EnComdCommonSpeedSignalState)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonSpeedSignalState.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdCommonSpeedSignalState
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
 # Build types.hal (EnComdCommonUsbPowSetResu)
 #
 GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonUsbPowSetResu.java
@@ -377,6 +453,44 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
         iauto.hardware.ucom.common@1.1::types.EnComdCommonVcanSleepPermit
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (EnComdFanControType)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdFanControType.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdFanControType
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (EnComdFanSettingStatus)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdFanSettingStatus.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdFanSettingStatus
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)

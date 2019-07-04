@@ -532,6 +532,25 @@ $(GEN): $(LOCAL_PATH)/types.hal
 LOCAL_GENERATED_SOURCES += $(GEN)
 
 #
+# Build types.hal (EnComdCommonNaviReset)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_0/EnComdCommonNaviReset.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.0::types.EnComdCommonNaviReset
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
 # Build types.hal (EnComdCommonNormalOrNotStatus)
 #
 GEN := $(intermediates)/iauto/hardware/ucom/common/V1_0/EnComdCommonNormalOrNotStatus.java
@@ -1764,6 +1783,25 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
         iauto.hardware.ucom.common@1.0::types.EnComdCommonMiconStatus
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (EnComdCommonNaviReset)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_0/EnComdCommonNaviReset.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.0::types.EnComdCommonNaviReset
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
