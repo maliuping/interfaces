@@ -374,4 +374,37 @@ interface IComdDiag {
      * Adaptive project: Base && Morley
      */
     nDiagInitSeqErrInfoSetReq(EnComdDiagSetModeCmd cmd) generates(EnComdDiagFuncResult funcResult);
+
+    /***********PANA DIAG***************/
+    /**
+     * request the key backlight
+     *
+     * @param none
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagRequestKeyBackLight() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * set the key backlight
+     *
+     * @param keybacklight: the value of keybacklight
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagSetKeyBackLight(uint8_t keybacklight) generates(EnComdDiagFuncResult funcResult);
 };
