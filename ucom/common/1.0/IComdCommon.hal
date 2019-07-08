@@ -668,4 +668,15 @@ interface IComdCommon {
     commonFuncCommuStatusGet()
         generates(EnComdCommonCommuStatus status
                   , EnComdCommonFuncResult funcResult);
+
+    /**
+     * Client informs micon to do system reset
+     *
+     * @param  resettype: soc reset type
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive project: Morley
+     *
+     */
+    commonFuncNaviResetTypeReq(EnComdCommonNaviReset resettype) generates(EnComdCommonFuncResult funcResult);
 };

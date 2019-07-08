@@ -122,4 +122,16 @@ interface IComdCommonListener extends @1.0::IComdCommonListener {
      * EN_COMMON_EID_CanSpeedPulse to monitor this function.
      */
      oneway notifyCommonCanSignalSpeedPulse(StComdCommonCansignalSpeed cansignalspeed);    //CT 92h ：Speed pulse
+
+     /**
+     * Comd informs client of micon fan setting status
+     *
+     * @param fanstatus: The fan setting satatus
+     *
+     * Adaptive project: morley
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_FanSettingStatus to monitor this function
+     */
+    oneway notifyCommonFanSettingStatus(EnComdFanSettingStatus fanstatus);  //CT 10h : fan setting
 };
