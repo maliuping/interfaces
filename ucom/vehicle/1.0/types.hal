@@ -153,10 +153,7 @@ struct StComdVehicleVehicleStatus {
     uint8_t                          lightMaxPercent;
     EnComdVehicleLightStatus         lightStatus;
     EnComdVehicleParkingBrakeStatus  parkingBrakeStatus;
-    uint8_t                          distanceHighByte;
-    uint8_t                          distanceMiddleByte;
-    uint8_t                          distanceMiddleLowByte;
-    uint8_t                          distanceLowByte;
+    uint32_t                         distanceTotalizer;
     EnComdVehicleDistanceStatus      distanceStatus;
 };
 
@@ -202,8 +199,7 @@ enum EnComdVehicleSteeringAngleStatus : uint8_t {
  */
 struct StComdVehicleSteeringAngleCameraData {
     EnComdVehicleSwaSensorStatus      swaSensorStatus;
-    uint8_t                           steeringAngleHighByte;
-    uint8_t                           steeringAngleLowByte;
+    uint16_t                          steeringAngleCorrected;
     EnComdVehicleSteeringAngleStatus  steeringAngleStatus;
 };
 
