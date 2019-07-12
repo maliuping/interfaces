@@ -684,9 +684,8 @@ enum EnComdCommonVrHfCtrlType : uint8_t {
  * Specifies a enum which describe the navi reset action type
  */
 enum EnComdCommonNaviReset : uint8_t {
-    EN_COMMON_NAVI_RESET_NO = 0x00,    // does not restart
-    EN_COMMON_NAVI_RESET_YES = 0x01,   // soc restart 
-    EN_COMMON_NAVI_RESET_MICON_ACC = 0x02, // Micon do ACC OFF ON
-    EN_COMMON_NAVI_RESET_MICON_RESET = 0x03, //Micon do restart
+    EN_COMMON_NAVI_RESET_NO_ACTION = 0x00,    // does not restart
+    EN_COMMON_NAVI_RESET_SOC_RESTART = 0x01,   // soc restart
+    EN_COMMON_NAVI_RESET_MICON_ACC = 0x02,     // Micon do ACC OFF ON
+    EN_COMMON_NAVI_RESET_MICON_RESET = 0x03,   // Micon do restart
 };
-
