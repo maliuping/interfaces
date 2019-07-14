@@ -105,19 +105,6 @@ interface IComdCommon {
     commonFuncFactoryDefaultReq() generates(EnComdCommonFuncResult funcResult);
 
     /**
-     * Client informs micon to do system reset
-     *
-     * @return funcResult: Comd excute result
-     *
-     * Adaptive project: base
-     *
-     * When micon used ASENSE pin to inform soc reboot, soc need call this
-     * function as response. Only used with no WDT.
-     * This function is reserved and doesn't fit any current projects
-     */
-    commonFuncNaviResetReq() generates(EnComdCommonFuncResult funcResult);
-
-    /**
      * Client informs micon to switch user
      *
      * @param switchUserReq: The target user that to switch
