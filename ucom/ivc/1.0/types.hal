@@ -1,0 +1,166 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.ivc@1.0;
+
+enum EnComdIvcFuncResult : uint8_t {
+    EN_IVC_RESULT_OK = 0x00,        // OK
+    EN_IVC_RESULT_ERR_PARA = 0x01,  // Parameter Error
+    EN_IVC_RESULT_ERR_SERV = 0x02,  // Server Error
+};
+
+enum EnComdIvcListenerID : uint8_t {
+    EN_IVC_LIS_ID_DCM  = 0x00,
+    EN_IVC_LIS_ID_TEST = 0xFF,
+};
+
+enum EnComdIvcEventId : uint64_t {
+    EN_IVC_EID_MSG          = 1 << 0,
+    EN_IVC_EID_MSG_SEND_ACK = 1 << 1,
+    EN_IVC_EID_FotaInfo     = 1 << 2,
+};
+
+typedef bitfield<EnComdIvcEventId> EnComdIvcEventIds;
+
+
+enum EnComdIvcMcanChannelNum : uint8_t {
+    EN_IVC_MCAN_ITM_TCU_CHANNEL = 0x03,	/*  Mcan channel  */
+};
+
+enum EnComdIvcMcanOpType : uint8_t {
+    EN_IVC_MCAN_MCAN_OPT_P_SET         = 0x00, /*  Set  	   */
+    EN_IVC_MCAN_MCAN_OPT_P_GET         = 0x01, /*  Get  	   */
+    EN_IVC_MCAN_MCAN_OPT_P_INCREMENT   = 0x02, /*  Increment  */
+    EN_IVC_MCAN_MCAN_OPT_P_DECREMENT   = 0x03, /*  Decrement  */
+    EN_IVC_MCAN_MCAN_OPT_P_STATUS      = 0x0C, /*  Status     */
+    EN_IVC_MCAN_MCAN_OPT_P_INDICATION  = 0x0D, /*  Indication */
+    EN_IVC_MCAN_MCAN_OPT_P_ERROR       = 0x0F  /*  Error      */
+};
+
+enum EnComdIvcMcanInterruptLevel : uint8_t {
+    EN_IVC_MCAN_MCAN_IL_TYPE_CMD  = 0x00,	/*  Interrupt Need  */
+    EN_IVC_MCAN_MCAN_IL_TYPE_DATA = 0x01	/*  Interrupt Not Need  */
+};
+
+struct StComdIvcMcanSendData {
+    uint8_t                      totalPackageNum;  /* total package num          */
+    uint8_t                      packageLen;       /* len from channelNum to end */
+    EnComdIvcMcanChannelNum      channelNum;       /* Channle num                */
+    uint8_t                      funcIdLow;        /* Function ID Low            */
+    uint8_t                      funcIdHigh;       /* Function ID High           */
+    EnComdIvcMcanOpType          optype;           /* Option type                */
+    EnComdIvcMcanInterruptLevel  il;               /* Interrupt level            */
+    uint8_t                      paraLenLow;       /* Parameter DLC Low byte     */
+    uint8_t                      paraLenHigh;      /* Parameter DLC High byte    */
+    vec<uint8_t>                 para;             /* Parameter                  */
+};
+
+struct StComdIvcMcanSendExtendData {
+    uint8_t                  packageNum;  /*  Extern Package Num */
+    EnComdIvcMcanChannelNum  channelNum;  /* Channle num         */
+    uint8_t                  paraLen;     /*  Parameter DLC	     */
+    vec<uint8_t>             para; 	      /*  Parameter		     */
+};
+
+enum EnComdIvcVCanIdSend : uint32_t {
+    ADASISV2_A101      = 0x0000025E,  // ADAS
+    ADASISV2_A102      = 0x000003A0,  // ADAS
+    ADASISV2_A103      = 0x0000054C,  // ADAS
+    ADASISV2_A104      = 0x000003A1,  // ADAS
+    ADASISV2_A105      = 0x000003A3,  // ADAS
+    ADASISV2_A106      = 0x000006A1,  // ADAS
+    IVI_USERSETPREF_A5 = 0x000005B8,  // Seat
+};
+
+struct StComdIvcVcanData {
+    EnComdIvcVCanIdSend canId;
+    uint8_t                dlc;
+    uint8_t[8]             data;
+};
+
+struct StComdIvcVcanMsg {
+    vec<StComdIvcVcanData>  vcanData;
+};
+
+enum EnComdIvcFotaStatus : uint8_t {
+    EN_IVC_FOTA_IDLE                     = 0x00,  // IDLE
+    EN_IVC_FOTA_INVENTORY_IN_PROGRESS    = 0x01,  // Inventory In Progress
+    EN_IVC_FOTA_DOWNLOAD_IN_PROGRESS     = 0x02,  // Download In Progress
+    EN_IVC_FOTA_DOWNLOAD_COMPLETED       = 0x03,  // Download Completed
+    EN_IVC_FOTA_CHECK_IN_PROGRESS        = 0x04,  // Check In Progress
+    EN_IVC_FOTA_CHECK_COMPLETED          = 0x05,  // Check Completed
+    EN_IVC_FOTA_READY_FOR_INSTALL        = 0x06,  // Ready For Install
+    EN_IVC_FOTA_INSTALLATION_IN_PROGRESS = 0x07,  // Installation In Progress
+    EN_IVC_FOTA_INSTALLATION_COMPLETED   = 0x08,  // Installation Completed
+    EN_IVC_FOTA_READY_FOR_ACTIVE         = 0x09,  // Ready For Active
+    EN_IVC_FOTA_ACTIVATION_IN_PROGRESS   = 0x0A,  // Activation In Progress
+    EN_IVC_FOTA_ACTIVATION_COMPLETED     = 0x0B,  // Activation Completed
+    EN_IVC_FOTA_CANCELATION_IN_PROGRESS  = 0x0C,  // Cancelation In Progress
+    EN_IVC_FOTA_CANCELATION_COMPLETED    = 0x0D,  // Cancelation Completed
+    EN_IVC_FOTA_ROLLBACK_IN_PROGRESS     = 0x0E,  // Rollback In Progress
+    EN_IVC_FOTA_ROLLBACK_COMPLETED       = 0x0F,  // Rollback Completed
+    EN_IVC_FOTA_SETTING_IN_PROGRESS      = 0x10,  // Setting In Progress
+    EN_IVC_FOTA_SETTING_COMPLETED        = 0x11,  // Setting Completed
+    EN_IVC_FOTA_DOWNLOAD_ERROR           = 0x12,  // Download Error
+    EN_IVC_FOTA_INSTALLATION_ERROR       = 0x13,  // Installation Error
+    EN_IVC_FOTA_ACTIVATION_ERROR         = 0x14,  // Activation Error
+    EN_IVC_FOTA_RESERVED1                = 0x15,  // Reserved
+    EN_IVC_FOTA_RESERVED2                = 0x16,  // Reserved
+    EN_IVC_FOTA_RESERVED3                = 0x17,  // Reserved
+    EN_IVC_FOTA_RESERVED4                = 0x18,  // Reserved
+    EN_IVC_FOTA_RESERVED5                = 0x19,  // Reserved
+    EN_IVC_FOTA_RESERVED6                = 0x1A,  // Reserved
+    EN_IVC_FOTA_RESERVED7                = 0x1B,  // Reserved
+    EN_IVC_FOTA_RESERVED8                = 0x1C,  // Reserved
+    EN_IVC_FOTA_RESERVED9                = 0x1D,  // Reserved
+    EN_IVC_FOTA_RESERVED10               = 0x1E,  // Reserved
+    EN_IVC_FOTA_INVALID                  = 0x1F,  // Invalid
+    EN_IVC_FOTA_SIGNAL_SUDDEN            = 0xFE,  // Signal Sudden
+    EN_IVC_FOTA_NOT_GET                  = 0xFF,  // Not Get
+};
+
+enum EnComdIvcFotaBusyFlag : uint8_t {
+    EN_IVC_FOTA_BUSY          = 0x00,  // IVC FOTA Busy
+    EN_IVC_FOTA_READY         = 0x01,  // IVC FOTA Ready
+    EN_IVC_FOTA_SIGNAL_SUDDEN = 0xFE,  // Signal Sudden
+    EN_IVC_FOTA_NOT_GET       = 0xFF,  // Not Get
+};
+
+struct StComdIvcFotaData {
+    uint8_t                fotaProgress;
+    EnComdIvcFotaStatus    fotaStatus;
+    EnComdIvcFotaBusyFlag  fotaBusyFlag;
+};
+
+struct StComdIvcMcanRecvData {
+    EnComdIvcMcanChannelNum         channelNum;     /* Channle num              */
+    uint8_t                         funcIdLow;      /* Function ID Low          */
+    uint8_t                         funcIdHigh;     /* Function ID High         */
+    EnComdIvcMcanOpType             optype;         /* Option type              */
+    EnComdIvcMcanInterruptLevel     il;             /* Interrupt level          */
+    uint8_t                         paraLenLow;     /* Parameter DLC Low byte   */
+    uint8_t                         paraLenHigh;    /* Parameter DLC High byte  */
+    vec<uint8_t>                    para;           /* Parameter                */
+};
+
+enum EnComdIvcMcanCommonStatus: uint8_t {
+    EN_IVC_MCAN_COMMON_STATUS_OK = 0x00,  /*  OK  */
+    EN_IVC_MCAN_COMMON_STATUS_NG = 0x01,  /*  NG  */
+};
+
+struct StComdIvcMcanRecvDataAck{
+    EnComdIvcMcanChannelNum    channelNum;  /* Channle num       */
+    uint8_t                    funcIdLow;   /* Function ID Low   */
+    uint8_t                    funcIdHigh;  /* Function ID High  */
+    EnComdIvcMcanCommonStatus  sendResult;	/* Mcan Send result */
+};
