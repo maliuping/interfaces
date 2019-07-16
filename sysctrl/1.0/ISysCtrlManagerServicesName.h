@@ -21,6 +21,7 @@ namespace nutshell {
     static const android::String16 SRV_NAME_GNSSDRD("iauto.hardware.gnssdrd");
     static const android::String16 SRV_NAME_DIAG("iauto.system.diag");
     static const android::String16 SRV_NAME_METER("iauto.system.meter");
+    static const android::String16 SRV_NAME_ETHERNET("iauto.system.ethernet");
     static const android::String16 SRV_NAME_TEST_MODE("iauto.system.testmode");
     static const android::String16
         SRV_NAME_SYS_UPDATE("iauto.system.sysupdate");
