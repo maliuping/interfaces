@@ -47,8 +47,9 @@ enum EnComdMeterFuncResult : uint8_t {
  * use for channelNum in ComdMeterCmdDataInfo
  */
 enum EnComdMcanChannelNum : uint8_t {
-    EN_METER_METER_CHANNEL = 0x00,	/*  Meter channel  */
-    EN_METER_STSW_CHANNEL = 0x01	/*  SteeringSwich channel  */
+    EN_METER_METER_CHANNEL = 0x00,	 /*  Meter channel  */
+    EN_METER_STSW_CHANNEL = 0x01,	 /*  SteeringSwich channel  */
+    EN_METER_ITM_NAVI_CHANNEL = 0x02,/*  ITM_NAVI channel  */
 };
 
 /**
@@ -147,7 +148,8 @@ struct StComdMeterCmdDataSendAck{
  * package two or three type
  */
  struct StComdToMeterCmdDataInfoExten {
-	uint8_t packageNum;	/*  Extern Package Num */
-	uint8_t paraLen;	/*  Parameter DLC	*/
-	vec<uint8_t> para; 	/*  Parameter		*/
+	uint8_t packageNum;	              /*  Extern Package Num */
+    EnComdMcanChannelNum channelNum;  /*  Channle num */
+	uint8_t paraLen;	              /*  Parameter DLC	*/
+	vec<uint8_t> para; 	              /*  Parameter		*/
 };
