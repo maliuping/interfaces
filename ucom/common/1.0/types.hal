@@ -493,10 +493,14 @@ enum EnComdCommonChannelStatusInfo : uint8_t {
  * Overview.xls : Bitdata
  */
 struct StComdCommonMcanInfo{
-	EnComdCommonInitSeqStatus  meterInitSequence;	            /*  Meter init sequence				*/
-	EnComdCommonInitSeqStatus	stswInitSequence;	            /*  Steering Switch init sequence	*/
-	EnComdCommonChannelStatusInfo   meterChannelStatus;		/*  Meter channel status			*/
-	EnComdCommonChannelStatusInfo   stswChannelStatus;		/*  Steering Switch channel status	*/
+    EnComdCommonInitSeqStatus  meterInitSequence;	        /*  Meter init sequence				*/
+    EnComdCommonInitSeqStatus	stswInitSequence;	        /*  Steering Switch init sequence	*/
+    EnComdCommonChannelStatusInfo   meterChannelStatus;     /*  Meter channel status			*/
+    EnComdCommonChannelStatusInfo   stswChannelStatus;		/*  Steering Switch channel status	*/
+    EnComdCommonInitSeqStatus naviInitSequence;             /*  Navi init sequence				*/
+    EnComdCommonInitSeqStatus tcuInitSequence;              /*  TCU init sequence	*/
+    EnComdCommonChannelStatusInfo   naviChannelStatus;		/*  Navi channel status			*/
+    EnComdCommonChannelStatusInfo   tcuChannelStatus;		/*  TCU channel status			*/
 };
 /**
  * Overview.xls : Bitdata
