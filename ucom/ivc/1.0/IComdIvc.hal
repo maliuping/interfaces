@@ -1,0 +1,45 @@
+/**
+ * Copyright @ 2013 - 2015 Suntec Software(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * Suntec Software(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.ucom.ivc@1.0;
+
+import IComdIvcListener;
+
+interface IComdIvc {
+    // registerListener
+    registerListener(IComdIvcListener listener
+                     , EnComdIvcListenerID serviceId
+                     , EnComdIvcEventIds eventIds)
+        generates(EnComdIvcFuncResult funcResult);
+
+    // unRegisterListener
+    unRegisterListener(EnComdIvcListenerID serviceId)
+        generates(EnComdIvcFuncResult funcResult);
+
+    // ivcSendDataToMcan
+    ivcSendDataToMcan(StComdIvcMcanSendData sendData)
+        generates(EnComdIvcFuncResult funcResult);
+
+    // ivcSendExtendDataToMcan
+    ivcSendExtendDataToMcan(StComdIvcMcanSendExtendData sendExtendData)
+        generates(EnComdIvcFuncResult funcResult);
+
+    // ivcFuncVcanSendMsg
+    ivcFuncVcanSendMsg(StComdIvcVcanMsg vcanMsg)
+        generates(EnComdIvcFuncResult funcResult);
+
+    // ivcFuncFotaDataGet
+    ivcFuncFotaDataGet()
+        generates(StComdIvcFotaData data
+                  , EnComdIvcFuncResult funcResult);
+};

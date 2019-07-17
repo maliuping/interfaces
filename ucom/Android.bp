@@ -4,6 +4,7 @@ subdirs = [
     "common/1.1",
     "diag/1.0",
     "gcan/1.0",
+    "ivc/1.0",
     "meter/1.0",
     "source/1.0",
     "sourceMock/1.0",
