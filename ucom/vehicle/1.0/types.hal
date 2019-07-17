@@ -44,9 +44,7 @@ enum EnComdVehicleCanIdSend : uint32_t {
     ADASISV2_A104      = 0x000003A1,  // ADAS
     ADASISV2_A105      = 0x000003A3,  // ADAS
     ADASISV2_A106      = 0x000006A1,  // ADAS
-    IVI_A5             = 0x000003C7,  // AVM/POWER
     IVI_USERSETPREF_A5 = 0x000005B8,  // Seat
-    NAV_TO_DTOOL       = 0x00000767,  // Diag
 };
 
 /**

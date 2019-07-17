@@ -56,18 +56,16 @@ struct StComdIvcMcanSendData {
     uint8_t                      totalPackageNum;  /* total package num          */
     uint8_t                      packageLen;       /* len from channelNum to end */
     EnComdIvcMcanChannelNum      channelNum;       /* Channle num                */
-    uint8_t                      funcIdLow;        /* Function ID Low            */
-    uint8_t                      funcIdHigh;       /* Function ID High           */
+    uint16_t                     funcId;           /* Function ID                */
     EnComdIvcMcanOpType          optype;           /* Option type                */
     EnComdIvcMcanInterruptLevel  il;               /* Interrupt level            */
-    uint8_t                      paraLenLow;       /* Parameter DLC Low byte     */
-    uint8_t                      paraLenHigh;      /* Parameter DLC High byte    */
+    uint16_t                     paraLen;          /* Parameter DLC byte         */
     vec<uint8_t>                 para;             /* Parameter                  */
 };
 
 struct StComdIvcMcanSendExtendData {
     uint8_t                  packageNum;  /*  Extern Package Num */
-    EnComdIvcMcanChannelNum  channelNum;  /* Channle num         */
+    EnComdIvcMcanChannelNum  channelNum;  /*  Channle num        */
     uint8_t                  paraLen;     /*  Parameter DLC	     */
     vec<uint8_t>             para; 	      /*  Parameter		     */
 };
@@ -136,24 +134,21 @@ struct StComdIvcFotaData {
 };
 
 struct StComdIvcMcanRecvData {
-    EnComdIvcMcanChannelNum      channelNum;     /* Channle num              */
-    uint8_t                      funcIdLow;      /* Function ID Low          */
-    uint8_t                      funcIdHigh;     /* Function ID High         */
-    EnComdIvcMcanOpType          optype;         /* Option type              */
-    EnComdIvcMcanInterruptLevel  il;             /* Interrupt level          */
-    uint8_t                      paraLenLow;     /* Parameter DLC Low byte   */
-    uint8_t                      paraLenHigh;    /* Parameter DLC High byte  */
-    vec<uint8_t>                 para;           /* Parameter                */
+    EnComdIvcMcanChannelNum      channelNum;    /* Channle num        */
+    uint16_t                     funcId;        /* Function ID        */
+    EnComdIvcMcanOpType          optype;        /* Option type        */
+    EnComdIvcMcanInterruptLevel  il;            /* Interrupt level    */
+    uint16_t                     paraLen;       /* Parameter DLC byte */
+    vec<uint8_t>                 para;          /* Parameter          */
 };
 
-enum EnComdIvcMcanCommonStatus: uint8_t {
-    EN_IVC_MCAN_COMMON_STATUS_OK = 0x00,  /*  OK  */
-    EN_IVC_MCAN_COMMON_STATUS_NG = 0x01,  /*  NG  */
+enum EnComdIvcMcanSendResult: uint8_t {
+    EN_IVC_MCAN_SEND_RESULT_OK = 0x00,  /*  OK  */
+    EN_IVC_MCAN_SEND_RESULT_NG = 0x01,  /*  NG  */
 };
 
-struct StComdIvcMcanRecvDataAck{
-    EnComdIvcMcanChannelNum    channelNum;  /* Channle num       */
-    uint8_t                    funcIdLow;   /* Function ID Low   */
-    uint8_t                    funcIdHigh;  /* Function ID High  */
-    EnComdIvcMcanCommonStatus  sendResult;	/* Mcan Send result */
+struct StComdIvcMcanRecvDataAck {
+    EnComdIvcMcanChannelNum  channelNum;  /* Channle num      */
+    uint16_t                 funcId;      /* Function ID      */
+    EnComdIvcMcanSendResult  sendResult;  /* Mcan Send result */
 };
