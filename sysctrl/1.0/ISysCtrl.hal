@@ -114,6 +114,11 @@ interface ISysCtrl {
      * service action finished.
      */
      powerActionResult(string serviceName, PowerActionType powerActionType, bool result);
+     /*
+     * Only used by sysctrlmanager.sysctrlmanager use it to notify sysctrl first ui
+     * screen ready.
+     */
+     uiScreenReady(string serviceName);
 
     /*
      * Only used by datamanager.datamanager use it to notify sysctrl data clear finished.
