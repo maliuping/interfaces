@@ -87,3 +87,114 @@ enum SysdPropertyNameID : int32_t {
         uint8_t[2]    day;
         uint8_t[4]    serialNum;
 };
+
+/**
+  * @brief Defines possible items of BSP data.
+  */
+  enum BspDataId : int32_t {
+      BspDataId_Min,
+      BspDataId_ActiveBootMode = BspDataId_Min,  ///< Boot Mode
+      BspDataId_ActiveDebug,                     ///< debug on/off active flag.
+      BspDataId_ActiveVdata,                     ///< Vdata A/B active flag.
+      BspDataId_ActiveSys,                       ///< Sys A/B active flag.
+      BspDataId_ActiveAmigo,                     ///< Amigo A/B active flag.
+      BspDataId_ActiveSideInfo,                  ///< All side info.
+
+      BspDataId_AllItem,                         ///< All of BSPData.
+      BspDataId_Max
+    };
+
+/**
+  * @brief Defines possible items of boot mode.
+  */
+  enum BootMode : int32_t {
+      BootMode_Invalid = -1,
+      BootMode_Normal,      ///< Normal
+      BootMode_Update,      ///< Update
+      BootMode_TestMode,    ///< TestMode
+      BootMode_UserUpdate,  ///< UserUpdate
+      BootMode_SpecialUserUpdate,    ///< SpecialUserUpdate
+    };
+
+/**
+  * @brief Defines possible items of Vdata program sides.
+  */
+  enum VdataSide : int32_t {
+      VdataSide_Invalid = -1,
+      VdataSide_A,  ///< Vdata side A.
+      VdataSide_B,  ///< Vdata side B.
+    };
+
+/**
+  * @brief Defines possible items of Sys program sides.
+  */
+  enum SysSide : int32_t {
+      SysSide_Invalid = -1,
+      SysSide_A,  ///< Sys side A.
+      SysSide_B,  ///< Sys side B.
+    };
+
+/**
+  * @brief Defines possible items of Amigo program sides.
+  */
+  enum AmigoSide : int32_t {
+      AmigoSide_Invalid = -1,
+      AmigoSide_A,  ///< Amigo side A.
+      AmigoSide_B,  ///< Amigo side B.
+    };
+
+/**
+  * @brief Defines possible items of debugsw program sides.
+  */
+  enum DebugSide : int32_t {
+      Debugsw_Invalid = -1,
+      Debugsw_off,  ///< debug off 0.
+      Debugsw_on,  ///< debug on 1.
+    };
+
+/**
+  * @brief This structure is used to describe all of activeside.
+  *
+  */
+struct ActiveSide {
+      VdataSide      Vdata;                                    ///< Vdata A/B active flag.
+      SysSide        Sys;                                      ///< Sys A/B active flag.
+      AmigoSide      Amigo;                                    ///< Amigo A/B active flag.
+    };
+
+/**
+  * @brief This structure is used to describe all of bspdata.
+  *
+  */
+struct BspInfo {
+      BootMode       mode;                                     ///< boot mode
+      DebugSide      debugsw;                                  ///< debug on/off active flag.
+      VdataSide      Vdata;                                    ///< Vdata A/B active flag.
+      SysSide        Sys;                                      ///< Sys A/B active flag.
+      AmigoSide      Amigo;                                    ///< Amigo A/B active flag.
+    };
+
+/**
+  * @brief Defines possible items of config data.
+  */
+    enum CfgDataId : int32_t {
+        CfgDataId_Min,
+        CfgDataId_CameraType = CfgDataId_Min,    // camera type
+        CfgDataId_Max
+    };
+
+/**
+  * @brief Defines possible items of camera type.
+  */
+    enum CameraType : int32_t {
+        CameraType_Invalid,
+        CameraType_RVC,  // RVC camera.
+        CameraType_AVM,  // AVM camera.
+    };
+
+/**
+  * @brief This structure is used to describe all of cfgdata.
+  */
+  struct CfgInfo {
+      CameraType     camera_type;                             // camera type
+    };
