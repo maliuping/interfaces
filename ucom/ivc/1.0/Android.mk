@@ -133,25 +133,6 @@ $(GEN): $(LOCAL_PATH)/types.hal
 LOCAL_GENERATED_SOURCES += $(GEN)
 
 #
-# Build types.hal (EnComdIvcMcanCommonStatus)
-#
-GEN := $(intermediates)/iauto/hardware/ucom/ivc/V1_0/EnComdIvcMcanCommonStatus.java
-$(GEN): $(HIDL)
-$(GEN): PRIVATE_HIDL := $(HIDL)
-$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
-$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
-$(GEN): PRIVATE_CUSTOM_TOOL = \
-        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
-        -Ljava \
-        -randroid.hidl:system/libhidl/transport \
-        -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.ucom.ivc@1.0::types.EnComdIvcMcanCommonStatus
-
-$(GEN): $(LOCAL_PATH)/types.hal
-	$(transform-generated-source)
-LOCAL_GENERATED_SOURCES += $(GEN)
-
-#
 # Build types.hal (EnComdIvcMcanInterruptLevel)
 #
 GEN := $(intermediates)/iauto/hardware/ucom/ivc/V1_0/EnComdIvcMcanInterruptLevel.java
@@ -184,6 +165,25 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
         iauto.hardware.ucom.ivc@1.0::types.EnComdIvcMcanOpType
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (EnComdIvcMcanSendResult)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/ivc/V1_0/EnComdIvcMcanSendResult.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.ivc@1.0::types.EnComdIvcMcanSendResult
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
@@ -516,25 +516,6 @@ $(GEN): $(LOCAL_PATH)/types.hal
 LOCAL_GENERATED_SOURCES += $(GEN)
 
 #
-# Build types.hal (EnComdIvcMcanCommonStatus)
-#
-GEN := $(intermediates)/iauto/hardware/ucom/ivc/V1_0/EnComdIvcMcanCommonStatus.java
-$(GEN): $(HIDL)
-$(GEN): PRIVATE_HIDL := $(HIDL)
-$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
-$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
-$(GEN): PRIVATE_CUSTOM_TOOL = \
-        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
-        -Ljava \
-        -randroid.hidl:system/libhidl/transport \
-        -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.ucom.ivc@1.0::types.EnComdIvcMcanCommonStatus
-
-$(GEN): $(LOCAL_PATH)/types.hal
-	$(transform-generated-source)
-LOCAL_GENERATED_SOURCES += $(GEN)
-
-#
 # Build types.hal (EnComdIvcMcanInterruptLevel)
 #
 GEN := $(intermediates)/iauto/hardware/ucom/ivc/V1_0/EnComdIvcMcanInterruptLevel.java
@@ -567,6 +548,25 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
         iauto.hardware.ucom.ivc@1.0::types.EnComdIvcMcanOpType
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (EnComdIvcMcanSendResult)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/ivc/V1_0/EnComdIvcMcanSendResult.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.ivc@1.0::types.EnComdIvcMcanSendResult
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
