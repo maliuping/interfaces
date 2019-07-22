@@ -28,6 +28,62 @@ interface ISysdProxy {
     setUsb1Mode(int32_t mode) generates (bool ret);
     setAdbWithUsbMode(int32_t mode) generates (bool ret);
     setAdbWithNetworkMode(int32_t mode) generates (bool ret);
-    setAuthId(bool authIdFlag, VehicleAuthIDInfo value) generates(bool ret);
-    clearAuthIdInfo() generates(bool ret);
+    setAuthId(bool authIdFlag, VehicleAuthIDInfo value) generates (bool ret);
+    clearAuthIdInfo() generates (bool ret);
+    setBSPDataInfo(BspDataId id, vec<int32_t> value) generates (bool ret);
+    getBSPDataInfo(BspDataId id) generates (vec<int32_t> value, bool ret);
+
+    setBootMode(BootMode mode) generates (bool ret);
+    setDebugSide(DebugSide debugsw) generates (bool ret);
+    setVdataSide(VdataSide Vdata) generates (bool ret);
+    setSysSide(SysSide Sys) generates (bool ret);
+    setAmigoSide(AmigoSide Amigo) generates (bool ret);
+    setActiveSideInfo(ActiveSide activeSide) generates (bool ret);
+    setAllBspInfo(BspInfo bspInfo) generates (bool ret);
+
+    getBootMode() generates (BootMode mode, bool ret);
+    getDebugSide() generates (DebugSide debugsw, bool ret);
+    getVdataSide() generates (VdataSide Vdata, bool ret);
+    getSysSide() generates (SysSide Sys, bool ret);
+    getAmigoSide() generates (AmigoSide Amigo, bool ret);
+    getActiveSideInfo() generates (ActiveSide activeSide, bool ret);
+    getAllBspInfo() generates (BspInfo bspInfo, bool ret);
+
+    /**
+     * @brief Set Single CONFIGData to flash.
+     *
+     * @param [in] id
+     *             A UINT32 value that indicates CONFIG data id.
+     *
+     * @param [in] value
+     *               A int32 that indicates the CONFIG data value.
+     *
+     * @return true indicates success, false indicates failure.
+     */
+    setCfgDataInfo(CfgDataId id, int32_t value) generates (bool ret);
+
+    /**
+     * @brief Get single CONFIGData from flash.
+     *
+     * @param [in] id
+     *             A UINT32 value that indicates CONFIG data id.
+     *
+     * @param [out] value
+     *               A int32 that indicates the CONFIG data value.
+     *
+     * @return true indicates success, false indicates failure.
+     */
+    getCfgDataInfo(CfgDataId id) generates (int32_t value, bool ret);
+
+    /**
+     * @brief Set All CONFIGData to flash.
+     */
+    setAllCfgData(CfgInfo cfgInfo) generates (bool ret);
+
+    /**
+     * @brief Get All CONFIGData from flash.
+     */
+    getAllCfgData() generates (CfgInfo cfgInfo, bool ret);
+
+
 };
