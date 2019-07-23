@@ -596,6 +596,7 @@ enum EnComdSourceEventId : uint64_t{
     EN_SOURCE_EID_replyPowerOnMuteOff = 1 << 19,
     EN_SOURCE_EID_replyPowerOffMuteOn = 1 << 20,
     EN_SOURCE_EID_notifyCarplayAudioChannelMuteResp = 1 << 21,
+	EN_SOURCE_EID_notifyDevicePlugInPlayResp = 1<< 22,
     EN_SOURCE_EID_notifyAll = 0xFFFFFFFFFFFFFFFF
 };
 
