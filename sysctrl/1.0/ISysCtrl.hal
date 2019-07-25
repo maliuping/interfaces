@@ -131,7 +131,7 @@ interface ISysCtrl {
     preDataCleared(bool result, string name);
 
     /*
-     * Diag or UI use it to notify sysctrl do personal data initialize.
+     * Service use it to notify sysctrl do data clear.
      */
     startDataClear(StartupReasons reason, string sourceName);
 
@@ -141,4 +141,13 @@ interface ISysCtrl {
      */
     registerGenericListener(ISysCtrlGenericListener listener, string serviceName);
 
+    /*
+     * Service use it to get data clear result.
+     */
+    // getDataClearResult() generates (StartupReasons reason, DataClearResult result);
+
+    /*
+     * Service use it to notify sysctrl that service has get data clear result successful.
+     */
+    // resetDataClearResult(string serviceName);
 };

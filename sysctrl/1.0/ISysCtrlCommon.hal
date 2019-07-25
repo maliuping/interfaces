@@ -34,4 +34,8 @@ interface ISysCtrlCommon {
      * The function only used by sys.sys use it to notify sys initialize complete.
      */
     sysInitComplete();
+    /*
+     * The function only used by sys.sys use it to notify sys start abnormal info.
+     */
+    // setStartErrorStatus(uint8_t accError, uint8_t bupError);
 };

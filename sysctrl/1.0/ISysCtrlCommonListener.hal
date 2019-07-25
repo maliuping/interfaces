@@ -18,4 +18,5 @@ interface ISysCtrlCommonListener {
      * The callback function be used to receive acc off ready notification.
      */
     oneway onAccOffReady(int32_t reqType, int32_t event, string reason);
+    oneway onReboot(SysBootMode boot_mode);
 };
