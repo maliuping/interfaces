@@ -295,21 +295,23 @@ enum EnComdDiagEventId : uint64_t{
     EN_DIAG_EID_notifyPDiagExitFMTestModeResp = 1 << 11,
     EN_DIAG_EID_notifyPDiagTunerAlignInfoResp = 1 << 12,
     EN_DIAG_EID_notifyPDiagTunerAlignResultResp = 1 << 13,
-    EN_DIAG_EID_notifyNDiagChangeModeAndStatusResp = 1 << 14,
-    EN_DIAG_EID_notifyNDiagResultDataInit = 1 <<  15,
-    EN_DIAG_EID_notifyNDiagResultDataInitSeq = 1 << 16,
-    EN_DIAG_EID_notifyNDiagResultDataSelfDiag = 1 << 17,
-    EN_DIAG_EID_notifyNDiagResultDataAVMonit = 1 << 18,
-    EN_DIAG_EID_notifyNDiagResultDataErrRecord = 1 << 19,
-    EN_DIAG_EID_notifyNDiagResultDataVersion = 1 << 20,
-    EN_DIAG_EID_notifyNDiagResultDataConnRecord = 1 << 21,
-    EN_DIAG_EID_notifyNDiagClearErrRecordResult = 1 << 22,
-    EN_DIAG_EID_notifyNDiagClearAVCountResult = 1 << 23,
-    EN_DIAG_EID_notifyNDiagClearUnitConnResult = 1 << 24,
-    EN_DIAG_EID_notifyNDiagSpeakerTestResp = 1 << 25,
-    EN_DIAG_EID_notifyNDiagCameraPowCtrlResp = 1 << 26,
-    EN_DIAG_EID_notifyNDiagInitSeqErrInfoSetResp = 1 << 27,
-    EN_DIAG_EID_notifyPDiagKeyBacklightResp = 1 << 28,
+    EN_DIAG_EID_notifyPDiagKeyBacklightResp = 1 << 14,
+    EN_DIAG_EID_notifyNDiagChangeModeAndStatusResp = 1 << 15,
+    EN_DIAG_EID_notifyNDiagResultDataInit = 1 <<  16,
+    EN_DIAG_EID_notifyNDiagResultDataInitSeq = 1 << 17,
+    EN_DIAG_EID_notifyNDiagResultDataSelfDiag = 1 << 18,
+    EN_DIAG_EID_notifyNDiagResultDataAVMonit = 1 << 19,
+    EN_DIAG_EID_notifyNDiagResultDataErrRecord = 1 << 20,
+    EN_DIAG_EID_notifyNDiagResultDataVersion = 1 << 21,
+    EN_DIAG_EID_notifyNDiagResultDataConnRecord = 1 << 22,
+    EN_DIAG_EID_notifyNDiagClearErrRecordResult = 1 << 23,
+    EN_DIAG_EID_notifyNDiagClearAVCountResult = 1 << 24,
+    EN_DIAG_EID_notifyNDiagClearUnitConnResult = 1 << 25,
+    EN_DIAG_EID_notifyNDiagSpeakerTestResp = 1 << 26,
+    EN_DIAG_EID_notifyNDiagCameraPowCtrlResp = 1 << 27,
+    EN_DIAG_EID_notifyNDiagInitSeqErrInfoSetResp = 1 << 28,
+    EN_DIAG_EID_notifyNDiagVcanConnInfoResp = 1 << 29,
+    EN_DIAG_EID_notifyNDiagExitVcanConnResp = 1 << 30,
 };
 
 /**
@@ -577,4 +579,21 @@ struct StComdNDiagSpeakerTestData{
     EnComdDiagStatus rightFrontDoorSpeaker;
     EnComdDiagStatus rightFrontTweeter;
     EnComdDiagStatus leftFrontTweeter;
+};
+
+enum EnComdNDiagFrameStatus : uint8_t {
+  EN_NDIAG_FRAME_STATUS_NO_ERROR,
+  EN_NDIAG_FRAME_STATUS_TIME_OUT,
+  EN_NDIAG_FRAME_STATUS_RX_ERROR,
+};
+
+
+struct StComdNDiagVCanConnData {
+    uint32_t frameId;
+    EnComdNDiagFrameStatus frameStatus;
+};
+
+struct StComdNDiagVCanData {
+    uint8_t length;
+    vec<StComdNDiagVCanConnData>  condata;
 };
