@@ -142,6 +142,15 @@ interface IComdDiagListener {
      */
     oneway notifyPDiagTunerAlignResultResp(StComdPDiagTunerAlignResultInfo info);
 
+    /**
+     * Request key backlight and set key backlight response
+     *
+     * @param keybacklight: the value of key backlight
+     *
+     * Adaptive project: Base && Morley
+     */
+    oneway notifyPDiagKeyBacklightResp(uint8_t keybacklight);
+
 //NISSAN DIAG
     /**
      * Diag change mode and status response
@@ -268,13 +277,21 @@ interface IComdDiagListener {
      */
     oneway notifyNDiagInitSeqErrInfoSetResp(EnComdDiagStatus settingRespStatus);
 
-    /*********PANA DIAG*******/
     /**
-     * Request key backlight and set key backlight response
+     *  V-CAN connection target devices information response
      *
-     * @param keybacklight: the value of key backlight
+     * @param vcanData: FrameId and status
      *
-     * Adaptive project: Base && Morley
+     * Adaptive project: Morley
      */
-    oneway notifyPDiagKeyBacklightResp(uint8_t keybacklight);
+     oneway notifyNDiagVcanConnInfoResp(StComdNDiagVCanData vcanData);
+
+    /**
+     *  V-CAN connection target devices exit response
+     *
+     * @param None
+     *
+     * Adaptive project: Morley
+     */
+     oneway notifyNDiagExitVcanConnResp();
 };
