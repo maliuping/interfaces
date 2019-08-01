@@ -21,6 +21,7 @@ package iauto.hardware.ucom.diag@1.0;
  */
 enum EnComdDiagListenerID : uint8_t {
     EN_DIAG_LIS_ID_DIAG = 0x00,
+    EN_DIAG_LIS_ID_SYSCTRL = 0x01,
     EN_DIAG_LIS_ID_TEST = 0xFF,
 };
 
@@ -227,10 +228,11 @@ enum EnComdDiagResult : uint8_t {
  * Adaptive project: Base && Morley
  */
 enum EnComdNDiagInitSeqErrType : uint8_t {
-    EN_NDIAG_INIT_SEQ_ERR_TYPE_NOERR = 0x00,  //no error
-    EN_NDIAG_INIT_SEQ_ERR_TYPE_METER = 0x01,  //meter error
-    EN_NDIAG_INIT_SEQ_ERR_TYPE_STW_SW = 0x02, //stw sw error
-    EN_NDIAG_INIT_SEQ_ERR_TYPE_ALL = 0x03,    //all error
+    EN_NDIAG_INIT_SEQ_ERR_TYPE_NOERR = 0x00,  // no error
+    EN_NDIAG_INIT_SEQ_ERR_TYPE_ERROR = 0x01,  // error
+    EN_NDIAG_INIT_SEQ_ERR_TYPE_METER = 0x02,   // meter
+    EN_NDIAG_INIT_SEQ_ERR_TYPE_STW_SW = 0x03,  // stwsw
+    EN_NDIAG_INIT_SEQ_ERR_TYPE_ALL = 0x04,     // all
 };
 
 /**
@@ -467,6 +469,18 @@ struct StComdNDiagInitResultData{
 
 /**
  * Specifies a struct which describe the init sequence diag result response information
+ * used in struct: StComdNDiagInitSeqResultData
+ * Adaptive project: Base && Morley
+ */
+struct StComdNDiagInitSeqErrorType {
+    EnComdNDiagInitSeqErrType meter;
+    EnComdNDiagInitSeqErrType stsw;
+    EnComdNDiagInitSeqErrType navi;
+    EnComdNDiagInitSeqErrType tcu;
+};
+
+/**
+ * Specifies a struct which describe the init sequence diag result response information
  * used in function: notifyNDiagResultDataInitSeq
  * Adaptive project: Base && Morley
  */
@@ -474,7 +488,10 @@ struct StComdNDiagInitSeqResultData{
     EnComdNDiagSpecialResult result;
     uint8_t meterSeqCount;
     uint8_t steerKeySeqCount;
+    uint8_t naviSeqCount;
+    uint8_t tcuSeqCount;
     EnComdNDiagInitSeqErrType errType;
+    StComdNDiagInitSeqErrorType type;
 };
 
 /**
