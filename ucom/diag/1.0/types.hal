@@ -686,9 +686,9 @@ enum EnComdVDiagRearCameraStatus : uint8_t {
     EN_VDIAG_REAR_CAMERA_ON,
 };
 
-enum EnComdVDiagSpkConnFrequency : uint8_t {
-    EN_VDIAG_SPEAKER_CONNECT_FREQUENCY_FIVE = 0x05,
-    EN_VDIAG_SPEAKER_CONNECT_FREQUENCY_EIGHTY = 0x50,
+enum EnComdVDiagFrequency : uint8_t {
+    EN_VDIAG_FREQUENCY_500HZ = 0x05,
+    EN_VDIAG_FREQUENCY_8000HZ = 0x50,
 };
 
 /**
@@ -721,8 +721,8 @@ struct StComdVDiagIOCtrlTunerInfo {
  */
 struct StComdVDiagIOCtrlLoudSpkInfo {
     EnComdVDiagLoudSpeakerLine speakerLine;
-    uint8_t frequency;
-    uint8_t volume;
+    EnComdVDiagFrequency frequency;
+    uint8_t volumeValue;
 };
 
 
@@ -733,8 +733,8 @@ struct StComdVDiagIOCtrlLoudSpkInfo {
  *
  */
 struct StComdVDiagIOCtrlSpkConnInfo {
-    EnComdVDiagSpkConnFrequency frequency;
-    uint8_t volume;
+    EnComdVDiagFrequency frequency;
+    uint8_t volumeValue;
 };
 
 /**
