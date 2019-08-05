@@ -33,7 +33,7 @@ interface IComdDiag {
      *
      *  Adaptive project: Base && Apoo && Morley
      */
-    registerListener(IComdDiagListener listener,EnComdDiagListenerID serviceId,EnComdDiagEventIds eventIds) generates(EnComdDiagFuncResult funcResult);
+    registerListener(IComdDiagListener listener,EnComdDiagListenerID serviceId, EnComdDiagEventIds eventIds) generates(EnComdDiagFuncResult funcResult);
 
     /**
      * when the client don`t need to listen the ComdDiag information
@@ -278,6 +278,38 @@ interface IComdDiag {
      */
     pDiagGetTunerAlignResult(uint8_t[4] address) generates(EnComdDiagFuncResult funcResult);
 
+    /**
+     * request the key backlight
+     *
+     * @param none
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagRequestKeyBackLight() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * set the key backlight
+     *
+     * @param keybacklight: the value of keybacklight
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Base && Apoo && Morley
+     */
+    pDiagSetKeyBackLight(uint8_t keybacklight) generates(EnComdDiagFuncResult funcResult);
+
 //NISSAN DIAG
     /**
      * change Diag status and mode
@@ -375,11 +407,10 @@ interface IComdDiag {
      */
     nDiagInitSeqErrInfoSetReq(EnComdDiagSetModeCmd cmd) generates(EnComdDiagFuncResult funcResult);
 
-    /***********PANA DIAG***************/
     /**
-     * request the key backlight
+     * V-CAN connection target devices request
      *
-     * @param none
+     * @param cmd: status of initial sequence error information setting
      *
      * @return funcResult: the status of invoking functon: OK in case of success
      *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
@@ -388,15 +419,15 @@ interface IComdDiag {
      *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
      *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
      *
-     * Adaptive project: Base && Apoo && Morley
+     * Adaptive project: Morley
      */
-    pDiagRequestKeyBackLight() generates(EnComdDiagFuncResult funcResult);
-
+     nDiagVCanConnectInfoReq() generates(EnComdDiagFuncResult funcResult);
+     
     /**
-     * set the key backlight
+     * V-CAN connection target devices Diag exit
      *
-     * @param keybacklight: the value of keybacklight
-     *
+     * @param None
+     * 
      * @return funcResult: the status of invoking functon: OK in case of success
      *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
      *
@@ -404,7 +435,7 @@ interface IComdDiag {
      *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
      *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
      *
-     * Adaptive project: Base && Apoo && Morley
+     * Adaptive project: Morley
      */
-    pDiagSetKeyBackLight(uint8_t keybacklight) generates(EnComdDiagFuncResult funcResult);
+     nDiagVcanConnectExitReq() generates(EnComdDiagFuncResult funcResult);
 };
