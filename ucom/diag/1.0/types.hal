@@ -313,7 +313,16 @@ enum EnComdDiagEventId : uint64_t{
     EN_DIAG_EID_notifyNDiagCameraPowCtrlResp = 1 << 27,
     EN_DIAG_EID_notifyNDiagInitSeqErrInfoSetResp = 1 << 28,
     EN_DIAG_EID_notifyNDiagVcanConnInfoResp = 1 << 29,
-    EN_DIAG_EID_notifyNDiagExitVcanConnResp = 1 << 30,
+    EN_DIAG_EID_notifyNDiagVcanConnInfoExtendResp = 1 << 30,
+    EN_DIAG_EID_notifyNDiagExitVcanConnResp = 1 << 31,
+    EN_DIAG_EID_notifyVDiagReqEnterVcanDiag = 1 << 32,
+    EN_DIAG_EID_notifyVDiagReqExitVcanDiag = 1 << 33,
+    EN_DIAG_EID_notifyVDiagReqIOTunerControl = 1 << 34,
+    EN_DIAG_EID_notifyVDiagReqLoudSpkControl = 1 << 35,
+    EN_DIAG_EID_notifyVDiagReqRearCameraControl = 1 << 36,
+    EN_DIAG_EID_notifyVDiagReqSpkConnControl = 1 << 37,
+    EN_DIAG_EID_notifyVDiagReqStopIOControl = 1 << 38,
+    EN_DIAG_EID_notifyVDiagReqDIDInfo = 1 << 39,
 };
 
 /**
@@ -503,6 +512,8 @@ struct StComdNDiagSelfDiagResultData{
     EnComdNDiagSpecialResult meterResult;
     EnComdNDiagSpecialResult stwSwResult;
     EnComdNDiagSpecialResult ivcMcanResult;
+    EnComdNDiagSpecialResult naviResult;
+    EnComdNDiagSpecialResult tcuResult;
 };
 
 /**
@@ -519,6 +530,12 @@ struct StComdNDiagAVMonitResultData{
 
     EnComdDiagResult mpdtSendSteerStatus;
     uint8_t mpdtSendItmSteerCount;
+
+    EnComdDiagResult mpdtSendNaviStatus;
+    uint8_t mpdtSendNaviCount;
+
+    EnComdDiagResult mpdtSendTcuStatus;
+    uint8_t mpdtSendTcuCount;
 
     EnComdDiagResult cmfSendSteerStatus;
     uint8_t cmfSendSteerCount;
@@ -540,6 +557,12 @@ struct StComdNDiagAVMonitResultData{
 
     EnComdDiagResult cmfReceiveIvcStatus;
     uint8_t cmfReceiveIvcCount;
+
+    EnComdDiagResult cmfReceiveNaviStatus;
+    uint8_t cmfReceiveNaviCount;
+
+    EnComdDiagResult cmfReceiveTcuStatus;
+    uint8_t cmfReceiveTcuCount;
 };
 
 /**
@@ -556,6 +579,8 @@ struct StComdNDiagErrRecordResultData{
     uint8_t meternaviInitCommErrCount;
     uint8_t ivcConnectErrCount;
     uint8_t ivcInitCommErrCount;
+    uint8_t meternaviCommErrCount;
+    uint8_t tcuInitCommErrCount;
 };
 
 /**
@@ -566,10 +591,16 @@ struct StComdNDiagErrRecordResultData{
 struct StComdNDiagVerResultData{
     EnComdDiagValidity meterVerValidity;
     EnComdDiagValidity stswVerValidity;
+    EnComdDiagValidity naviVerValidity;
+    EnComdDiagValidity tcuVerValidity;
     uint8_t[3] meterHardwareVer;
     uint8_t[3] meterSoftwareVer;
     uint8_t[3] stwSwHardwareVer;
     uint8_t[3] stwSwSoftwareVer;
+    uint8_t[3] naviHardwareVer;
+    uint8_t[3] naviSoftwareVer;
+    uint8_t[3] tcuHardwareVer;
+    uint8_t[3] tcuSwSoftwareVer;
 };
 
 /**
@@ -581,6 +612,8 @@ struct StComdNDiagConnRecordResultData{
     EnComdNDiagConnRecordStatus meterRecord;
     EnComdNDiagConnRecordStatus stswRecord;
     EnComdNDiagConnRecordStatus ivcMcanRecord;
+    EnComdNDiagConnRecordStatus naviRecord;
+    EnComdNDiagConnRecordStatus tcuRecord;
 };
 
 /**
@@ -611,6 +644,114 @@ struct StComdNDiagVCanConnData {
 };
 
 struct StComdNDiagVCanData {
+    uint8_t packageNum;
     uint8_t length;
     vec<StComdNDiagVCanConnData>  condata;
+};
+
+/*****************VCAN DIAG***************************/
+/**
+ * Adaptive project: Morley
+ */
+enum EnComdVDiagLoudSpeakerLine : uint8_t {
+    EN_VDIAG_LOUD_SPEAKER_FL = 0x01,
+    EN_VDIAG_LOUD_SPEAKER_FR,
+    EN_VDIAG_LOUD_SPEAKER_RR,
+    EN_VDIAG_LOUD_SPEAKER_RL,
+};
+
+/**
+ * Adaptive project: Morley
+ */
+enum EnComdVDiagAcionType : uint8_t {
+    EN_VDIAG_TYPE_IO_CONTROL_TUNER,
+    EN_VDIAG_TYPE_IO_CONTROL_LOUD_SPEAKER,
+    EN_VDIAG_TYPE_IO_CONTROL_REAR_CAMERA,
+    EN_VDIAG_TYPE_IO_CONTROL_SPEAKER_CONNECT,
+};
+
+/**
+ * Adaptive project: Morley
+ */
+enum EnComdVDiagBandType : uint8_t {
+    EN_VDIAG_BAND_TYPE_FM = 0x01,
+    EN_VDIAG_BAND_TYPE_AM = 0x11,
+};
+
+/**
+ * Adaptive project: Morley
+ */
+enum EnComdVDiagRearCameraStatus : uint8_t {
+    EN_VDIAG_REAR_CAMERA_OFF,
+    EN_VDIAG_REAR_CAMERA_ON,
+};
+
+enum EnComdVDiagSpkConnFrequency : uint8_t {
+    EN_VDIAG_SPEAKER_CONNECT_FREQUENCY_FIVE = 0x05,
+    EN_VDIAG_SPEAKER_CONNECT_FREQUENCY_EIGHTY = 0x50,
+};
+
+/**
+ * CT:Ba D0:02 D1:12
+ *
+ * Adaptive project: Morley
+ *
+ */
+struct StComdVDiagIOControlResult {
+    EnComdVDiagAcionType actionType;
+    EnComdDiagResult result;
+};
+
+/**
+ * CT:BF D0:02 D1:12 D2:00
+ *
+ * Adaptive project: Morley
+ *
+ */
+struct StComdVDiagIOCtrlTunerInfo {
+    EnComdVDiagBandType bandType;
+    uint8_t[5] frequency;
+};
+
+/**
+ * CT:BF D0:02 D1:12 D2:01
+ *
+ * Adaptive project: Morley
+ *
+ */
+struct StComdVDiagIOCtrlLoudSpkInfo {
+    EnComdVDiagLoudSpeakerLine speakerLine;
+    uint8_t frequency;
+    uint8_t volume;
+};
+
+
+/**
+ * CT:BF D0:02 D1:12 D2:03\
+ *
+ * Adaptive project: Morley
+ *
+ */
+struct StComdVDiagIOCtrlSpkConnInfo {
+    EnComdVDiagSpkConnFrequency frequency;
+    uint8_t volume;
+};
+
+/**
+ * Adaptive project: Morley
+ */
+struct StComdVDiagDTCInfo {
+    uint32_t dtcValue;
+    uint8_t status;
+};
+
+/**
+ * CT:BA D0:02 D1:20
+ *
+ * Adaptive project: Morley
+ *
+ */
+struct StComdVDiagDIDInfo {
+    uint8_t didValue;
+    vec<uint8_t> didData;
 };
