@@ -23,6 +23,13 @@ enum EnComdCommonEventId : @1.0::EnComdCommonEventId {
     EN_COMMON_EID_C1A_HSState                = 1 << 39,
     EN_COMMON_EID_CanSpeedPulse              = 1 << 40,
     EN_COMMON_EID_FanSettingStatus           = 1 << 41,
+    EN_COMMON_EID_RwcPowerStatus             = 1 << 42,
+    EN_COMMON_EID_PowerIcDetect              = 1 << 43,
+    EN_COMMON_EID_DayNightMode               = 1 << 44,
+    EN_COMMON_EID_StartInfo                  = 1 << 45,
+    EN_COMMON_EID_BcmMicuSta                 = 1 << 46,
+    EN_COMMON_EID_BcanBusOffSta              = 1 << 47,
+    EN_COMMON_EID_PGearsSta                  = 1 << 48,
 };
 /**
  * USB type define
@@ -123,4 +130,26 @@ enum EnComdFanControType : uint8_t {
 enum EnComdFanSettingStatus : uint8_t {
     EN_COMMON_FAN_SETTING_STOP = 0x00,
     EN_COMMON_FAN_SETTING_RUN = 0x01,
+};
+
+/**
+ * Specifies a enum which describe RWC/RVC power control status
+ */
+enum EnComdRwcPowerState : uint8_t {
+    EN_COMMON_RWC_POWER_OFF = 0x00,
+    EN_COMMON_RWC_POWER_ON = 0x01,
+};
+
+/**
+ * 01.Overview.xls
+ *
+ * Bit Data
+ *
+ * Day Night Mode
+ */
+enum EnComdCommonDayNightMode : uint8_t {
+    EN_COMMON_DAY_NIGHT_MODE_DAY         = 0x00,  // Day
+    EN_COMMON_DAY_NIGHT_MODE_TWILIGHT    = 0x01,  // Twilight
+    EN_COMMON_DAY_NIGHT_MODE_NIGHT       = 0x02,  // Night
+    EN_COMMON_DAY_NIGHT_MODE_UNAVAILABLE = 0x03,  // Unavailable
 };

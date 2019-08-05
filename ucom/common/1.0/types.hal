@@ -179,6 +179,9 @@ struct StComdCommonStartErrorMonitorData {
     EnComdCommonStartErrorStatus sysTaskError;           //Sys Task notification
 
     EnComdCommonStartErrorStatus socWatchDog;        //SOC Watchdog reset monitoring
+    EnComdCommonStartErrorStatus socOffReady;        // SOC off ready restart
+    EnComdCommonStartErrorStatus socInitComErr;      // SOC initial communication error
+    EnComdCommonStartErrorStatus socRegComErr;       // SOC regular communication error
 };
 
 /**
@@ -276,6 +279,7 @@ struct StComdCommonStartInfoClearReqCmd {
     EnComdCommonRestartDemand restartDemand;
     EnComdCommonRestartType restartType;
 
+
     EnComdCommonClearReqCmdType resetStartup;       //Reset startup notification ClearCmd
     EnComdCommonClearReqCmdType accError;           //ASENSE abnormal history notification ClearCmd
     EnComdCommonClearReqCmdType bupError;           //BSENSE abnormal history notification ClearCmd
@@ -288,7 +292,10 @@ struct StComdCommonStartInfoClearReqCmd {
     EnComdCommonClearReqCmdType illegalAddressError;    //Illegal address exception notification ClearCmd
     EnComdCommonClearReqCmdType sysTaskError;           //Sys Task notification ClearCmd
 
-    EnComdCommonClearReqCmdType socWatchDog;        //SOC Watchdog reset monitoring ClearCmd
+    EnComdCommonClearReqCmdType socWatchDog;         //SOC Watchdog reset monitoring ClearCmd
+    EnComdCommonClearReqCmdType socOffReady;        // SOC off ready restart
+    EnComdCommonClearReqCmdType socInitCom;      // SOC initial communication error
+    EnComdCommonClearReqCmdType socRegCom;       // SOC regular communication error
 };
 
 /**

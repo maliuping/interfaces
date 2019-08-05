@@ -39,6 +39,25 @@ $(GEN): $(LOCAL_PATH)/types.hal
 LOCAL_GENERATED_SOURCES += $(GEN)
 
 #
+# Build types.hal (EnComdCommonDayNightMode)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonDayNightMode.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdCommonDayNightMode
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
 # Build types.hal (EnComdCommonEventId)
 #
 GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonEventId.java
@@ -185,6 +204,25 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
         iauto.hardware.ucom.common@1.1::types.EnComdFanSettingStatus
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (EnComdRwcPowerState)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdRwcPowerState.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdRwcPowerState
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
@@ -345,6 +383,25 @@ $(GEN): $(LOCAL_PATH)/types.hal
 LOCAL_GENERATED_SOURCES += $(GEN)
 
 #
+# Build types.hal (EnComdCommonDayNightMode)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonDayNightMode.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdCommonDayNightMode
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
 # Build types.hal (EnComdCommonEventId)
 #
 GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdCommonEventId.java
@@ -491,6 +548,25 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
         iauto.hardware.ucom.common@1.1::types.EnComdFanSettingStatus
+
+$(GEN): $(LOCAL_PATH)/types.hal
+	$(transform-generated-source)
+LOCAL_GENERATED_SOURCES += $(GEN)
+
+#
+# Build types.hal (EnComdRwcPowerState)
+#
+GEN := $(intermediates)/iauto/hardware/ucom/common/V1_1/EnComdRwcPowerState.java
+$(GEN): $(HIDL)
+$(GEN): PRIVATE_HIDL := $(HIDL)
+$(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
+$(GEN): PRIVATE_OUTPUT_DIR := $(intermediates)
+$(GEN): PRIVATE_CUSTOM_TOOL = \
+        $(PRIVATE_HIDL) -o $(PRIVATE_OUTPUT_DIR) \
+        -Ljava \
+        -randroid.hidl:system/libhidl/transport \
+        -riauto.hardware:ivi/system/hardware/interfaces \
+        iauto.hardware.ucom.common@1.1::types.EnComdRwcPowerState
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
