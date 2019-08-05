@@ -644,9 +644,8 @@ struct StComdNDiagVCanConnData {
 };
 
 struct StComdNDiagVCanData {
-    uint8_t packageNum;
-    uint8_t length;
-    vec<StComdNDiagVCanConnData>  condata;
+    uint8_t packageSum;
+    vec<StComdNDiagVCanConnData>  connData;
 };
 
 /*****************VCAN DIAG***************************/
@@ -752,6 +751,6 @@ struct StComdVDiagDTCInfo {
  *
  */
 struct StComdVDiagDIDInfo {
-    uint8_t didValue;
+    uint16_t didValue;
     vec<uint8_t> didData;
 };
