@@ -1,0 +1,21 @@
+package iauto.hardware.logmanagerservice@1.0;
+
+import ILogListener;
+
+interface ILogManager {
+    /**
+    * for client to call.
+    */
+
+    registerListener(ILogListener listener);
+
+    unregisterListener(ILogListener listener);
+
+    oneway reqErrorAccumulate(LOG_SRV_ERROR_INFO sErrorInfo);
+
+	oneway reqDeleteLog();
+
+	oneway reqBeginUsbAccumulate();
+
+
+};

@@ -1,0 +1,18 @@
+package iauto.hardware.logmanagerservice@1.0;
+
+
+enum LOG_SRV_ERROR_TYPE : uint16_t {
+    LOG_ERROR_KERNEL_CRASH = 0,                 ///kernel crash 発生時
+    LOG_ERROR_KERNEL_WDTO,                      ///kernel WDT T.O.発生時
+    LOG_ERROR_NATIVE_CODE_ABORT,                ///Native Code の強制終了
+    LOG_ERROR_APPLICATION_NOT_RESPONDING,       ///ANR時
+    LOG_ERROR_BG_APPLICATION_NOT_RESPONDING,    ///Background ANR時
+    LOG_ERROR_SYSTEM_SERVER_WDTO,               ///Android Watchdog 発生時
+    LOG_ERROR_HWLOG_NOTIFY,                     ///hardware error
+
+};
+
+struct LOG_SRV_ERROR_INFO {
+	LOG_SRV_ERROR_TYPE eErrorType;
+    uint32_t iOccurTime;
+};
