@@ -287,6 +287,15 @@ interface IComdDiagListener {
      oneway notifyNDiagVcanConnInfoResp(StComdNDiagVCanData vcanData);
 
     /**
+     *  V-CAN connection target devices information response
+     *
+     * @param vcanData: FrameId and status
+     *
+     * Adaptive project: Morley
+     */
+     oneway notifyNDiagVcanConnInfoExtendResp(vec<StComdNDiagVCanConnData> vcanData);
+
+    /**
      *  V-CAN connection target devices exit response
      *
      * @param None
