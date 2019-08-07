@@ -303,4 +303,94 @@ interface IComdDiagListener {
      * Adaptive project: Morley
      */
      oneway notifyNDiagExitVcanConnResp();
+
+    /***********VCAN Diag***********/
+    /**
+     * Response enter Pana Diag
+     *
+     * @param None
+     *
+     * CT : 0xBF, D0: 0x02, D1: 0x10
+     *
+     * Adaptive project: Morley
+     */
+    oneway notifyVDiagReqEnterVcanDiag();
+
+    /**
+     * Response exit Vcan Diag
+     *
+     * @param None
+     * 
+     * CT : 0xBF, D0: 0x02, D1: 0x11
+     *
+     * Adaptive project: Morley
+     */
+    oneway notifyVDiagReqExitVcanDiag();
+
+    /**
+     * micon notify client tuner temporary control info
+     *
+     * @param info : StComdVDiagIOCtrlTunerInfo
+     *
+     * CT : 0xBF, D0: 0x02, D1: 0x12  D2:0x00
+     *
+     * Adaptive project: Morley
+     */
+    oneway notifyVDiagReqIOTunerControl(StComdVDiagIOCtrlTunerInfo info);
+    
+    /**
+     * micon notify client loudspeaker temporary control info
+     *
+     * @param info : StComdVDiagIOCtrlLoudSpkInfo
+     *
+     * CT : 0xBF, D0: 0x02, D1: 0x12  D2:0x01
+     *
+     * Adaptive project: Morley
+     */
+    oneway notifyVDiagReqLoudSpkControl(StComdVDiagIOCtrlLoudSpkInfo info);
+
+    /**
+     * micon notify client Rear Camera temporary control info
+     *
+     * @param status :EnComdVDiagRearCameraStatus
+     *
+     * CT : 0xBF, D0: 0x02, D1: 0x12  D2:0x02
+     *
+     * Adaptive project: Morley
+     */
+    oneway notifyVDiagReqRearCameraControl(EnComdVDiagRearCameraStatus status);
+
+    /**
+     * micon notify client speaker connect temporary control info
+     *
+     * @param info :  StComdVDiagIOCtrlSpkConnInfo
+     *
+     * CT : 0xBF, D0: 0x02, D1: 0x12 D2:0x03
+     *
+     * Adaptive project: Morley
+     *
+     */
+    oneway notifyVDiagReqSpkConnControl(StComdVDiagIOCtrlSpkConnInfo info);
+
+    /**
+     * micon notify IO control stop
+     *
+     * @param None
+     *
+     * CT : 0xBF, D0: 0x02, D1: 0x13
+     *
+     * Adaptive project: Morley
+     */
+    oneway notifyVDiagReqStopIOControl();
+
+    /**
+     * micon req DID Info
+     *
+     * @param info  :  StComdVDiagDIDInfo
+     *
+     * CT : 0xBF, D0: 0x02, D1: 0x20
+     *
+     * Adaptive project: Morley
+     */
+    oneway notifyVDiagReqDIDInfo(vec<uint16_t> didValue);
 };
