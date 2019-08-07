@@ -132,4 +132,136 @@ interface IComdCommon extends @1.0::IComdCommon {
      */
     commonFanSettingReq(EnComdFanControType fantype)
          generates(EnComdCommonFuncResult funcResult);
+
+
+
+
+    /**
+      * Client request rwc/rvc power control status
+      *
+      * @param power: Rwc power status
+      *
+      * @return funcResult: Comd excute result
+      *
+      * Adaptive project: Morley
+      *
+      * If comd don't get the data from micon,the status will be
+      * UNKNOWN. However, comd will use notifyCommonRwcPowerStatus in
+      * IComdCommonListener to inform client after get the newest data from
+      * micon
+      */
+     commonRwcPowerControlStateReq(EnComdRwcPowerState powSta)
+         generates(EnComdCommonFuncResult funcResult);
+
+     /**
+      * Client get power ic offset defect status
+      *
+      * @return usbHoststatus:power ic offset defect status
+      * @return funcResult: Comd excute result
+      *
+      * Adaptive project: Morley
+      *
+      * If comd don't get the data from micon,the status will be
+      * UNKNOWN. However, comd will use notifyCommonPowerIcDetectStatus in
+      * IComdCommonListener to inform client after get the newest data from
+      * micon
+      */
+     commonFuncPowerIcStatusGet()
+         generates(EnComdCommonNormalOrNotStatus powICSta
+                   , EnComdCommonFuncResult funcResult);
+
+    /**
+     * @brief Client get day night mode from comd
+     *
+     * @param None
+     *
+     * @return mode: day night mode
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Morley
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyVehicleFuncDayNightModeResp in
+     * IComdCommon to inform client after get the newest
+     * data from micon.
+    */
+    commonFuncDayNightModeGet()
+        generates(EnComdCommonDayNightMode mode
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * @brief Client get start info from comd
+     *
+     * @param None
+     *
+     * @return startInfo: start Info
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: all
+     *
+     * If comd don't get the data from micon, the size will be 0.
+     * However, comd will use notifyCommonFuncStartInfo in
+     * IComdCommon to inform client after get the newest
+     * data from micon.
+     */
+    commonFuncStartInfoGet()
+        generates(vec<uint8_t> startInfo
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * @brief Client get BCM_MICU signal status from comd
+     *
+     * @param None
+     *
+     * @return status: BCM_MICU signal status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Apoo
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyCommonFuncBcmMicuSta in
+     * IComdCommon to inform client after get the newest
+     * data from micon.
+     */
+    commonFuncBcmMicuStaGet()
+        generates(EnComdCommonNormalOrNotStatus status
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * @brief Client get BCAN bus off status from comd
+     *
+     * @param None
+     *
+     * @return status: BCAN bus off status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Apoo
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyCommonFuncBcanBusOffSta in
+     * IComdCommon to inform client after get the newest
+     * data from micon.
+     */
+    commonFuncBcanBusOffStaGet()
+        generates(EnComdCommonNormalOrNotStatus status
+                  , EnComdCommonFuncResult funcResult);
+
+    /**
+     * @brief Client get P Gear status from comd
+     *
+     * @param None
+     *
+     * @return pGearsSta: P Gear status
+     * @return funcResult: Comd excute result
+     *
+     * Adaptive Project: Apoo
+     *
+     * If comd don't get the data from micon, the status will be UNKNOWN.
+     * However, comd will use notifyCommonFuncPGearsSta in
+     * IComdCommon to inform client after get the newest
+     * data from micon.
+     */
+    commonFuncPGearsStatusGet()
+        generates(EnComdCommonOnOffStatus pGearsSta
+                  , EnComdCommonFuncResult funcResult);
 };

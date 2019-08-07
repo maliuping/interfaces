@@ -134,4 +134,97 @@ interface IComdCommonListener extends @1.0::IComdCommonListener {
      * EN_COMMON_EID_FanSettingStatus to monitor this function
      */
     oneway notifyCommonFanSettingStatus(EnComdFanSettingStatus fanstatus);  //CT 10h : fan setting
+
+    /**
+     * Comd informs client of micon rwc/rvc power status
+     *
+     * @param fanstatus: The fan setting satatus
+     *
+     * Adaptive project: morley
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_RwcPowerStatus to monitor this function
+     */
+    oneway notifyCommonRwcPowerResp(EnComdRwcPowerState powerState);  // CT 1Fh : rwc/rvc power status
+
+    /**
+     * Comd informs client of micon power ic offset detect
+     *
+     * @param powerIcStatus : The power ic offset detect
+     *
+     * Adaptive project: morley
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_PowerIcDetect to monitor this function
+     */
+    oneway notifyCommonPowerIcDetectStatus(EnComdCommonNormalOrNotStatus powerIcStatus);
+
+    /**
+     * @brief Comd informs client of day night mode
+     *
+     * @param [IN] respData: day night mode
+     *
+     * @return None
+     *
+     * From: 01.Overview.xls
+     *
+     * Adaptive Project: Morley
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_DayNightMode to monitor this function.
+     */
+    oneway notifyCommonFuncDayNightMode(EnComdCommonDayNightMode respData);
+
+    /**
+     * Comd informs sysctrl of micon start up factor and stored in sysctrl
+     *
+     * @param startInfo : micon start up factor
+     *
+     * Adaptive project: all
+     *
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_StartInfo to monitor this function
+     */
+    oneway notifyCommonFuncStartInfo(vec<uint8_t> startInfo);
+
+    /**
+     * Comd informs client of BCOM_MICU signal status
+     *
+     * @param status : BCOM_MICU signal status
+     *
+     * Adaptive project: Apoo
+     *
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_BcmMicuSta to monitor this function
+     */
+    oneway notifyCommonFuncBcmMicuSta(EnComdCommonNormalOrNotStatus status);
+
+    /**
+     * Comd informs client of bcan bus off status
+     *
+     * @param status : bcan bus off status
+     *
+     * Adaptive project: Apoo
+     *
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_BcanBusOffSta to monitor this function
+     */
+    oneway notifyCommonFuncBcanBusOffSta(EnComdCommonNormalOrNotStatus status);
+
+    /**
+     * Comd informs client of P gears status--P gear
+     *
+     * @param pGearsSta : P gears status
+     *
+     * Adaptive project: Apoo
+     *
+     *
+     * Client can use registerListener with parameter
+     * EN_COMMON_EID_PGearsSta to monitor this function
+     */
+    oneway notifyCommonFuncPGearsSta(EnComdCommonOnOffStatus pGearsSta);
+
 };

@@ -322,7 +322,7 @@ interface IComdCommonListener {
     oneway notifyCommonRevStatus(EnComdCommonOnOffStatus revStatus);          //(SYS ->NAVI) BD1_2
 
     /**
-     * Comd informs client of parking status
+     * Comd informs client of parking status--handbrake
      *
      * @param parkingStatus: PKB status
      *
