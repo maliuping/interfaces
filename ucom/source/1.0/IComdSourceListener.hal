@@ -363,4 +363,16 @@ interface IComdSourceListener {
      * EN_SOURCE_EID_notifyCarplayAudioChannelMuteResp to monitor this function.
      */
 	oneway notifyCarplayAudioChannelMuteResp(StAudioChannelMuteResp respData);
+
+    /**
+     * Comd informs client of micon do Fade In response
+     *
+     * @param result : the result of Start Fade In request 
+     *
+     * Adaptive project: all
+     *
+     * Client can use registerListener with parameter
+     * EN_SOURCE_EID_notifyStartFadeInResp to monitor this function.
+     */
+    oneway notifyStartFadeInResp(EnComdSourceId sourceId);
 };
