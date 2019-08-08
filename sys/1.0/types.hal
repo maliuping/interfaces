@@ -89,6 +89,11 @@ enum SysdPropertyNameID : int32_t {
 };
 
 /**
+  * @brief The defined about BSP/CFG/RAW in SysdManagerProxy/deviceiolib/sysdhidltypes are one-to-one,
+  *        need modify together.
+  */
+
+/**
   * @brief Defines possible items of BSP data.
   */
   enum BspDataId : int32_t {
@@ -156,7 +161,7 @@ enum SysdPropertyNameID : int32_t {
   * @brief This structure is used to describe all of activeside.
   *
   */
-struct ActiveSide {
+  struct ActiveSide {
       VdataSide      Vdata;                                    ///< Vdata A/B active flag.
       SysSide        Sys;                                      ///< Sys A/B active flag.
       AmigoSide      Amigo;                                    ///< Amigo A/B active flag.
@@ -166,7 +171,7 @@ struct ActiveSide {
   * @brief This structure is used to describe all of bspdata.
   *
   */
-struct BspInfo {
+  struct BspInfo {
       BootMode       mode;                                     ///< boot mode
       DebugSide      debugsw;                                  ///< debug on/off active flag.
       VdataSide      Vdata;                                    ///< Vdata A/B active flag.
@@ -177,7 +182,7 @@ struct BspInfo {
 /**
   * @brief Defines possible items of config data.
   */
-    enum CfgDataId : int32_t {
+  enum CfgDataId : int32_t {
         CfgDataId_Min,
         CfgDataId_CameraType = CfgDataId_Min,    // camera type
         CfgDataId_Max
@@ -186,7 +191,7 @@ struct BspInfo {
 /**
   * @brief Defines possible items of camera type.
   */
-    enum CameraType : int32_t {
+  enum CameraType : int32_t {
         CameraType_Invalid,
         CameraType_RVC,  // RVC camera.
         CameraType_AVM,  // AVM camera.
@@ -198,3 +203,39 @@ struct BspInfo {
   struct CfgInfo {
       CameraType     camera_type;                             // camera type
     };
+
+/**
+  * @brief raw data item id.
+  */
+  enum RawDataId : int32_t {
+        INFO_INDEX_RBST = 2,    // rgb_brightness_step
+        INFO_INDEX_YBST,    // yuv_brightness_step
+        INFO_INDEX_SBST,    // second camera view backlight brightness step
+        INFO_INDEX_RCST,    // rgb_contrast_step
+        INFO_INDEX_YCST,    // yuv_contrast_step
+        INFO_INDEX_SCST,    // second camera view contrast step
+        INFO_INDEX_YCLR,    // camera view colar
+        INFO_INDEX_SCLR,    // second camera view colar
+        INFO_INDEX_YCDP,    // camera view colar depth
+        INFO_INDEX_SCDP,    // second camera view colar depth
+        INFO_INDEX_YBLV,    // camera view black level
+        INFO_INDEX_SBLV,    // second camera view black level
+        INFO_INDEX_ADCG,    // config for ad picture A/B
+        INFO_INDEX_LGTP,    // languange type
+        INFO_INDEX_GDLE,    // guideline setting
+
+        INFO_INDEX_MAX,
+    };
+
+/**
+  * @brief raw data return value.
+  */
+  enum RawDataReturn : int32_t {
+        RETURN_OK = 0,
+        RETURN_PARAMETER_ERROR,
+        RETURN_SIGNATURE_ERROR,
+        RETURN_READ_ERROR,
+        RETURN_WRITE_ERROR,
+        RETURN_CRC_ERROR,
+        RETURN_ERROR,
+  };
