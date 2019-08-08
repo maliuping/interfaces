@@ -403,4 +403,15 @@ interface IComdSource {
      */
     carplayAppointAudioChannelMute(StAppointAudioChannelMute muteData)
         generates (EnComdSourceReturn ret);
+
+    /**
+     * Fade in when device plug In and play
+     *
+     * @param : sourceId
+     *
+     * @return ret: Comd excute result
+     *
+     * Adaptive project: morley
+     */
+     reqStartFadeIn(EnComdSourceId sourceId) generates (EnComdSourceReturn ret);
 };
