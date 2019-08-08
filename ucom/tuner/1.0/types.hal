@@ -116,6 +116,7 @@ struct StComdTunerInfo {
     EnComdTunerPSFlagType psFlag;
     uint8_t ptyType;
     uint8_t[8] psName;
+    uint8_t processBar;
 };
 
 struct StComdPresetList{
