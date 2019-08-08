@@ -438,4 +438,101 @@ interface IComdDiag {
      * Adaptive project: Morley
      */
      nDiagVcanConnectExitReq() generates(EnComdDiagFuncResult funcResult);
+
+/**************VCAN Diag**************/
+    /**
+     * Enter Vcan Diag and notify Micon
+     *
+     * @param none
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Morley
+     */
+    vDiagReplyEnterVcanDiag() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * Exit Vcan Diag and notify Micon
+     *
+     * @param none
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Morley
+     */
+    vDiagReplyExitVcanDiag() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * inform micon IO Control temporary control start
+     *
+     * @param IOControl : action Type and action excute result
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Morley
+     */
+    vDiagReplyIOControlResult(StComdVDiagIOControlResult ioControl) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * inform micon IO Control stop finish
+     *
+     * @param none
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Morley
+     */
+    vDiagReplyIOControlStop() generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * reply req micon DTC Record when failure
+     *
+     * @param  dtcRecord : StComdVDiagDTCRecord
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Morley
+     */
+    vDiagReplyDTCRecordRequest(vec<StComdVDiagDTCInfo> dtcRecord) generates(EnComdDiagFuncResult funcResult);
+
+    /**
+     * reply the result of req micon DID info  
+     *
+     * @param  result : StComdVDiagAllDIDResult
+     *
+     * @return funcResult: the status of invoking functon: OK in case of success
+     *                 ERROR_PARA in case of param is fault or lost, ERR_SERV in case of config is error
+     *
+     *    @retval EN_DIAG_FUNC_RESULT_OK : operation ok 
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_PARA : parameter error
+     *    @retval EN_DIAG_FUNC_RESULT_ERR_SERV : service operate error
+     *
+     * Adaptive project: Morley
+     */
+    vDiagReplyDIDInfoResult(vec<StComdVDiagDIDInfo> didInfo) generates(EnComdDiagFuncResult funcResult);
 };
