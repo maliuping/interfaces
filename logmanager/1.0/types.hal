@@ -1,4 +1,4 @@
-package iauto.hardware.logmanagerservice@1.0;
+package iauto.hardware.logmanager@1.0;
 
 
 enum LOG_SRV_ERROR_TYPE : uint16_t {
@@ -15,4 +15,12 @@ enum LOG_SRV_ERROR_TYPE : uint16_t {
 struct LOG_SRV_ERROR_INFO {
 	LOG_SRV_ERROR_TYPE eErrorType;
     uint32_t iOccurTime;
+};
+
+
+enum LOG_SRV_UPLOAD_STATUS : uint16_t {
+    LOG_SRV_UPLOAD_BEGIN = 0,
+    LOG_SRV_UPLOAD_SUCCESS,
+    LOG_SRV_UPLOAD_FAILED,
+
 };

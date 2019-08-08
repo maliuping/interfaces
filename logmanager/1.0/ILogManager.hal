@@ -1,4 +1,4 @@
-package iauto.hardware.logmanagerservice@1.0;
+package iauto.hardware.logmanager@1.0;
 
 import ILogListener;
 
@@ -10,6 +10,8 @@ interface ILogManager {
     registerListener(ILogListener listener);
 
     unregisterListener(ILogListener listener);
+
+    oneway notifyUploadStatus(LOG_SRV_UPLOAD_STATUS eStatus);
 
     oneway reqErrorAccumulate(LOG_SRV_ERROR_INFO sErrorInfo);
 
