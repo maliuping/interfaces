@@ -5,7 +5,7 @@ LOCAL_PATH := $(call my-dir)
 ################################################################################
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := iauto.hardware.logmanagerservice-V1.0-java
+LOCAL_MODULE := iauto.hardware.logmanager-V1.0-java
 LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 
 intermediates := $(call local-generated-sources-dir, COMMON)
@@ -21,7 +21,7 @@ LOCAL_VENDOR_MODULE := true
 #
 # Build types.hal (LOG_SRV_ERROR_INFO)
 #
-GEN := $(intermediates)/iauto/hardware/logmanagerservice/V1_0/LOG_SRV_ERROR_INFO.java
+GEN := $(intermediates)/iauto/hardware/logmanager/V1_0/LOG_SRV_ERROR_INFO.java
 $(GEN): $(HIDL)
 $(GEN): PRIVATE_HIDL := $(HIDL)
 $(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
@@ -31,7 +31,7 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -Ljava \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.logmanagerservice@1.0::types.LOG_SRV_ERROR_INFO
+        iauto.hardware.logmanager@1.0::types.LOG_SRV_ERROR_INFO
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
@@ -40,7 +40,7 @@ LOCAL_GENERATED_SOURCES += $(GEN)
 #
 # Build types.hal (LOG_SRV_ERROR_TYPE)
 #
-GEN := $(intermediates)/iauto/hardware/logmanagerservice/V1_0/LOG_SRV_ERROR_TYPE.java
+GEN := $(intermediates)/iauto/hardware/logmanager/V1_0/LOG_SRV_ERROR_TYPE.java
 $(GEN): $(HIDL)
 $(GEN): PRIVATE_HIDL := $(HIDL)
 $(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
@@ -50,7 +50,7 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -Ljava \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.logmanagerservice@1.0::types.LOG_SRV_ERROR_TYPE
+        iauto.hardware.logmanager@1.0::types.LOG_SRV_ERROR_TYPE
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
@@ -59,7 +59,7 @@ LOCAL_GENERATED_SOURCES += $(GEN)
 #
 # Build ILogListener.hal
 #
-GEN := $(intermediates)/iauto/hardware/logmanagerservice/V1_0/ILogListener.java
+GEN := $(intermediates)/iauto/hardware/logmanager/V1_0/ILogListener.java
 $(GEN): $(HIDL)
 $(GEN): PRIVATE_HIDL := $(HIDL)
 $(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/ILogListener.hal
@@ -69,7 +69,7 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -Ljava \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.logmanagerservice@1.0::ILogListener
+        iauto.hardware.logmanager@1.0::ILogListener
 
 $(GEN): $(LOCAL_PATH)/ILogListener.hal
 	$(transform-generated-source)
@@ -78,7 +78,7 @@ LOCAL_GENERATED_SOURCES += $(GEN)
 #
 # Build ILogManager.hal
 #
-GEN := $(intermediates)/iauto/hardware/logmanagerservice/V1_0/ILogManager.java
+GEN := $(intermediates)/iauto/hardware/logmanager/V1_0/ILogManager.java
 $(GEN): $(HIDL)
 $(GEN): PRIVATE_HIDL := $(HIDL)
 $(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/ILogManager.hal
@@ -92,7 +92,7 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -Ljava \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.logmanagerservice@1.0::ILogManager
+        iauto.hardware.logmanager@1.0::ILogManager
 
 $(GEN): $(LOCAL_PATH)/ILogManager.hal
 	$(transform-generated-source)
@@ -103,7 +103,7 @@ include $(BUILD_JAVA_LIBRARY)
 ################################################################################
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := iauto.hardware.logmanagerservice-V1.0-java-static
+LOCAL_MODULE := iauto.hardware.logmanager-V1.0-java-static
 LOCAL_MODULE_CLASS := JAVA_LIBRARIES
 
 intermediates := $(call local-generated-sources-dir, COMMON)
@@ -117,7 +117,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 #
 # Build types.hal (LOG_SRV_ERROR_INFO)
 #
-GEN := $(intermediates)/iauto/hardware/logmanagerservice/V1_0/LOG_SRV_ERROR_INFO.java
+GEN := $(intermediates)/iauto/hardware/logmanager/V1_0/LOG_SRV_ERROR_INFO.java
 $(GEN): $(HIDL)
 $(GEN): PRIVATE_HIDL := $(HIDL)
 $(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
@@ -127,7 +127,7 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -Ljava \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.logmanagerservice@1.0::types.LOG_SRV_ERROR_INFO
+        iauto.hardware.logmanager@1.0::types.LOG_SRV_ERROR_INFO
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
@@ -136,7 +136,7 @@ LOCAL_GENERATED_SOURCES += $(GEN)
 #
 # Build types.hal (LOG_SRV_ERROR_TYPE)
 #
-GEN := $(intermediates)/iauto/hardware/logmanagerservice/V1_0/LOG_SRV_ERROR_TYPE.java
+GEN := $(intermediates)/iauto/hardware/logmanager/V1_0/LOG_SRV_ERROR_TYPE.java
 $(GEN): $(HIDL)
 $(GEN): PRIVATE_HIDL := $(HIDL)
 $(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/types.hal
@@ -146,7 +146,7 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -Ljava \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.logmanagerservice@1.0::types.LOG_SRV_ERROR_TYPE
+        iauto.hardware.logmanager@1.0::types.LOG_SRV_ERROR_TYPE
 
 $(GEN): $(LOCAL_PATH)/types.hal
 	$(transform-generated-source)
@@ -155,7 +155,7 @@ LOCAL_GENERATED_SOURCES += $(GEN)
 #
 # Build ILogListener.hal
 #
-GEN := $(intermediates)/iauto/hardware/logmanagerservice/V1_0/ILogListener.java
+GEN := $(intermediates)/iauto/hardware/logmanager/V1_0/ILogListener.java
 $(GEN): $(HIDL)
 $(GEN): PRIVATE_HIDL := $(HIDL)
 $(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/ILogListener.hal
@@ -165,7 +165,7 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -Ljava \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.logmanagerservice@1.0::ILogListener
+        iauto.hardware.logmanager@1.0::ILogListener
 
 $(GEN): $(LOCAL_PATH)/ILogListener.hal
 	$(transform-generated-source)
@@ -174,7 +174,7 @@ LOCAL_GENERATED_SOURCES += $(GEN)
 #
 # Build ILogManager.hal
 #
-GEN := $(intermediates)/iauto/hardware/logmanagerservice/V1_0/ILogManager.java
+GEN := $(intermediates)/iauto/hardware/logmanager/V1_0/ILogManager.java
 $(GEN): $(HIDL)
 $(GEN): PRIVATE_HIDL := $(HIDL)
 $(GEN): PRIVATE_DEPS := $(LOCAL_PATH)/ILogManager.hal
@@ -188,7 +188,7 @@ $(GEN): PRIVATE_CUSTOM_TOOL = \
         -Ljava \
         -randroid.hidl:system/libhidl/transport \
         -riauto.hardware:ivi/system/hardware/interfaces \
-        iauto.hardware.logmanagerservice@1.0::ILogManager
+        iauto.hardware.logmanager@1.0::ILogManager
 
 $(GEN): $(LOCAL_PATH)/ILogManager.hal
 	$(transform-generated-source)

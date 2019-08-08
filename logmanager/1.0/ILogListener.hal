@@ -10,10 +10,12 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  */
-package iauto.hardware.logmanagerservice@1.0;
+package iauto.hardware.logmanager@1.0;
 
 interface ILogListener {
 
     notifyConnectHistory(int32_t iType, bool bStatus) generates(bool result);
+    notifyDeleteLogResult(bool bResult);
+	notifyAccumulateResult(bool bResult);
 
 };
