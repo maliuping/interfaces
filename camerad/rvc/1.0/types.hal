@@ -1,0 +1,66 @@
+/**
+ * Copyright @ 2019 iAUTO(Shanghai) Co., Ltd.
+ * All Rights Reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are NOT permitted except as agreed by
+ * iAUTO(Shanghai) Co., Ltd.
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ */
+
+package iauto.hardware.camerad.rvc@1.0;
+
+/**
+ * Specifies a enum which describe the Register ListenerID
+ */
+enum EnCameradRvcListenerID : uint8_t {
+    EN_LIS_ID_RVC = 0x00,	         /*For RVC C++ Service		*/
+};
+
+
+/**
+ * Specifies a enum which describe the Register Event ID
+ */
+enum EnRvcEventId : uint64_t{
+	EN_CAMERA_TO_RVC_MSG                   = 1 << 0,
+};
+
+typedef bitfield<EnRvcEventId> EnRvcEventIds;
+
+
+/**
+ * Specifies a enum which describe the function execution result
+ * used in function : every function in IRvc.hal
+ */
+enum EnRvcFuncResult : uint8_t {
+    RVC_RESULT_OK = 0x00,        //OK
+    RVC_RESULT_ERR = 0x01,       //fail
+    RVC_RESULT_UNKNOW = 0x02,   //unknow
+};
+
+
+/**
+ * Specifies a enum which describe guideline ready info
+ */
+enum EnOnRvcReadyInfo : uint8_t {
+    EN_READY_DISP_RVC = 0x00,   //camerad is ready to display
+    EN_READY_RELEASE_RVC = 0x01,  //camerad is ready to release
+};
+
+
+/**
+ * Specifies a enum which describe RVC or AVM
+ */
+enum EnNotifyGuideLineStatus : uint8_t {
+    EN_STATIC_GUIDELINE_ON = 0x00,   //camerad is ready to display
+	EN_STATIC_GUIDELINE_OFF = 0x01,
+    EN_DYNAMIC_GUIDELINE_ON = 0x02,  //camerad is ready to release
+    EN_DYNAMIC_GUIDELINE_OFF = 0x03,
+};
+
+
+
+
