@@ -126,7 +126,7 @@ interface IComdCommon {
      *
      * @return funcResult: Comd excute result
      *
-     * Adaptive project: Morley
+     * Adaptive project: Base(Morley Not use)
      *
      * Comd will call notifyCommonFuncAVMCommandResult in
      * IComdCommonListener when micon response result
@@ -335,7 +335,7 @@ interface IComdCommon {
      * @return uEQPinData: EqPin data
      * @return funcResult: Comd excute result
      *
-     * Adaptive project: Morley
+     * Adaptive project: Base(Morley Not use)
      *
      * If comd don't get the data from micon,the uEQPinData will be
      * UNKNOWN. However, comd will use notifyCommonEQPin in
@@ -559,7 +559,7 @@ interface IComdCommon {
      * @return illStatus: Illume open or not status
      * @return funcResult: Comd excute result
      *
-     * Adaptive project: all
+     * Adaptive project: Base(Morley Not use)
      *
      * If comd don't get the data from micon,the illStatus will be
      * UNKNOWN. However, comd will use notifyCommonILLStatus in
@@ -593,7 +593,7 @@ interface IComdCommon {
      * @return status: AVM switch signal active or not status
      * @return funcResult: Comd excute result
      *
-     * Adaptive project: Morley
+     * Adaptive project: Base(Morley Not use)
      *
      * If comd don't get the data from micon,the status will be
      * UNKNOWN. However, comd will use notifyCommonAVMSwiSigStatus in
@@ -610,7 +610,7 @@ interface IComdCommon {
      * @return status: AVM connect status
      * @return funcResult: Comd excute result
      *
-     * Adaptive project: Morley
+     * Adaptive project: Base(Morley Not use)
      *
      * If comd don't get the data from micon,the status will be
      * UNKNOWN. However, comd will use notifyCommonAVMConStatus in
@@ -627,7 +627,7 @@ interface IComdCommon {
      * @return status: Back camera connect status
      * @return funcResult: Comd excute result
      *
-     * Adaptive project: Morley
+     * Adaptive project: Base(Morley Not use)
      *
      * If comd don't get the data from micon,the status will be
      * UNKNOWN. However, comd will use notifyCommonBackCamConStatus in
