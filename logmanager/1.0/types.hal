@@ -9,6 +9,17 @@ enum LOG_SRV_ERROR_TYPE : uint16_t {
     LOG_ERROR_BG_APPLICATION_NOT_RESPONDING,    ///Background ANR時
     LOG_ERROR_SYSTEM_SERVER_WDTO,               ///Android Watchdog 発生時
     LOG_ERROR_HWLOG_NOTIFY,                     ///hardware error
+    LOG_ERROR_RESET_MICON_STACK_OVERFLOW,       ///Micon Task Stack溢出再起動通知
+    LOG_ERROR_RESET_MICON_ILLEGAL_ADDR,         ///Micon Illegal address異常再起動通知
+    LOG_ERROR_RESET_MICON_WDTO,                 ///Micon Watchdag異常再起動通知
+    LOG_ERROR_RESET_MICON_LVI,                  ///Micon LVI異常再起動通知
+    LOG_ERROR_RESET_MICON_PLL_CLOCK,            /// PLL CLOCK異常再起動通知
+    LOG_ERROR_RESET_MICON_AMIGO,                ///Amigo異常再起動通知
+    LOG_ERROR_RESET_SOC_TIMER_COM,              ///SOC 定期通信异常重启通知
+    LOG_ERROR_RESET_SOC_INIT_COM,               ///SOC 初期通信异常重启通知
+    LOG_ERROR_RESET_SOC_OFF_READY,              ///SOC OFF READY异常重启通知
+    LOG_ERROR_RESET_SOC_WDTO,                   ///SOC WDTリセット監視再起動通知
+
 
 };
 
