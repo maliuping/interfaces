@@ -200,7 +200,7 @@ interface IComdCommonListener {
      *
      * @param respData: The micon AVM action result
      *
-     * Adaptive project: Morley
+     * Adaptive project: Base(Morley Not use)
      *
      * Client can use registerListener with parameter
      * EN_COMMON_EID_AVMComResult to monitor this function.
@@ -253,7 +253,7 @@ interface IComdCommonListener {
      *
      * @param speedPlusData: The micon speed pulse data
      *
-     * Adaptive project: all
+     * Adaptive project: Base(Morley Not use)
      *
      * Client can use registerListener with parameter
      * EN_COMMON_EID_FuncSpeedPulse to monitor this function.
@@ -341,7 +341,7 @@ interface IComdCommonListener {
      *
      * @param fanStatus: Fan status
      *
-     * Adaptive project: Poc
+     * Adaptive project: Poc(Morley Not use)
      *
      * Firstly, client can use registerListener with parameter
      * EN_COMMON_EID_FanStatus to monitor this function.
@@ -388,7 +388,7 @@ interface IComdCommonListener {
      *
      * @param temperatureStatus: Soc temperature abnormal or not status
      *
-     * Adaptive project: Poc
+     * Adaptive project: Base(Morley Not use)
      *
      * Firstly, client can use registerListener with parameter
      * EN_COMMON_EID_TemperatureStatus to monitor this function.
@@ -435,7 +435,7 @@ interface IComdCommonListener {
      *
      * @param illStatus: illume open or not status
      *
-     * Adaptive project: all
+     * Adaptive project: Base(Morley Not use)
      *
      * Firstly, client can use registerListener with parameter
      * EN_COMMON_EID_ILLStatus to monitor this function.
@@ -451,7 +451,7 @@ interface IComdCommonListener {
      *
      * @param status: AVM switch signal active or not status
      *
-     * Adaptive project: Morley
+     * Adaptive project: Base(Morley Not use)
      *
      * Firstly, client can use registerListener with parameter
      * EN_COMMON_EID_AVMSwiSigStatus to monitor this function.
@@ -467,7 +467,7 @@ interface IComdCommonListener {
      *
      * @param status: AVM connect status
      *
-     * Adaptive project: Morley
+     * Adaptive project: Base(Morley Not use)
      *
      * Firstly, client can use registerListener with parameter
      * EN_COMMON_EID_AVMConStatus to monitor this function.
@@ -482,7 +482,7 @@ interface IComdCommonListener {
      *
      * @param status: Back camera connect status
      *
-     * Adaptive project: Morley
+     * Adaptive project: Base(Morley Not use)
      *
      * Firstly, client can use registerListener with parameter
      * EN_COMMON_EID_BackCamConStatus to monitor this function.
