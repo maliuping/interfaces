@@ -23,7 +23,7 @@ interface ISysCtrlGenericListener {
     oneway onPreDataClear(StartupReasons reason);
 
     /*
-     * Notify diag or UI that personal data clear finished.
+     * Notify data clear result.
      */
     oneway onStartDataCleared(bool result);
 };
